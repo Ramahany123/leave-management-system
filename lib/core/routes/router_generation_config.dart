@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:leave_management_system/core/routes/app_routes.dart';
-import 'package:leave_management_system/features/auth/ui/screens/login_screen.dart';
+import 'app_routes.dart';
+import '../../features/auth/ui/screens/login_screen.dart';
 
 class RouterGenerationConfig {
   static final goRouter = GoRouter(

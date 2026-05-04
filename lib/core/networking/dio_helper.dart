@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:leave_management_system/core/networking/api_endpoints.dart';
+import 'api_endpoints.dart';
 
 class DioHelper {
   Dio? dio;

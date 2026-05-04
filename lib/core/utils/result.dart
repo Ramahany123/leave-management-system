@@ -1,4 +1,4 @@
-import 'package:leave_management_system/core/networking/errors/failures.dart';
+import '../networking/errors/failures.dart';
 
 sealed class Result<S> {
   T fold<T>(

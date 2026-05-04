@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:leave_management_system/core/networking/api_endpoints.dart';
-import 'package:leave_management_system/core/networking/api_service.dart';
+import '../networking/api_endpoints.dart';
+import '../networking/api_service.dart';
 
 final GetIt sl = GetIt.instance;
 

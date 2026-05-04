@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:leave_management_system/core/styles/app_colors.dart';
-import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import '../styles/app_colors.dart';
+import '../styles/app_text_styles.dart';
 
 class CustomTextField extends StatefulWidget {
   final String? hintText;

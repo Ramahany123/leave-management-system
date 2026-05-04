@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:leave_management_system/core/networking/errors/failures.dart';
+import 'errors/failures.dart';
 
 class ApiErrorHandler {
   static Failure handle(dynamic error) {
