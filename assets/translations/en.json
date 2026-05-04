@@ -1,0 +1,28 @@
+{
+  "app_name": "University Leave Management",
+  "login": {
+    "title": "University Portal",
+    "subtitle": "Staff & Faculty Login",
+    "email_label": "University Email",
+    "password_label": "Password",
+    "submit_button": "Login",
+    "onboarding_message": "First time? Use your National ID as password."
+  },
+  "dashboard": {
+    "welcome_user": "Welcome, {name}",
+    "leave_balance": "Leave Balance",
+    "request_leave": "Request Leave"
+  },
+  "leave_request": {
+    "form_title": "New Leave Request",
+    "leave_type": "Leave Type",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "submit": "Submit Request"
+  },
+  "errors": {
+    "required_field": "This field is required",
+    "invalid_email": "Please enter a valid university email",
+    "generic_error": "Something went wrong. Please try again."
+  }
+}

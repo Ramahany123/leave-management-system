@@ -1,0 +1,28 @@
+{
+  "app_name": "نظام إدارة الإجازات الجامعي",
+  "login": {
+    "title": "البوابة الجامعية",
+    "subtitle": "تسجيل دخول الموظفين وأعضاء هيئة التدريس",
+    "email_label": "البريد الإلكتروني الجامعي",
+    "password_label": "كلمة المرور",
+    "submit_button": "تسجيل الدخول",
+    "onboarding_message": "أول مرة؟ استخدم رقمك القومي ككلمة مرور."
+  },
+  "dashboard": {
+    "welcome_user": "مرحباً، {name}",
+    "leave_balance": "رصيد الإجازات",
+    "request_leave": "طلب إجازة"
+  },
+  "leave_request": {
+    "form_title": "طلب إجازة جديد",
+    "leave_type": "نوع الإجازة",
+    "start_date": "تاريخ البدء",
+    "end_date": "تاريخ الانتهاء",
+    "submit": "تقديم الطلب"
+  },
+  "errors": {
+    "required_field": "هذا الحقل مطلوب",
+    "invalid_email": "يرجى إدخال بريد إلكتروني جامعي صحيح",
+    "generic_error": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  }
+}
