@@ -23,7 +23,7 @@ class PrimaryButtonWidget extends StatelessWidget {
           borderRadius: BorderRadiusGeometry.circular(8.r),
         ),
       ),
-      child: Text(text, style: AppTextStyles.black16w500TextStyle),
+      child: Text(text, style: AppTextStyles.white16w600TextStyle),
     );
   }
 }
