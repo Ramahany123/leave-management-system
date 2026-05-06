@@ -11,4 +11,16 @@ class ApiService {
   }) async {
     return await _dio.get(apiEndpoint, queryParameters: queryParameters);
   }
+
+  Future<Response<T>> postRequest<T>({
+    required String apiEndpoint,
+    Map<String, dynamic>? queryParameters,
+    Object? data,
+  }) async {
+    return await _dio.post(
+      apiEndpoint,
+      queryParameters: queryParameters,
+      data: data,
+    );
+  }
 }
