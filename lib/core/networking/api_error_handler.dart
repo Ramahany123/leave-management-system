@@ -31,7 +31,7 @@ class ApiErrorHandler {
     final int statusCode = response.statusCode ?? 0;
 
     final String apiMessage =
-        response.data?["status_message"] ?? "Server Error";
+        response.data?["data"]["message"] ?? "Server Error";
     return switch (statusCode) {
       401 => const UnauthenticatedFailure(),
       404 => NotFoundFailure(apiMessage),
