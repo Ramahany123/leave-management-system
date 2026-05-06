@@ -1,11 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:leave_management_system/core/cache/cache_helper.dart';
 import 'core/routes/router_generation_config.dart';
 import 'core/styles/theme_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
   await EasyLocalization.ensureInitialized();
   runApp(
     EasyLocalization(
