@@ -1,21 +1,23 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import '../networking/api_endpoints.dart';
+import 'package:leave_management_system/core/networking/dio_factory.dart';
+import 'package:leave_management_system/features/auth/data/repo/auth_repo.dart';
+import 'package:leave_management_system/features/auth/data/web_services/auth_web_services.dart';
+import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dart';
 import '../networking/api_service.dart';
 
 final GetIt sl = GetIt.instance;
 
 void setupServiceLocator() {
-  final Dio dio = Dio(
-    BaseOptions(
-      baseUrl: ApiEndpoints.baseUrl,
-      receiveDataWhenStatusError: true,
-      connectTimeout: const Duration(seconds: 60),
-      receiveTimeout: const Duration(seconds: 60),
-    ),
-  );
-
-  sl.registerLazySingleton(() => dio);
-
+  sl.registerLazySingleton(() => DioFactory().getDio);
   sl.registerLazySingleton(() => ApiService(sl<Dio>()));
+
+  //Auth dpenedencies
+  setupAuthDependencies();
+}
+
+void setupAuthDependencies() {
+  sl.registerLazySingleton(() => AuthWebServices(apiService: sl()));
+  sl.registerLazySingleton(() => AuthRepo(authWebServices: sl()));
+  sl.registerFactory(() => AuthCubit(authRepo: sl()));
 }
