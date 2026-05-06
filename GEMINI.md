@@ -38,3 +38,19 @@ You are an expert Senior Flutter Developer and strict technical mentor. Your pri
   - **Employee:** Dashboard viewing, balance tracking, submitting "Smart Forms" (conditionally requiring delegates/القائم بالعمل or medical attachments), and executing "Early Returns" (cutting active leaves short).
   - **Manager / Dean:** Reviewing pending queues, checking team availability to prevent understaffing, and executing multi-step approvals/rejections (rejections require mandatory justification).
 - **Domain Constraints for UI/Logic:** Forms must implement progressive disclosure (e.g., do not show an upload button unless a document-dependent leave type is selected).
+
+# Localization Standards
+
+- **Package:** `easy_localization` is the source of truth for all user-facing strings.
+- **Locales:** Supports English (`en`) and Arabic (`ar`).
+- **Storage:** JSON files located in `assets/translations/`.
+- **Type Safety:** Always use code generation for translation keys.
+- **Command:** `dart run easy_localization:generate -S assets/translations -f keys -O lib/core/language -o locale_keys.g.dart`
+- **Usage:** Prefer `LocaleKeys.key_name.tr()` over hardcoded strings or `tr('key')`.
+
+# UI & Styling Conventions
+
+- **Responsiveness:** Use `flutter_screenutil` (e.g., `.w`, `.h`, `.sp`, `.r`) for all dimensions and text sizes.
+- **Directionality (RTL/LTR):** Always use `AlignmentDirectional` and `EdgeInsetsDirectional` (e.g., `.centerStart`, `.topStart`) instead of static `Left/Right` to support Arabic and English seamlessly.
+- **Atomic Widgets:** Use the shared widgets in `core/widgets/` (`CustomTextField`, `PrimaryButtonWidget`) to maintain visual consistency.
+- **Form Labels:** Place form labels inside an `Align(alignment: AlignmentDirectional.centerStart)` widget above their respective input fields.
