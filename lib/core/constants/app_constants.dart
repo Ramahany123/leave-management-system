@@ -1,9 +1,11 @@
 class AppImages {
   static const String universityLogo = "assets/images/Hurghada-University.png";
+  static const String loadingLottie = "assets/lottie/loadingLottie.json";
 }
 
 class CacheKeys {
   static const String userToken = "userToken";
   static const String isDarkMode = "isDarkMode";
   static const String language = "language";
+  static const String authStatus = "authStatus";
 }
