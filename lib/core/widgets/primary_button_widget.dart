@@ -6,16 +6,18 @@ import '../styles/app_text_styles.dart';
 class PrimaryButtonWidget extends StatelessWidget {
   final void Function() onPressed;
   final String text;
+  final bool isLoading;
   const PrimaryButtonWidget({
     super.key,
     required this.onPressed,
     required this.text,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primaryBlue,
         fixedSize: Size(331.w, 56.h),
@@ -23,7 +25,16 @@ class PrimaryButtonWidget extends StatelessWidget {
           borderRadius: BorderRadiusGeometry.circular(8.r),
         ),
       ),
-      child: Text(text, style: AppTextStyles.white16w600TextStyle),
+      child: isLoading
+          ? SizedBox(
+            height: 24.h,
+            width: 24.h,
+            child: const CircularProgressIndicator(
+              color: AppColors.whiteColor,
+              strokeWidth: 3,
+            ),
+          )
+          : Text(text, style: AppTextStyles.white16w600TextStyle),
     );
   }
 }
