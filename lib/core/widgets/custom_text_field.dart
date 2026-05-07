@@ -9,6 +9,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final bool isEnabled;
   const CustomTextField({
     super.key,
     this.hintText,
@@ -16,6 +17,7 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.controller,
     this.validator,
+    this.isEnabled = true,
   });
 
   @override
@@ -39,6 +41,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.h),
         child: TextFormField(
+          enabled: widget.isEnabled,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: widget.controller,
           validator: widget.validator,
@@ -52,7 +55,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             hint: Text(
               widget.hintText ?? "",
-              style: AppTextStyles.black16w500TextStyle,
+              style: AppTextStyles.grey16w400TextStyle,
             ),
             suffixIcon: widget.isPassword
                 ? GestureDetector(
