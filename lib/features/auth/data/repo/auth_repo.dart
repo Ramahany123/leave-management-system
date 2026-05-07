@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:leave_management_system/core/cache/secure_storage_helper.dart';
 import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/constants/enums.dart';
@@ -7,11 +8,34 @@ import 'package:leave_management_system/features/auth/data/models/login_body_mod
 import 'package:leave_management_system/features/auth/data/models/login_response_model.dart';
 import 'package:leave_management_system/features/auth/data/web_services/auth_web_services.dart';
 
-class AuthRepo {
+import '../../../../core/cache/cache_helper.dart';
+
+class AuthRepo extends ChangeNotifier {
   final AuthWebServices _authWebServices;
+
+  AuthStatus _currentAuthStatus = AuthStatus.unauthenticated;
+  AuthStatus get currentAuthStatus => _currentAuthStatus;
 
   AuthRepo({required AuthWebServices authWebServices})
     : _authWebServices = authWebServices;
+
+  Future<void> checkInitialAuthStatus() async {
+    final String? token = await SecureStorageHelper.getData(
+      key: CacheKeys.userToken,
+    );
+    final String? statusName = CacheHelper.getData(key: CacheKeys.authStatus);
+
+    if (token != null && token.isNotEmpty && statusName != null) {
+      try {
+        _currentAuthStatus = AuthStatus.values.byName(statusName);
+      } catch (e) {
+        _currentAuthStatus = AuthStatus.authenticated;
+      }
+    } else {
+      _currentAuthStatus = AuthStatus.unauthenticated;
+    }
+    notifyListeners();
+  }
 
   Future<Result<LoginResponseModel>> login(LoginBodyModel loginBody) async {
     try {
@@ -22,7 +46,14 @@ class AuthRepo {
           key: CacheKeys.userToken,
           value: response.token,
         );
+        await CacheHelper.saveData(
+          key: CacheKeys.authStatus,
+          value: response.status.name,
+        );
+        _currentAuthStatus = response.status;
+        notifyListeners();
       }
+
       return SuccessResult(response);
     } catch (e) {
       return FailureResult(ApiErrorHandler.handle(e));
