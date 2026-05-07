@@ -4,6 +4,7 @@ sealed class Failure {
   const Failure(this.message);
 }
 
+// TODO: localize the error messages
 class ServerFailure extends Failure {
   const ServerFailure(super.message);
 }
@@ -14,7 +15,7 @@ class NetworkFailure extends Failure {
 
 final class UnauthenticatedFailure extends Failure {
   const UnauthenticatedFailure([
-    super.message = 'Session expired. Please login again.',
+    super.message = 'Wrong Credentials. Please login again.',
   ]);
 }
 

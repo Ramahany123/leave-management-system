@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'errors/failures.dart';
 
+//TODO: localize error messages
 class ApiErrorHandler {
   static Failure handle(dynamic error) {
     if (error is DioException) {
