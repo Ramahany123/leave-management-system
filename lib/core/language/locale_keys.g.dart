@@ -25,5 +25,14 @@ abstract class  LocaleKeys {
   static const errors_invalid_email = 'errors.invalid_email';
   static const errors_generic_error = 'errors.generic_error';
   static const errors = 'errors';
+  static const onboarding_title = 'onboarding.title';
+  static const onboarding_step = 'onboarding.step';
+  static const onboarding_header = 'onboarding.header';
+  static const onboarding_sub_header = 'onboarding.sub_header';
+  static const onboarding_phone_label = 'onboarding.phone_label';
+  static const onboarding_new_password_label = 'onboarding.new_password_label';
+  static const onboarding_confirm_password_label = 'onboarding.confirm_password_label';
+  static const onboarding_submit_button = 'onboarding.submit_button';
+  static const onboarding = 'onboarding';
 
 }

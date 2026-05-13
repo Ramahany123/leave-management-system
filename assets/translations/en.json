@@ -24,5 +24,15 @@
     "required_field": "This field is required",
     "invalid_email": "Please enter a valid university email",
     "generic_error": "Something went wrong. Please try again."
+  },
+  "onboarding": {
+    "title": "Account Activation",
+    "step": "Step 1 of 1",
+    "header": "Welcome! Let's secure your account",
+    "sub_header": "Please update your default password and provide a phone number for account recovery.",
+    "phone_label": "Mobile Phone Number",
+    "new_password_label": "New Password",
+    "confirm_password_label": "Confirm New Password",
+    "submit_button": "Activate Account"
   }
 }
