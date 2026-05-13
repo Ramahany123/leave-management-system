@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:leave_management_system/core/constants/enums.dart';
 import 'package:leave_management_system/core/networking/errors/failures.dart';
+import 'package:leave_management_system/features/auth/data/models/activation_body_model.dart';
 import 'package:leave_management_system/features/auth/data/models/login_body_model.dart';
 import 'package:leave_management_system/features/auth/data/models/login_response_model.dart';
 import 'package:leave_management_system/features/auth/data/repo/auth_repo.dart';
@@ -39,6 +40,19 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (failure) {
         emit(AuthError(failure: failure));
+      },
+    );
+  }
+
+  Future<void> activateUser(ActivationBodyModel activationBody) async {
+    emit(AuthActivationLoading());
+    final result = await _authRepo.activateUser(activationBody);
+    result.fold(
+      (activationResponse) {
+        emit(AuthActivationSuccess(user: activationResponse.user));
+      },
+      (failure) {
+        emit(AuthActivationError(failure: failure));
       },
     );
   }

@@ -24,3 +24,19 @@ final class AuthError extends AuthState {
 
   AuthError({required this.failure});
 }
+
+final class AuthActivationSuccess extends AuthState {
+  final UserModel user;
+
+  AuthActivationSuccess({required this.user});
+}
+
+final class AuthActivationLoading extends AuthState {
+  AuthActivationLoading();
+}
+
+final class AuthActivationError extends AuthState {
+  final Failure failure;
+
+  AuthActivationError({required this.failure});
+}
