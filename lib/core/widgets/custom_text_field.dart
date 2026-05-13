@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../styles/app_colors.dart';
 import '../styles/app_text_styles.dart';
@@ -10,6 +11,7 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final bool isEnabled;
+  final List<TextInputFormatter>? textInputFormatter;
   const CustomTextField({
     super.key,
     this.hintText,
@@ -18,6 +20,7 @@ class CustomTextField extends StatefulWidget {
     this.controller,
     this.validator,
     this.isEnabled = true,
+    this.textInputFormatter,
   });
 
   @override
@@ -41,6 +44,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.h),
         child: TextFormField(
+          inputFormatters: widget.textInputFormatter,
           enabled: widget.isEnabled,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: widget.controller,
