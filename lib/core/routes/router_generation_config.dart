@@ -18,14 +18,19 @@ class RouterGenerationConfig {
       final AuthStatus authStatus = sl<AuthRepo>().currentAuthStatus;
       final bool isLoggingIn = state.matchedLocation == AppRoutes.loginScreen;
       final bool isSplash = state.matchedLocation == AppRoutes.splashScreen;
+      final bool isOnboarding =
+          state.matchedLocation == AppRoutes.onboardingScreen;
 
       if (authStatus == AuthStatus.unauthenticated) {
         return isLoggingIn ? null : AppRoutes.loginScreen;
       }
-      if (isLoggingIn || isSplash) {
-        return (authStatus == AuthStatus.activationRequired)
-            ? AppRoutes.onboardingScreen
-            : AppRoutes.employeeDashboardScreen;
+      if (authStatus == AuthStatus.activationRequired) {
+        return isOnboarding ? null : AppRoutes.onboardingScreen;
+      }
+      if (authStatus == AuthStatus.authenticated) {
+        if (isLoggingIn || isSplash || isOnboarding) {
+          return AppRoutes.employeeDashboardScreen;
+        }
       }
       return null;
     },
@@ -43,7 +48,10 @@ class RouterGenerationConfig {
       GoRoute(
         path: AppRoutes.onboardingScreen,
         name: AppRoutes.onboardingScreen,
-        builder: (context, state) => OnboardingScreen(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<AuthCubit>(),
+          child: OnboardingScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.employeeDashboardScreen,
