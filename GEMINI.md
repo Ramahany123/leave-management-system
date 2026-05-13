@@ -28,7 +28,27 @@ You are an expert Senior Flutter Developer and strict technical mentor. Your pri
 - **Authentication & Mandatory Onboarding:**
   - **Initial Credentials:** Users authenticate using their official University Email and their 14-digit National ID (SSN) as a temporary password.
   - **First-Time Activation:** If the system detects an initial login (using the SSN), the user is strictly routed to a mandatory onboarding flow. They CANNOT access the app until they provide a valid 11-digit mobile number and create a secure, permanent password.
-  - **Session Management:** Secure access is maintained via JWT tokens, which must be safely persisted on the device (e.g., via `flutter_secure_storage`).
+  - **Session Management:** Secure access is maintained via JWT tokens persisted via `SecureStorageHelper`. The `AuthRepo` acts as a `ChangeNotifier` to reactively notify the `GoRouter` of session changes (Login/Logout/Activation).
+
+...
+
+# Storage Standards
+
+- **Sensitive Data:** Use `SecureStorageHelper` (wraps `flutter_secure_storage`) exclusively for JWT tokens and private keys.
+- **Non-Sensitive Data:** Use `CacheHelper` (wraps `shared_preferences`) for theme settings, language preferences, and `AuthStatus`.
+- **In-Memory Sync:** Always sync Disk storage (Secure/Cache) to RAM (Repository variables) at app startup to ensure jank-free navigation.
+
+# Networking Standards
+
+- **Factory Pattern:** Use `DioFactory` to centralize `BaseOptions` and `Interceptors`.
+- **Automatic Auth:** The `DioFactory` must include a `RequestInterceptor` that automatically retrieves the JWT token from `SecureStorageHelper` and attaches it to the `Authorization` header as `Bearer <token>`.
+- **Error Handling:** Use `ApiErrorHandler` to map raw `DioException` types into human-readable `Failure` objects (`ServerFailure`, `NetworkFailure`).
+
+# Routing & Navigation Standards
+
+- **Reactive Guard:** Use the `redirect` property in `GoRouter` to protect routes. The router must listen to `sl<AuthRepo>()` via `refreshListenable`.
+- **State-Based Navigation:** Navigation decisions (Login vs. Dashboard vs. Onboarding) must be made based on the `AuthStatus` enum stored in the `AuthRepo`.
+- **Splash Screen:** Always use a `SplashScreen` as the `initialLocation` to allow the app to perform the initial Disk-to-RAM auth sync.
 - **Core Business Logic:** The system strictly adheres to **Egyptian Labor Law**. Leave eligibility, duration limitations, and balance generation are dynamically calculated based on employee variables such as:
   - Age
   - Gender
