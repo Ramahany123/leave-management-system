@@ -1,9 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/utils/service_locator.dart';
+import 'package:leave_management_system/features/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
 import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:leave_management_system/features/auth/ui/screens/onboarding_screen.dart';
 import 'package:leave_management_system/features/employee_dashboard/ui/screens/employee_dashboard_screen.dart';
+import 'package:leave_management_system/features/manager_dashboard/ui/screens/manager_dashboard_screen.dart';
 import 'package:leave_management_system/features/splash/ui/screens/splash_screen.dart';
 import '../../features/auth/data/repo/auth_repo.dart';
 import '../constants/enums.dart';
@@ -20,6 +23,7 @@ class RouterGenerationConfig {
       final bool isSplash = state.matchedLocation == AppRoutes.splashScreen;
       final bool isOnboarding =
           state.matchedLocation == AppRoutes.onboardingScreen;
+      final String userRole = sl<AuthRepo>().userRole;
 
       if (authStatus == AuthStatus.unauthenticated) {
         return isLoggingIn ? null : AppRoutes.loginScreen;
@@ -29,7 +33,13 @@ class RouterGenerationConfig {
       }
       if (authStatus == AuthStatus.authenticated) {
         if (isLoggingIn || isSplash || isOnboarding) {
-          return AppRoutes.employeeDashboardScreen;
+          if (userRole == UserRoles.employeeRole) {
+            return AppRoutes.employeeDashboardScreen;
+          } else if (userRole == UserRoles.adminRole) {
+            return AppRoutes.adminDashboard;
+          } else if (UserRoles.managerRoles.contains(userRole)) {
+            return AppRoutes.managerDashboard;
+          }
         }
       }
       return null;
@@ -62,6 +72,16 @@ class RouterGenerationConfig {
         path: AppRoutes.splashScreen,
         name: AppRoutes.splashScreen,
         builder: (context, state) => SplashScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.managerDashboard,
+        name: AppRoutes.managerDashboard,
+        builder: (context, state) => ManagerDashboardScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.adminDashboard,
+        name: AppRoutes.adminDashboard,
+        builder: (context, state) => AdminDashboardScreen(),
       ),
     ],
   );
