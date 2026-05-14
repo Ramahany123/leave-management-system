@@ -8,4 +8,11 @@ class CacheKeys {
   static const String isDarkMode = "isDarkMode";
   static const String language = "language";
   static const String authStatus = "authStatus";
+  static const String userRole = "userRole";
+}
+
+class UserRoles {
+  static const managerRoles = ["Manager", "Dean", "President"];
+  static const employeeRole = "Employee";
+  static const adminRole = "HR_Admin";
 }
