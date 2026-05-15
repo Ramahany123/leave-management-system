@@ -6,7 +6,11 @@ import 'package:leave_management_system/features/admin_dashboard/ui/screens/admi
 import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:leave_management_system/features/auth/ui/screens/onboarding_screen.dart';
 import 'package:leave_management_system/features/employee_dashboard/ui/screens/employee_dashboard_screen.dart';
+import 'package:leave_management_system/features/leave_history/ui/screens/leave_history_screen.dart';
+import 'package:leave_management_system/features/leave_request/ui/screens/leave_request_screen.dart';
+import 'package:leave_management_system/features/main_layout/ui/screens/main_layout.dart';
 import 'package:leave_management_system/features/manager_dashboard/ui/screens/manager_dashboard_screen.dart';
+import 'package:leave_management_system/features/profile/ui/screens/profile_screen.dart';
 import 'package:leave_management_system/features/splash/ui/screens/splash_screen.dart';
 import '../../features/auth/data/repo/auth_repo.dart';
 import '../constants/enums.dart';
@@ -23,6 +27,10 @@ class RouterGenerationConfig {
       final bool isSplash = state.matchedLocation == AppRoutes.splashScreen;
       final bool isOnboarding =
           state.matchedLocation == AppRoutes.onboardingScreen;
+      final bool isManagerRoute =
+          state.matchedLocation == AppRoutes.managerDashboardScreen;
+      final bool isAdminRoute =
+          state.matchedLocation == AppRoutes.adminDashboardScreen;
       final String userRole = sl<AuthRepo>().userRole;
 
       if (authStatus == AuthStatus.unauthenticated) {
@@ -36,10 +44,20 @@ class RouterGenerationConfig {
           if (userRole == UserRoles.employeeRole) {
             return AppRoutes.employeeDashboardScreen;
           } else if (userRole == UserRoles.adminRole) {
-            return AppRoutes.adminDashboard;
+            return AppRoutes.adminDashboardScreen;
           } else if (UserRoles.managerRoles.contains(userRole)) {
-            return AppRoutes.managerDashboard;
+            return AppRoutes.managerDashboardScreen;
           }
+        }
+
+        // To prevent access from employee to other roles
+        if (userRole == UserRoles.employeeRole &&
+            (isManagerRoute || isAdminRoute)) {
+          return AppRoutes.employeeDashboardScreen;
+        }
+        //to prevent access from manager to admin role
+        if (UserRoles.managerRoles.contains(userRole) && isAdminRoute) {
+          return AppRoutes.managerDashboardScreen;
         }
       }
       return null;
@@ -63,10 +81,49 @@ class RouterGenerationConfig {
           child: OnboardingScreen(),
         ),
       ),
-      GoRoute(
-        path: AppRoutes.employeeDashboardScreen,
-        name: AppRoutes.employeeDashboardScreen,
-        builder: (context, state) => EmployeeDashboardScreen(),
+
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return MainLayout(navigationShell: navigationShell);
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.employeeDashboardScreen,
+                name: AppRoutes.employeeDashboardScreen,
+                builder: (context, state) => EmployeeDashboardScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.leaveRequestScreen,
+                name: AppRoutes.leaveRequestScreen,
+                builder: (context, state) => LeaveRequestScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.leaveHistoryScreen,
+                name: AppRoutes.leaveHistoryScreen,
+                builder: (context, state) => LeaveHistoryScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.profileScreen,
+                name: AppRoutes.profileScreen,
+                builder: (context, state) => ProfileScreen(),
+              ),
+            ],
+          ),
+        ],
       ),
       GoRoute(
         path: AppRoutes.splashScreen,
@@ -74,13 +131,13 @@ class RouterGenerationConfig {
         builder: (context, state) => SplashScreen(),
       ),
       GoRoute(
-        path: AppRoutes.managerDashboard,
-        name: AppRoutes.managerDashboard,
+        path: AppRoutes.managerDashboardScreen,
+        name: AppRoutes.managerDashboardScreen,
         builder: (context, state) => ManagerDashboardScreen(),
       ),
       GoRoute(
-        path: AppRoutes.adminDashboard,
-        name: AppRoutes.adminDashboard,
+        path: AppRoutes.adminDashboardScreen,
+        name: AppRoutes.adminDashboardScreen,
         builder: (context, state) => AdminDashboardScreen(),
       ),
     ],

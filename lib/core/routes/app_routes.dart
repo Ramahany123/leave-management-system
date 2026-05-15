@@ -3,6 +3,9 @@ class AppRoutes {
   static const onboardingScreen = "/onboarding";
   static const employeeDashboardScreen = "/employeeDashboard";
   static const splashScreen = "/splashScreen";
-  static const managerDashboard = "/managerDashboard";
-  static const adminDashboard = "/adminDashboard";
+  static const managerDashboardScreen = "/managerDashboard";
+  static const adminDashboardScreen = "/adminDashboard";
+  static const leaveRequestScreen = "/leaveRequest";
+  static const leaveHistoryScreen = "/leaveHistory";
+  static const profileScreen = "/profile";
 }
