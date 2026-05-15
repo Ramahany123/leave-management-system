@@ -11,7 +11,10 @@
   "dashboard": {
     "welcome_user": "مرحباً، {name}",
     "leave_balance": "رصيد الإجازات",
-    "request_leave": "طلب إجازة"
+    "request_leave": "طلب إجازة",
+    "recent_requests": "الطلبات الأخيرة",
+    "view_all": "عرض الكل",
+    "good_morning": "صباح الخير،"
   },
   "leave_request": {
     "form_title": "طلب إجازة جديد",
@@ -34,5 +37,11 @@
     "new_password_label": "كلمة المرور الجديدة",
     "confirm_password_label": "تأكيد كلمة المرور الجديدة",
     "submit_button": "تفعيل الحساب"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "request": "طلب",
+    "history": "السجل",
+    "profile": "الملف الشخصي"
   }
 }

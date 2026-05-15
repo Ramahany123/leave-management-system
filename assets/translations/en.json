@@ -11,7 +11,10 @@
   "dashboard": {
     "welcome_user": "Welcome, {name}",
     "leave_balance": "Leave Balance",
-    "request_leave": "Request Leave"
+    "request_leave": "Request Leave",
+    "recent_requests": "Recent Requests",
+    "view_all": "View All",
+    "good_morning": "Good Morning,"
   },
   "leave_request": {
     "form_title": "New Leave Request",
@@ -34,5 +37,11 @@
     "new_password_label": "New Password",
     "confirm_password_label": "Confirm New Password",
     "submit_button": "Activate Account"
+  },
+  "navigation": {
+    "home": "Home",
+    "request": "Request",
+    "history": "History",
+    "profile": "Profile"
   }
 }

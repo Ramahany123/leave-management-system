@@ -14,6 +14,9 @@ abstract class  LocaleKeys {
   static const dashboard_welcome_user = 'dashboard.welcome_user';
   static const dashboard_leave_balance = 'dashboard.leave_balance';
   static const dashboard_request_leave = 'dashboard.request_leave';
+  static const dashboard_recent_requests = 'dashboard.recent_requests';
+  static const dashboard_view_all = 'dashboard.view_all';
+  static const dashboard_good_morning = 'dashboard.good_morning';
   static const dashboard = 'dashboard';
   static const leave_request_form_title = 'leave_request.form_title';
   static const leave_request_leave_type = 'leave_request.leave_type';
@@ -34,5 +37,10 @@ abstract class  LocaleKeys {
   static const onboarding_confirm_password_label = 'onboarding.confirm_password_label';
   static const onboarding_submit_button = 'onboarding.submit_button';
   static const onboarding = 'onboarding';
+  static const navigation_home = 'navigation.home';
+  static const navigation_request = 'navigation.request';
+  static const navigation_history = 'navigation.history';
+  static const navigation_profile = 'navigation.profile';
+  static const navigation = 'navigation';
 
 }
