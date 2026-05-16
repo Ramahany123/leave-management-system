@@ -48,6 +48,12 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
   );
 
+  static final grey14w400TextStyle = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.greyColor,
+    fontWeight: FontWeight.w400,
+  );
+
   static final grey12w500TextStyle = TextStyle(
     fontSize: 12.sp,
     color: AppColors.greyColor,
@@ -67,9 +73,21 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
   );
 
+  static final primaryBlue20w600TextStyle = TextStyle(
+    fontSize: 20.sp,
+    color: AppColors.primaryBlue,
+    fontWeight: FontWeight.w600,
+  );
+
   // Added this for text buttons or links (like "Forgot Password?")
   static final primary14w600TextStyle = TextStyle(
     fontSize: 14.sp,
+    color: AppColors.primaryBlue,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final primary16w600TextStyle = TextStyle(
+    fontSize: 16.sp,
     color: AppColors.primaryBlue,
     fontWeight: FontWeight.w600,
   );

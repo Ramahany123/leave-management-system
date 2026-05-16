@@ -28,4 +28,5 @@ class AppColors {
   static const Color pendingYellow = Color(
     0xffF59E0B,
   ); // Warm yellow for "Pending"
+  static const Color cardBorderColor = Color(0xFFEAECEF);
 }

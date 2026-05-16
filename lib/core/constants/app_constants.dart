@@ -16,3 +16,10 @@ class UserRoles {
   static const employeeRole = "Employee";
   static const adminRole = "HR_Admin";
 }
+
+class RequestStatus {
+  static const String pending = "Pending";
+  static const String approved = "Approved";
+  static const String rejected = "Rejected";
+  static const String cancelled = "Cancelled";
+}
