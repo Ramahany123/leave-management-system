@@ -5,6 +5,7 @@ import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'package:leave_management_system/features/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
 import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:leave_management_system/features/auth/ui/screens/onboarding_screen.dart';
+import 'package:leave_management_system/features/employee_dashboard/logic/cubit/employee_dashboard_cubit.dart';
 import 'package:leave_management_system/features/employee_dashboard/ui/screens/employee_dashboard_screen.dart';
 import 'package:leave_management_system/features/leave_history/ui/screens/leave_history_screen.dart';
 import 'package:leave_management_system/features/leave_request/ui/screens/leave_request_screen.dart';
@@ -92,7 +93,11 @@ class RouterGenerationConfig {
               GoRoute(
                 path: AppRoutes.employeeDashboardScreen,
                 name: AppRoutes.employeeDashboardScreen,
-                builder: (context, state) => EmployeeDashboardScreen(),
+                builder: (context, state) => BlocProvider(
+                  create: (context) =>
+                      sl<EmployeeDashboardCubit>()..getEmployeeDashboard(),
+                  child: EmployeeDashboardScreen(),
+                ),
               ),
             ],
           ),
