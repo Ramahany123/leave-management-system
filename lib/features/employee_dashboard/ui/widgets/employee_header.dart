@@ -4,20 +4,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/styles/app_colors.dart';
 import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import 'package:leave_management_system/features/auth/data/repo/auth_repo.dart';
+
+import '../../../../core/utils/service_locator.dart';
 
 class EmployeeHeader extends StatelessWidget {
   const EmployeeHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final String name = sl<AuthRepo>().userName;
     return Row(
       children: [
         CircleAvatar(
           radius: 28.r,
-          backgroundColor: Colors.grey,
-          backgroundImage: const NetworkImage(
-            'https://i.pravatar.cc/150?img=11',
-          ), // Placeholder
+          backgroundColor: AppColors.primaryBlue,
+          child: Text(
+            _getNameInitials(name),
+            style: AppTextStyles.white16w600TextStyle.copyWith(fontSize: 20.sp),
+          ),
         ),
         SizedBox(width: 16.w),
         Expanded(
@@ -29,10 +34,7 @@ class EmployeeHeader extends StatelessWidget {
                 style: AppTextStyles.grey16w400TextStyle,
               ),
               SizedBox(height: 4.h),
-              Text(
-                'Dr. Ahmed',
-                style: AppTextStyles.primaryBlue20w600TextStyle,
-              ),
+              Text(name, style: AppTextStyles.primaryBlue20w600TextStyle),
             ],
           ),
         ),
@@ -52,5 +54,20 @@ class EmployeeHeader extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+String _getNameInitials(String name) {
+  final String trimmedName = name.trim();
+  if (trimmedName.isEmpty) return "UN";
+
+  final List<String> parts = trimmedName.split(" ");
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  } else {
+    final String singleName = parts[0];
+    return singleName.length >= 2
+        ? singleName.substring(0, 2).toUpperCase()
+        : singleName.toUpperCase();
   }
 }
