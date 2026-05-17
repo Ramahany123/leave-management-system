@@ -9,6 +9,7 @@ class CacheKeys {
   static const String language = "language";
   static const String authStatus = "authStatus";
   static const String userRole = "userRole";
+  static const String userName = "userName";
 }
 
 class UserRoles {

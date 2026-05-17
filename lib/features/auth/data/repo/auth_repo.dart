@@ -21,6 +21,9 @@ class AuthRepo extends ChangeNotifier {
   String _userRole = UserRoles.employeeRole;
   String get userRole => _userRole;
 
+  String _userName = "";
+  String get userName => _userName;
+
   AuthRepo({required AuthWebServices authWebServices})
     : _authWebServices = authWebServices;
 
@@ -30,6 +33,7 @@ class AuthRepo extends ChangeNotifier {
     );
     final String? statusName = CacheHelper.getData(key: CacheKeys.authStatus);
     final String? userRole = CacheHelper.getData(key: CacheKeys.userRole);
+    final String? userName = CacheHelper.getData(key: CacheKeys.userName);
 
     if (token != null && token.isNotEmpty && statusName != null) {
       try {
@@ -43,6 +47,9 @@ class AuthRepo extends ChangeNotifier {
 
     if (userRole != null) {
       _userRole = userRole;
+    }
+    if (userName != null) {
+      _userName = userName;
     }
     notifyListeners();
   }
@@ -66,6 +73,11 @@ class AuthRepo extends ChangeNotifier {
             value: response.user!.role,
           );
           _userRole = response.user!.role;
+          await CacheHelper.saveData(
+            key: CacheKeys.userName,
+            value: response.user!.name,
+          );
+          _userName = response.user!.name;
         }
         _currentAuthStatus = response.status;
         notifyListeners();
@@ -96,8 +108,13 @@ class AuthRepo extends ChangeNotifier {
         key: CacheKeys.userRole,
         value: response.user.role,
       );
+      await CacheHelper.saveData(
+        key: CacheKeys.userName,
+        value: response.user.name,
+      );
       _currentAuthStatus = response.status;
       _userRole = response.user.role;
+      _userName = response.user.name;
       notifyListeners();
       return SuccessResult(response);
     } catch (e) {
