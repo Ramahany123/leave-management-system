@@ -1,4 +1,4 @@
-class RecentRequestModel {
+class LeaveRequestModel {
   final int requestId;
   final DateTime startDate;
   final DateTime endDate;
@@ -12,9 +12,9 @@ class RecentRequestModel {
   final DateTime createdAt;
   final DateTime updatedAt;
   final int? delegateUserId;
-  final LeaveType leaveType;
+  final String leaveTypeName;
 
-  RecentRequestModel({
+  LeaveRequestModel({
     required this.requestId,
     required this.startDate,
     required this.endDate,
@@ -28,11 +28,11 @@ class RecentRequestModel {
     required this.createdAt,
     required this.updatedAt,
     this.delegateUserId,
-    required this.leaveType,
+    required this.leaveTypeName,
   });
 
-  factory RecentRequestModel.fromJson(Map<String, dynamic> json) {
-    return RecentRequestModel(
+  factory LeaveRequestModel.fromJson(Map<String, dynamic> json) {
+    return LeaveRequestModel(
       requestId: json['request_id'] as int,
       startDate: DateTime.parse(json['start_date'] as String),
       endDate: DateTime.parse(json['end_date'] as String),
@@ -48,17 +48,7 @@ class RecentRequestModel {
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
       delegateUserId: json['delegate_user_id'] as int?,
-      leaveType: LeaveType.fromJson(json['leaveType'] as Map<String, dynamic>),
+      leaveTypeName: json['leaveType']['type_name'] as String,
     );
-  }
-}
-
-class LeaveType {
-  final String typeName;
-
-  LeaveType({required this.typeName});
-
-  factory LeaveType.fromJson(Map<String, dynamic> json) {
-    return LeaveType(typeName: json['type_name'] as String);
   }
 }

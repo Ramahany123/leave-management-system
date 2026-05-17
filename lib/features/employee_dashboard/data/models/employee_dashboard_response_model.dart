@@ -1,10 +1,10 @@
 import 'package:leave_management_system/features/employee_dashboard/data/models/leave_balance_model.dart';
-import 'package:leave_management_system/features/employee_dashboard/data/models/recent_request_model.dart';
+import 'package:leave_management_system/core/models/leave_request_model.dart';
 
 class EmployeeDashboardResponseModel {
   final String status;
   final List<LeaveBalanceModel> leaveBalances;
-  final List<RecentRequestModel> recentRequests;
+  final List<LeaveRequestModel> recentRequests;
 
   EmployeeDashboardResponseModel({
     required this.status,
@@ -20,7 +20,7 @@ class EmployeeDashboardResponseModel {
           .map((i) => LeaveBalanceModel.fromJson(i))
           .toList(),
       recentRequests: (data["recentRequests"] as List)
-          .map((i) => RecentRequestModel.fromJson(i))
+          .map((i) => LeaveRequestModel.fromJson(i))
           .toList(),
     );
   }

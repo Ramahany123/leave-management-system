@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/styles/app_colors.dart';
-import 'package:leave_management_system/features/employee_dashboard/data/models/recent_request_model.dart';
+import 'package:leave_management_system/core/models/leave_request_model.dart';
 import 'package:leave_management_system/features/employee_dashboard/ui/widgets/recent_request_card.dart';
 
 class RecentRequestsList extends StatelessWidget {
-  final List<RecentRequestModel> recentRequests;
+  final List<LeaveRequestModel> recentRequests;
   const RecentRequestsList({super.key, required this.recentRequests});
 
   @override
@@ -17,7 +17,7 @@ class RecentRequestsList extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.only(bottom: 12.h),
           child: RecentRequestCard(
-            title: request.leaveType.typeName,
+            title: request.leaveTypeName,
             date:
                 '${DateFormat('MMM dd').format(request.startDate)} - ${DateFormat('MMM dd, yyyy').format(request.endDate)}',
             status: request.status,
