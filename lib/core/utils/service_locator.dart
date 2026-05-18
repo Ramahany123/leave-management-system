@@ -7,6 +7,9 @@ import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dar
 import 'package:leave_management_system/features/employee_dashboard/data/repo/employee_dashboard_repo.dart';
 import 'package:leave_management_system/features/employee_dashboard/data/web_services/employee_dashboard_web_services.dart';
 import 'package:leave_management_system/features/employee_dashboard/logic/cubit/employee_dashboard_cubit.dart';
+import 'package:leave_management_system/features/leave_history/data/repo/leave_history_repo.dart';
+import 'package:leave_management_system/features/leave_history/data/web_services/leave_history_web_services.dart';
+import 'package:leave_management_system/features/leave_history/logic/cubit/leave_history_cubit.dart';
 import '../networking/api_service.dart';
 
 final GetIt sl = GetIt.instance;
@@ -19,6 +22,8 @@ void setupServiceLocator() {
   setupAuthDependencies();
   //Employee Dashboard dpenedencies
   setupEmployeeDashboardDependencies();
+
+  setupLeaveHistoryDependencies();
 }
 
 void setupAuthDependencies() {
@@ -35,4 +40,12 @@ void setupEmployeeDashboardDependencies() {
     () => EmployeeDashboardRepo(employeeDashboardWebServices: sl()),
   );
   sl.registerFactory(() => EmployeeDashboardCubit(employeeDashboardRepo: sl()));
+}
+
+void setupLeaveHistoryDependencies() {
+  sl.registerLazySingleton(() => LeaveHistoryWebServices(apiService: sl()));
+  sl.registerLazySingleton(
+    () => LeaveHistoryRepo(leaveHistoryWebServices: sl()),
+  );
+  sl.registerFactory(() => LeaveHistoryCubit(leaveHistoryRepo: sl()));
 }
