@@ -10,7 +10,7 @@ import 'package:leave_management_system/features/employee_dashboard/logic/cubit/
 import 'package:leave_management_system/features/employee_dashboard/ui/widgets/dashboard_shimmer.dart';
 import 'package:leave_management_system/features/employee_dashboard/ui/widgets/employee_header.dart';
 import 'package:leave_management_system/features/employee_dashboard/ui/widgets/leave_balances_list.dart';
-import 'package:leave_management_system/features/employee_dashboard/ui/widgets/recent_requests_list.dart';
+import 'package:leave_management_system/core/widgets/leave_requests_list.dart';
 
 import '../../../../core/routes/app_routes.dart';
 
@@ -66,9 +66,7 @@ class EmployeeDashboardScreen extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 16.h),
-                          RecentRequestsList(
-                            recentRequests: data.recentRequests,
-                          ),
+                          LeaveRequestsList(leaveRequests: data.recentRequests),
                           SizedBox(height: 80.h),
                         ],
                       ), // Padding for FAB
