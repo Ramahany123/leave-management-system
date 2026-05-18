@@ -4,8 +4,8 @@ import 'package:leave_management_system/core/constants/enums.dart';
 import 'package:leave_management_system/core/networking/errors/failures.dart';
 import 'package:leave_management_system/features/auth/data/models/activation_body_model.dart';
 import 'package:leave_management_system/features/auth/data/models/login_body_model.dart';
-import 'package:leave_management_system/features/auth/data/models/login_response_model.dart';
 import 'package:leave_management_system/features/auth/data/repo/auth_repo.dart';
+import '../../../../core/models/user_model.dart';
 
 part 'auth_state.dart';
 

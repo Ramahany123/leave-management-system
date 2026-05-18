@@ -1,5 +1,5 @@
 import '../../../../core/constants/enums.dart';
-import 'login_response_model.dart';
+import '../../../../core/models/user_model.dart';
 
 class ActivationResponseModel {
   final String message;
