@@ -1,10 +1,8 @@
 class UserModel {
   final int yearsOfService;
   final int userId;
-  final int ssn;
+  final String ssn;
   final String name;
-  final String? passwordResetToken;
-  final DateTime? passwordResetExpires;
   final String email;
   final String phone;
   final String? signatureUrl;
@@ -27,8 +25,6 @@ class UserModel {
     required this.userId,
     required this.ssn,
     required this.name,
-    this.passwordResetToken,
-    this.passwordResetExpires,
     required this.email,
     required this.phone,
     this.signatureUrl,
@@ -51,12 +47,8 @@ class UserModel {
     return UserModel(
       yearsOfService: json['yearsOfService'] as int,
       userId: json['user_id'] as int,
-      ssn: json['ssn'] as int,
+      ssn: json['ssn'].toString(),
       name: json['name'] as String,
-      passwordResetToken: json['password_reset_token'] as String?,
-      passwordResetExpires: json['password_reset_expires'] != null
-          ? DateTime.parse(json['password_reset_expires'] as String)
-          : null,
       email: json['email'] as String,
       phone: json['phone'] as String,
       signatureUrl: json['signature_url'] as String?,
@@ -84,8 +76,6 @@ class UserModel {
       'user_id': userId,
       'ssn': ssn,
       'name': name,
-      'password_reset_token': passwordResetToken,
-      'password_reset_expires': passwordResetExpires?.toIso8601String(),
       'email': email,
       'phone': phone,
       'signature_url': signatureUrl,
