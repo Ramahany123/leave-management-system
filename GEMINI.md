@@ -47,14 +47,34 @@ You are an expert Senior Flutter Developer and strict technical mentor. Your pri
 # Routing & Navigation Standards
 
 - **Reactive Guard:** Use the `redirect` property in `GoRouter` to protect routes. The router must listen to `sl<AuthRepo>()` via `refreshListenable`.
-- **State-Based Navigation:** Navigation decisions (Login vs. Dashboard vs. Onboarding) must be made based on the `AuthStatus` enum stored in the `AuthRepo`.
-- **Splash Screen:** Always use a `SplashScreen` as the `initialLocation` to allow the app to perform the initial Disk-to-RAM auth sync.
+- **Exhaustive Redirect Guard:** Navigation logic must implement a two-zone guard:
+  - **Zone A (Auth Exit):** Forcefully redirect authenticated users away from Login/Splash/Onboarding to their respective dashboards.
+  - **Zone B (RBAC Enforcement):** Explicitly block cross-role navigation (e.g., Employee trying to access Manager routes) by checking `state.matchedLocation` against `userRole`.
+- **Stateful Shell Routing:** For features requiring persistent tabs (e.g., Employee Dashboard group), use `StatefulShellRoute.indexedStack`. This ensures independent navigation stacks and state preservation (scroll position, form input) across tabs.
+- **State-Based Navigation:** Navigation decisions must be made based on the `AuthStatus` enum and `userRole` string stored in the `AuthRepo`.
+- **Role-Based Access Control (RBAC):** The `redirect` logic is responsible for mapping the `userRole` to the correct landing page (e.g., `employeeRole` to `employeeDashboardScreen`, `managerRoles` to `managerDashboard`, `adminRole` to `adminDashboard`).
+- **Splash Screen:** Always use a `SplashScreen` as the `initialLocation` to allow the app to perform the initial Disk-to-RAM auth sync via `sl<AuthRepo>().checkInitialAuthStatus()`.
+- **Dumb UI Navigation:** The UI should rarely call `context.go()` or `context.push()` for authentication-related flows. It should instead trigger a Cubit method, which updates the Repository, which then triggers the Router's automatic redirect.
+
+# Form & Layout Standards
+
+- **Responsive Forms:** Use `CustomScrollView` with `SliverFillRemaining(hasScrollBody: false)` for all form screens (e.g., Login, Onboarding). This ensures the `Spacer()` widget can push buttons to the bottom while remaining scrollable when the keyboard appears.
+- **Unified State Management:** For "Smart Forms," prefer using a single `BlocConsumer` at the top of the feature column. Use its `builder` to disable input fields during `Loading` states and its `listener` to show success/error snackbars.
+- **Atomic Tooling:** The `CustomTextField` must support an `isEnabled` flag and standard `inputFormatters` to maintain consistent behavior across all features.
 - **Core Business Logic:** The system strictly adheres to **Egyptian Labor Law**. Leave eligibility, duration limitations, and balance generation are dynamically calculated based on employee variables such as:
   - Age
   - Gender
   - Years of Service (Tenure)
 - **Fiscal Cycle:** All annual leave balances automatically reset at midnight on July 1st.
-- **Mobile Scope & Roles (RBAC):** The mobile application is highly scoped for quick, on-the-go actions. Heavy HR configuration is reserved for the web portal.
+# Mobile Scope & Roles (RBAC)
+
+The mobile application uses strict Role-Based Access Control to ensure users only access features relevant to their position.
+- **Employee:** Default role for most users. Accesses the `employeeDashboardScreen`.
+- **Manager / Dean:** Roles identified via `UserRoles.managerRoles`. Accesses the `managerDashboard`.
+- **Admin:** System administrator role. Accesses the `adminDashboard`.
+- **Source of Truth:** The `AuthRepo` manages the current `userRole`, which is persisted in `CacheHelper` and synced to RAM at startup.
+- **Routing Enforcement:** RBAC is primarily enforced at the routing level within `RouterGenerationConfig` to prevent unauthorized access to role-specific dashboards.
+- **Role Capabilities:**
   - **Employee:** Dashboard viewing, balance tracking, submitting "Smart Forms" (conditionally requiring delegates/القائم بالعمل or medical attachments), and executing "Early Returns" (cutting active leaves short).
   - **Manager / Dean:** Reviewing pending queues, checking team availability to prevent understaffing, and executing multi-step approvals/rejections (rejections require mandatory justification).
 - **Domain Constraints for UI/Logic:** Forms must implement progressive disclosure (e.g., do not show an upload button unless a document-dependent leave type is selected).
@@ -72,5 +92,15 @@ You are an expert Senior Flutter Developer and strict technical mentor. Your pri
 
 - **Responsiveness:** Use `flutter_screenutil` (e.g., `.w`, `.h`, `.sp`, `.r`) for all dimensions and text sizes.
 - **Directionality (RTL/LTR):** Always use `AlignmentDirectional` and `EdgeInsetsDirectional` (e.g., `.centerStart`, `.topStart`) instead of static `Left/Right` to support Arabic and English seamlessly.
+- **List Performance:** For large datasets (e.g., History), always use `CustomScrollView` with `SliverList` or `SliverGrid`. Avoid `shrinkWrap: true` on lists inside scrollable views to maintain virtualization (lazy loading).
+- **Empty States:** Use `SliverFillRemaining(hasScrollBody: false)` to center empty-state messages within sliver-based layouts.
+- **Business Logic Extensions:** Use Dart Extensions on core types (e.g., `String` status) to centralize UI styling logic (Colors, Icons) tied to business rules.
+- **In-Memory Filtering:** For small-to-medium datasets, perform filtering in the `Cubit` logic using an in-memory "Backup" variable. This ensures instant UI updates and reduces redundant API calls.
+- **Atomic Widgets & Composition:** Avoid large, monolithic screens. Extract UI sections into atomic, reusable widgets within the feature's `ui/widgets/` folder. The main screen file should primarily be a composition of these widgets.
+- **Loading UX (Shimmer):** Prefer the `shimmer` package over generic `CircularProgressIndicator`. Create "Skeleton" widgets that mimic the shapes and sizes of the real UI.
+- **User Personalization:** To ensure a "warm" first-run experience:
+  - Sync the `userName` to `CacheHelper` during login/activation.
+  - Pull the cached name in `AuthRepo` at startup.
+  - For avatars, if no photo is available, use a fallback container displaying the user's initials (extracted safely using regex/substring logic).
 - **Atomic Widgets:** Use the shared widgets in `core/widgets/` (`CustomTextField`, `PrimaryButtonWidget`) to maintain visual consistency.
 - **Form Labels:** Place form labels inside an `Align(alignment: AlignmentDirectional.centerStart)` widget above their respective input fields.
