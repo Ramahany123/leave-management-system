@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/styles/app_colors.dart';
 import 'package:leave_management_system/core/styles/app_text_styles.dart';
 
-class RecentRequestCard extends StatelessWidget {
+class LeaveRequestCard extends StatelessWidget {
   final String title;
   final String date;
   final String status;
@@ -11,7 +11,7 @@ class RecentRequestCard extends StatelessWidget {
   final Color statusBgColor;
   final IconData statusIcon;
 
-  const RecentRequestCard({
+  const LeaveRequestCard({
     super.key,
     required this.title,
     required this.date,
