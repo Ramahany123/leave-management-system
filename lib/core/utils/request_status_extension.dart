@@ -6,13 +6,13 @@ import '../styles/app_colors.dart';
 extension RequestStatusExtension on String {
   Color get getStatusColor {
     switch (this) {
-      case RequestStatus.approved:
+      case RequestStatues.approved:
         return AppColors.successGreen;
-      case RequestStatus.rejected:
+      case RequestStatues.rejected:
         return AppColors.errorRed;
-      case RequestStatus.pending:
+      case RequestStatues.pending:
         return AppColors.pendingYellow;
-      case RequestStatus.cancelled:
+      case RequestStatues.cancelled:
         return AppColors.greyColor;
       default:
         return AppColors.greyColor;
@@ -21,12 +21,12 @@ extension RequestStatusExtension on String {
 
   IconData get getStatusIcon {
     switch (this) {
-      case RequestStatus.approved:
+      case RequestStatues.approved:
         return Icons.check_circle_outline;
-      case RequestStatus.rejected:
-      case RequestStatus.cancelled:
+      case RequestStatues.rejected:
+      case RequestStatues.cancelled:
         return Icons.cancel_outlined;
-      case RequestStatus.pending:
+      case RequestStatues.pending:
         return Icons.access_time;
       default:
         return Icons.help_outline;

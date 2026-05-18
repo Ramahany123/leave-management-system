@@ -11,7 +11,7 @@ final class LeaveHistorySuccess extends LeaveHistoryState {
 
   LeaveHistorySuccess({
     required this.leaveHistoryRequests,
-    this.selectedStatus = RequestStatus.all,
+    this.selectedStatus = RequestStatues.all,
   });
 }
 

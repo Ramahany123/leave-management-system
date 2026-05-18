@@ -11,7 +11,7 @@ part 'leave_history_state.dart';
 class LeaveHistoryCubit extends Cubit<LeaveHistoryState> {
   final LeaveHistoryRepo _leaveHistoryRepo;
   List<LeaveRequestModel> _allRequests = [];
-  String _currentFilter = RequestStatus.all;
+  String _currentFilter = RequestStatues.all;
   LeaveHistoryCubit({required LeaveHistoryRepo leaveHistoryRepo})
     : _leaveHistoryRepo = leaveHistoryRepo,
       super(LeaveHistoryLoading());
@@ -33,7 +33,7 @@ class LeaveHistoryCubit extends Cubit<LeaveHistoryState> {
   void filterLeaveRequests(String status) {
     _currentFilter = status;
     final List<LeaveRequestModel> filteredData;
-    if (status == RequestStatus.all) {
+    if (status == RequestStatues.all) {
       filteredData = _allRequests;
     } else {
       filteredData = _allRequests.where((req) => req.status == status).toList();

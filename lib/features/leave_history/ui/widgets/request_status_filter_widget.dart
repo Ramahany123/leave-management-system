@@ -18,9 +18,9 @@ class RequestStatusFilterWidget extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         separatorBuilder: (context, index) => SizedBox(width: 12.w),
-        itemCount: RequestStatus.statues.length,
+        itemCount: RequestStatues.statues.length,
         itemBuilder: (context, index) {
-          String status = RequestStatus.statues[index];
+          String status = RequestStatues.statues[index];
           return InkWell(
             onTap: () {
               context.read<LeaveHistoryCubit>().filterLeaveRequests(status);
