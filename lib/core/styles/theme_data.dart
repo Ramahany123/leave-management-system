@@ -19,6 +19,14 @@ class AppTheme {
     ),
     textTheme: TextTheme(titleLarge: AppTextStyles.headingTextStyle),
 
+    // -- List Tile Styling --
+    listTileTheme: ListTileThemeData(
+      selectedColor: AppColors.primaryBlue,
+      titleTextStyle: AppTextStyles.black16w500TextStyle,
+      subtitleTextStyle: AppTextStyles.grey14w400TextStyle,
+      iconColor: AppColors.primaryBlue,
+    ),
+
     // -- App Bar Styling --
     appBarTheme: AppBarTheme(
       centerTitle: true,
