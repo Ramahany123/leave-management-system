@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../styles/app_colors.dart';
-import '../styles/app_text_styles.dart';
 
 class OutlinedButtonWidget extends StatelessWidget {
   final void Function() onPressed;
-  final String text;
+  final Widget child;
+  final Color? backgroundColor;
+  final Color? borderSideColor;
+  final double? width;
+  final double? height;
   const OutlinedButtonWidget({
     super.key,
     required this.onPressed,
-    required this.text,
+    required this.child,
+    this.backgroundColor,
+    this.borderSideColor,
+    this.width,
+    this.height,
   });
 
   @override
@@ -17,13 +24,17 @@ class OutlinedButtonWidget extends StatelessWidget {
     return OutlinedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-        fixedSize: Size(331.w, 56.h),
+        backgroundColor: backgroundColor,
+        fixedSize: Size(width ?? double.infinity, height ?? 56.h),
+        side: BorderSide(
+          width: 2.w,
+          color: borderSideColor ?? AppColors.primaryBlue,
+        ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(8.r),
-          side: BorderSide(width: 2.w, color: AppColors.primaryBlue),
+          borderRadius: BorderRadius.circular(12.r),
         ),
       ),
-      child: Text(text, style: AppTextStyles.black16w500TextStyle),
+      child: child,
     );
   }
 }
