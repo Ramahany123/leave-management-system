@@ -125,7 +125,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               }
                             },
-                            text: LocaleKeys.login_submit_button.tr(),
+                            child: Text(
+                              LocaleKeys.login_submit_button.tr(),
+                              style: AppTextStyles.white16w600TextStyle,
+                            ),
                           ),
 
                           SizedBox(height: 24.h),

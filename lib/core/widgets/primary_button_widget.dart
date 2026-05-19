@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../styles/app_colors.dart';
-import '../styles/app_text_styles.dart';
 
 class PrimaryButtonWidget extends StatelessWidget {
   final void Function() onPressed;
-  final String text;
   final bool isLoading;
+  final double? height;
+  final double? width;
+  final Color? backgroundColor;
+  final Widget child;
   const PrimaryButtonWidget({
     super.key,
     required this.onPressed,
-    required this.text,
     this.isLoading = false,
+    this.height,
+    this.width,
+    this.backgroundColor,
+    required this.child,
   });
 
   @override
@@ -19,22 +24,22 @@ class PrimaryButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primaryBlue,
-        fixedSize: Size(331.w, 56.h),
+        backgroundColor: backgroundColor ?? AppColors.primaryBlue,
+        fixedSize: Size(width ?? 331.w, height ?? 56.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(8.r),
         ),
       ),
       child: isLoading
           ? SizedBox(
-            height: 24.h,
-            width: 24.h,
-            child: const CircularProgressIndicator(
-              color: AppColors.whiteColor,
-              strokeWidth: 3,
-            ),
-          )
-          : Text(text, style: AppTextStyles.white16w600TextStyle),
+              height: 24.h,
+              width: 24.h,
+              child: const CircularProgressIndicator(
+                color: AppColors.whiteColor,
+                strokeWidth: 3,
+              ),
+            )
+          : child,
     );
   }
 }

@@ -181,7 +181,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               );
                             }
                           },
-                          text: LocaleKeys.onboarding_submit_button.tr(),
+                          child: Text(
+                            LocaleKeys.onboarding_submit_button.tr(),
+                            style: AppTextStyles.white16w600TextStyle,
+                          ),
                         ),
                       ],
                     ),
