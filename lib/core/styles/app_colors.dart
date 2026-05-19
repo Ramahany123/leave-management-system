@@ -5,8 +5,10 @@ class AppColors {
   static const Color primaryBlue = Color(
     0xff1A365D,
   ); // Trustworthy University Blue
-  static const Color backgroundLight = Color(
-    0xffF8FAFC,
+  static const Color backgroundLight = Color(0xffF8FAFC);
+
+  static const Color scaffcoldBackground = Color(
+    0xff64748B,
   ); // Light cool gray to reduce eye strain
 
   // Base Colors
