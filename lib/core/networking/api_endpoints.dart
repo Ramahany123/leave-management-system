@@ -3,4 +3,6 @@ class ApiEndpoints {
   static const login = "auth/login";
   static const activateUser = "auth/complete-onboarding";
   static const employeeDashboard = "me/dashboard";
+  static const getLeaveRequestsHistory = "me/leave-requests";
+  static const getProfile = "auth/me";
 }
