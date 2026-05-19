@@ -121,4 +121,17 @@ class AuthRepo extends ChangeNotifier {
       return FailureResult(ApiErrorHandler.handle(e));
     }
   }
+
+  Future<void> logout() async {
+    await SecureStorageHelper.deleteData(key: CacheKeys.userToken);
+    await CacheHelper.removeData(key: CacheKeys.userName);
+    await CacheHelper.removeData(key: CacheKeys.userRole);
+    await CacheHelper.removeData(key: CacheKeys.authStatus);
+
+    _currentAuthStatus = AuthStatus.unauthenticated;
+    _userName = "";
+    _userRole = UserRoles.employeeRole;
+
+    notifyListeners();
+  }
 }
