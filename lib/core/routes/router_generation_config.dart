@@ -15,6 +15,7 @@ import 'package:leave_management_system/features/manager_dashboard/ui/screens/ma
 import 'package:leave_management_system/features/profile/ui/screens/profile_screen.dart';
 import 'package:leave_management_system/features/splash/ui/screens/splash_screen.dart';
 import '../../features/auth/data/repo/auth_repo.dart';
+import '../../features/profile/logic/cubit/profile_cubit.dart';
 import '../constants/enums.dart';
 import 'app_routes.dart';
 import '../../features/auth/ui/screens/login_screen.dart';
@@ -129,7 +130,10 @@ class RouterGenerationConfig {
               GoRoute(
                 path: AppRoutes.profileScreen,
                 name: AppRoutes.profileScreen,
-                builder: (context, state) => ProfileScreen(),
+                builder: (context, state) => BlocProvider(
+                  create: (context) => sl<ProfileCubit>()..getProfile(),
+                  child: ProfileScreen(),
+                ),
               ),
             ],
           ),
