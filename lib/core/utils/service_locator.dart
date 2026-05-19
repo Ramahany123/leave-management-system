@@ -10,6 +10,9 @@ import 'package:leave_management_system/features/employee_dashboard/logic/cubit/
 import 'package:leave_management_system/features/leave_history/data/repo/leave_history_repo.dart';
 import 'package:leave_management_system/features/leave_history/data/web_services/leave_history_web_services.dart';
 import 'package:leave_management_system/features/leave_history/logic/cubit/leave_history_cubit.dart';
+import 'package:leave_management_system/features/profile/data/repo/profile_repo.dart';
+import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
+import '../../features/profile/data/web_services/profile_web_services.dart';
 import '../networking/api_service.dart';
 
 final GetIt sl = GetIt.instance;
@@ -24,6 +27,8 @@ void setupServiceLocator() {
   setupEmployeeDashboardDependencies();
 
   setupLeaveHistoryDependencies();
+
+  setupProfileDependencies();
 }
 
 void setupAuthDependencies() {
@@ -48,4 +53,10 @@ void setupLeaveHistoryDependencies() {
     () => LeaveHistoryRepo(leaveHistoryWebServices: sl()),
   );
   sl.registerFactory(() => LeaveHistoryCubit(leaveHistoryRepo: sl()));
+}
+
+void setupProfileDependencies() {
+  sl.registerLazySingleton(() => ProfileWebServices(apiService: sl()));
+  sl.registerLazySingleton(() => ProfileRepo(profileWebServices: sl()));
+  sl.registerFactory(() => ProfileCubit(profileRepo: sl()));
 }
