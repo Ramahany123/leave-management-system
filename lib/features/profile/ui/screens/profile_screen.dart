@@ -7,12 +7,11 @@ import 'package:leave_management_system/core/widgets/general_error_widget.dart';
 import 'package:leave_management_system/features/profile/ui/widgets/profile_card.dart';
 import 'package:leave_management_system/features/profile/ui/widgets/settings_group.dart';
 import 'package:leave_management_system/features/profile/ui/widgets/settings_tile.dart';
-
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/utils/service_locator.dart';
 import '../../../auth/data/repo/auth_repo.dart';
 import '../../logic/cubit/profile_cubit.dart';
-import '../widgets/profile_card_shimmer.dart';
+import '../widgets/profile_screen_shimmer.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -23,88 +22,89 @@ class ProfileScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BlocBuilder<ProfileCubit, ProfileState>(
-                builder: (context, state) {
-                  return switch (state) {
-                    ProfileLoading() => ProfileCardShimmer(),
-                    ProfileError(failure: final f) => GeneralErrorWidget(
-                      message: f.message,
-                      onRetry: context.read<ProfileCubit>().getProfile,
-                    ),
-                    ProfileSuccess(user: final user) => ProfileCard(
+          child: BlocBuilder<ProfileCubit, ProfileState>(
+            builder: (context, state) {
+              return switch (state) {
+                ProfileLoading() => ProfileScreenShimmer(),
+                ProfileError(failure: final f) => GeneralErrorWidget(
+                  message: f.message,
+                  onRetry: context.read<ProfileCubit>().getProfile,
+                ),
+                ProfileSuccess(user: final user) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ProfileCard(
                       name: user.name,
                       jobTitle: user.jobTitle,
                       workPlace: user.workplace,
                     ),
-                  };
-                },
-              ),
-              //TODO: localize text
-              _buildSectionTitle("ACCOUNT & SECURITY"),
-              SettingsGroup(
-                children: [
-                  SettingsTile(
-                    title: "Personal Info",
-                    icon: Icons.person_outline,
-                    onTap: () {
-                      // TODO: Implement navigation or action
-                    },
-                  ),
-                  SettingsTile(
-                    title: "Change Password",
-                    icon: Icons.lock_outline,
-                    onTap: () {
-                      // TODO: Implement navigation or action
-                    },
-                  ),
-                  SettingsTile(
-                    title: "Update Contact",
-                    icon: Icons.phone_outlined,
-                    onTap: () {
-                      // TODO: Implement navigation or action
-                    },
-                  ),
-                ],
-              ),
-              _buildSectionTitle("PREFERENCES"),
-              SettingsGroup(
-                children: [
-                  SettingsTile(
-                    title: "App Language",
-                    icon: Icons.language,
-                    subTitle: "English",
-                    onTap: () {
-                      //TODO: Implement Logic
-                    },
-                  ),
-                  SettingsTile(
-                    title: "Dark Mode",
-                    icon: Icons.language,
-                    trailing: Switch(value: true, onChanged: (value) {}),
-                  ),
-                ],
-              ),
-              _buildSectionTitle("SESSION"),
-              SettingsGroup(
-                children: [
-                  SettingsTile(
-                    title: "Logout",
-                    icon: Icons.logout,
-                    contentColor: AppColors.errorRed,
-                    onTap: () {
-                      AppDialogs.showLogoutDialog(
-                        context,
-                        onConfirm: () => sl<AuthRepo>().logout(),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 24.h),
-            ],
+
+                    //TODO: localize text
+                    _buildSectionTitle("ACCOUNT & SECURITY"),
+                    SettingsGroup(
+                      children: [
+                        SettingsTile(
+                          title: "Personal Info",
+                          icon: Icons.person_outline,
+                          onTap: () {
+                            AppDialogs.showPersonalInfoSheet(context, user);
+                          },
+                        ),
+                        SettingsTile(
+                          title: "Change Password",
+                          icon: Icons.lock_outline,
+                          onTap: () {
+                            // TODO: Implement navigation or action
+                          },
+                        ),
+                        SettingsTile(
+                          title: "Update Contact",
+                          icon: Icons.phone_outlined,
+                          onTap: () {
+                            // TODO: Implement navigation or action
+                          },
+                        ),
+                      ],
+                    ),
+                    _buildSectionTitle("PREFERENCES"),
+                    SettingsGroup(
+                      children: [
+                        SettingsTile(
+                          title: "App Language",
+                          icon: Icons.language,
+                          subTitle: "English",
+                          onTap: () {
+                            //TODO: Implement Logic
+                          },
+                        ),
+                        SettingsTile(
+                          title: "Dark Mode",
+                          icon: Icons.language,
+                          trailing: Switch(value: true, onChanged: (value) {}),
+                        ),
+                      ],
+                    ),
+                    _buildSectionTitle("SESSION"),
+                    SettingsGroup(
+                      children: [
+                        SettingsTile(
+                          title: "Logout",
+                          icon: Icons.logout,
+                          contentColor: AppColors.errorRed,
+                          onTap: () {
+                            AppDialogs.showLogoutDialog(
+                              context,
+                              onConfirm: () => sl<AuthRepo>().logout(),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 24.h),
+                  ],
+                ),
+              };
+            },
           ),
         ),
       ),
