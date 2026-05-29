@@ -2,10 +2,12 @@ import 'package:flutter/widgets.dart';
 import 'package:leave_management_system/core/cache/secure_storage_helper.dart';
 import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/constants/enums.dart';
+import 'package:leave_management_system/core/models/message_response_model.dart';
 import 'package:leave_management_system/core/networking/api_error_handler.dart';
 import 'package:leave_management_system/core/utils/result.dart';
 import 'package:leave_management_system/features/auth/data/models/activation_body_model.dart';
 import 'package:leave_management_system/features/auth/data/models/activation_response_model.dart';
+import 'package:leave_management_system/features/auth/data/models/change_password_body_model.dart';
 import 'package:leave_management_system/features/auth/data/models/login_body_model.dart';
 import 'package:leave_management_system/features/auth/data/models/login_response_model.dart';
 import 'package:leave_management_system/features/auth/data/web_services/auth_web_services.dart';
@@ -133,5 +135,18 @@ class AuthRepo extends ChangeNotifier {
     _userRole = UserRoles.employeeRole;
 
     notifyListeners();
+  }
+
+  Future<Result<MessageResponseModel>> changePassword(
+    ChangePasswordBodyModel changePasswordBody,
+  ) async {
+    try {
+      final response = await _authWebServices.changePassword(
+        changePasswordBody,
+      );
+      return SuccessResult(response);
+    } catch (e) {
+      return FailureResult(ApiErrorHandler.handle(e));
+    }
   }
 }
