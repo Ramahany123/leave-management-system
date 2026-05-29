@@ -94,4 +94,46 @@ class UserModel {
       'deletedAt': deletedAt?.toIso8601String(),
     };
   }
+
+  UserModel copyWith({
+    String? phone,
+    String? name,
+    int? yearsOfService,
+    int? userId,
+    String? ssn,
+    String? email,
+    String? jobTitle,
+    String? workplace,
+    String? role,
+    String? userType,
+    DateTime? hireDate,
+    DateTime? dateOfBirth,
+    String? gender,
+    int? departmentId,
+    int? collegeId,
+    bool? isActive,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return UserModel(
+      phone: phone ?? this.phone,
+      name: name ?? this.name,
+      yearsOfService: yearsOfService ?? this.yearsOfService,
+      userId: userId ?? this.userId,
+      ssn: ssn ?? this.ssn,
+      email: email ?? this.email,
+      jobTitle: jobTitle ?? this.jobTitle,
+      workplace: workplace ?? this.workplace,
+      role: role ?? this.role,
+      userType: userType ?? this.userType,
+      hireDate: hireDate ?? this.hireDate,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      gender: gender ?? this.gender,
+      departmentId: departmentId ?? this.departmentId,
+      collegeId: collegeId ?? this.collegeId,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }
