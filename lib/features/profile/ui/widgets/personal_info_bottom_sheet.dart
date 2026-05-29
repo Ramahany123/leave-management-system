@@ -55,6 +55,7 @@ class PersonalInfoBottomSheet extends StatelessWidget {
               value: user.dateOfBirth.toReadableDate,
             ),
             KeyValueRow(label: "Gender", value: user.gender),
+            KeyValueRow(label: "phone", value: user.phone),
           ]),
           SizedBox(height: 24.h),
 
