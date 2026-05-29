@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:leave_management_system/core/routes/app_routes.dart';
 import 'package:leave_management_system/core/styles/app_text_styles.dart';
 import 'package:leave_management_system/core/utils/app_dialogs.dart';
 import 'package:leave_management_system/core/widgets/general_error_widget.dart';
@@ -54,7 +56,9 @@ class ProfileScreen extends StatelessWidget {
                           title: "Change Password",
                           icon: Icons.lock_outline,
                           onTap: () {
-                            // TODO: Implement navigation or action
+                            GoRouter.of(
+                              context,
+                            ).pushNamed(AppRoutes.changePasswordScreen);
                           },
                         ),
                         SettingsTile(
