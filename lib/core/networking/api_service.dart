@@ -23,4 +23,16 @@ class ApiService {
       data: data,
     );
   }
+
+  Future<Response<T>> putRequest<T>({
+    required String apiEndpoint,
+    Map<String, dynamic>? queryParameters,
+    Object? data,
+  }) async {
+    return await _dio.put(
+      apiEndpoint,
+      queryParameters: queryParameters,
+      data: data,
+    );
+  }
 }
