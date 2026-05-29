@@ -4,5 +4,6 @@ class ApiEndpoints {
   static const activateUser = "auth/complete-onboarding";
   static const employeeDashboard = "me/dashboard";
   static const getLeaveRequestsHistory = "me/leave-requests";
-  static const getProfile = "auth/me";
+  static const getProfile = "profile";
+  static const changePassword = "profile/change-password";
 }
