@@ -4,6 +4,7 @@ import 'package:leave_management_system/core/networking/dio_factory.dart';
 import 'package:leave_management_system/features/auth/data/repo/auth_repo.dart';
 import 'package:leave_management_system/features/auth/data/web_services/auth_web_services.dart';
 import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dart';
+import 'package:leave_management_system/features/auth/logic/cubit/change_password_cubit.dart';
 import 'package:leave_management_system/features/employee_dashboard/data/repo/employee_dashboard_repo.dart';
 import 'package:leave_management_system/features/employee_dashboard/data/web_services/employee_dashboard_web_services.dart';
 import 'package:leave_management_system/features/employee_dashboard/logic/cubit/employee_dashboard_cubit.dart';
@@ -35,6 +36,7 @@ void setupAuthDependencies() {
   sl.registerLazySingleton(() => AuthWebServices(apiService: sl()));
   sl.registerLazySingleton(() => AuthRepo(authWebServices: sl()));
   sl.registerFactory(() => AuthCubit(authRepo: sl()));
+  sl.registerFactory(() => ChangePasswordCubit(authRepo: sl()));
 }
 
 void setupEmployeeDashboardDependencies() {
