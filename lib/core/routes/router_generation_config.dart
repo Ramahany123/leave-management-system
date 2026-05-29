@@ -4,6 +4,8 @@ import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'package:leave_management_system/features/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
 import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dart';
+import 'package:leave_management_system/features/auth/logic/cubit/change_password_cubit.dart';
+import 'package:leave_management_system/features/auth/ui/screens/change_password_screen.dart';
 import 'package:leave_management_system/features/auth/ui/screens/onboarding_screen.dart';
 import 'package:leave_management_system/features/employee_dashboard/logic/cubit/employee_dashboard_cubit.dart';
 import 'package:leave_management_system/features/employee_dashboard/ui/screens/employee_dashboard_screen.dart';
@@ -153,6 +155,14 @@ class RouterGenerationConfig {
         path: AppRoutes.adminDashboardScreen,
         name: AppRoutes.adminDashboardScreen,
         builder: (context, state) => AdminDashboardScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.changePasswordScreen,
+        name: AppRoutes.changePasswordScreen,
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<ChangePasswordCubit>(),
+          child: ChangePasswordScreen(),
+        ),
       ),
     ],
   );

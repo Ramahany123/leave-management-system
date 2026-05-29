@@ -8,4 +8,5 @@ class AppRoutes {
   static const leaveRequestScreen = "/leaveRequest";
   static const leaveHistoryScreen = "/leaveHistory";
   static const profileScreen = "/profile";
+  static const changePasswordScreen = "/changePasswordScreen";
 }
