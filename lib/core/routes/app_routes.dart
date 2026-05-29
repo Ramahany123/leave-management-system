@@ -9,4 +9,5 @@ class AppRoutes {
   static const leaveHistoryScreen = "/leaveHistory";
   static const profileScreen = "/profile";
   static const changePasswordScreen = "/changePasswordScreen";
+  static const updateContactScreen = "/updateContactScreen";
 }

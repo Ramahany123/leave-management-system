@@ -14,7 +14,9 @@ import 'package:leave_management_system/features/leave_history/ui/screens/leave_
 import 'package:leave_management_system/features/leave_request/ui/screens/leave_request_screen.dart';
 import 'package:leave_management_system/features/main_layout/ui/screens/main_layout.dart';
 import 'package:leave_management_system/features/manager_dashboard/ui/screens/manager_dashboard_screen.dart';
+import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
 import 'package:leave_management_system/features/profile/ui/screens/profile_screen.dart';
+import 'package:leave_management_system/features/profile/ui/screens/update_contact_screen.dart';
 import 'package:leave_management_system/features/splash/ui/screens/splash_screen.dart';
 import '../../features/auth/data/repo/auth_repo.dart';
 import '../../features/profile/logic/cubit/profile_cubit.dart';
@@ -162,6 +164,14 @@ class RouterGenerationConfig {
         builder: (context, state) => BlocProvider(
           create: (context) => sl<ChangePasswordCubit>(),
           child: ChangePasswordScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.updateContactScreen,
+        name: AppRoutes.updateContactScreen,
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<UpdateContactCubit>(),
+          child: UpdateContactScreen(),
         ),
       ),
     ],
