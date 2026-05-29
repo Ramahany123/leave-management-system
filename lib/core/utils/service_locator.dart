@@ -13,6 +13,7 @@ import 'package:leave_management_system/features/leave_history/data/web_services
 import 'package:leave_management_system/features/leave_history/logic/cubit/leave_history_cubit.dart';
 import 'package:leave_management_system/features/profile/data/repo/profile_repo.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
+import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
 import '../../features/profile/data/web_services/profile_web_services.dart';
 import '../networking/api_service.dart';
 
@@ -61,4 +62,5 @@ void setupProfileDependencies() {
   sl.registerLazySingleton(() => ProfileWebServices(apiService: sl()));
   sl.registerLazySingleton(() => ProfileRepo(profileWebServices: sl()));
   sl.registerFactory(() => ProfileCubit(profileRepo: sl()));
+  sl.registerFactory(() => UpdateContactCubit(profileRepo: sl()));
 }
