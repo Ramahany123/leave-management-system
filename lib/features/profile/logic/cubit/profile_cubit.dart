@@ -10,7 +10,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepo _profileRepo;
   ProfileCubit({required ProfileRepo profileRepo})
     : _profileRepo = profileRepo,
-      super(ProfileLoading());
+      super(ProfileLoading()) {
+    _profileRepo.addListener(_onProfileRepoChanged);
+  }
 
   Future<void> getProfile() async {
     emit(ProfileLoading());
@@ -23,5 +25,17 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(ProfileError(failure: failure));
       },
     );
+  }
+
+  void _onProfileRepoChanged() {
+    if (_profileRepo.currentUser != null) {
+      emit(ProfileSuccess(user: _profileRepo.currentUser!));
+    }
+  }
+
+  @override
+  Future<void> close() {
+    _profileRepo.removeListener(_onProfileRepoChanged);
+    return super.close();
   }
 }
