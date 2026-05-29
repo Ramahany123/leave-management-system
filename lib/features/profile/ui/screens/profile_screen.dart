@@ -65,7 +65,9 @@ class ProfileScreen extends StatelessWidget {
                           title: "Update Contact",
                           icon: Icons.phone_outlined,
                           onTap: () {
-                            // TODO: Implement navigation or action
+                            GoRouter.of(
+                              context,
+                            ).pushNamed(AppRoutes.updateContactScreen);
                           },
                         ),
                       ],
