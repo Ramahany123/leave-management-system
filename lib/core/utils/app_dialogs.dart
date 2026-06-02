@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leave_management_system/core/models/user_model.dart';
 import 'package:leave_management_system/core/widgets/logout_dialog.dart';
+import 'package:leave_management_system/features/profile/ui/widgets/language_bottom_sheet.dart';
 import 'package:leave_management_system/features/profile/ui/widgets/personal_info_bottom_sheet.dart';
 
 class AppDialogs {
@@ -20,6 +21,13 @@ class AppDialogs {
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (context) => PersonalInfoBottomSheet(user: user),
+    );
+  }
+
+  static void showLanguageSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => LanguageBottomSheet(),
     );
   }
 }
