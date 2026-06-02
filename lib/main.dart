@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/cache/cache_helper.dart';
+import 'package:leave_management_system/core/logic/cubit/theme_cubit.dart';
 import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'core/routes/router_generation_config.dart';
 import 'core/styles/theme_data.dart';
@@ -18,7 +20,7 @@ void main() async {
       supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
-      child: MyApp(),
+      child: BlocProvider(create: (context) => ThemeCubit(), child: MyApp()),
     ),
   );
 }
@@ -34,14 +36,20 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return MaterialApp.router(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          debugShowCheckedModeBanner: false,
-          title: 'University Leave Management System',
-          theme: AppTheme.lightTheme,
-          routerConfig: RouterGenerationConfig.goRouter,
+        return BlocBuilder<ThemeCubit, bool>(
+          builder: (context, isDark) {
+            return MaterialApp.router(
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              debugShowCheckedModeBanner: false,
+              title: 'University Leave Management System',
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+              routerConfig: RouterGenerationConfig.goRouter,
+            );
+          },
         );
       },
     );

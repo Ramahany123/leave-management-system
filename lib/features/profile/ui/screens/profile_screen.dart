@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leave_management_system/core/logic/cubit/theme_cubit.dart';
 import 'package:leave_management_system/core/routes/app_routes.dart';
 import 'package:leave_management_system/core/styles/app_text_styles.dart';
 import 'package:leave_management_system/core/utils/app_dialogs.dart';
@@ -89,7 +90,16 @@ class ProfileScreen extends StatelessWidget {
                         SettingsTile(
                           title: "Dark Mode",
                           icon: Icons.language,
-                          trailing: Switch(value: true, onChanged: (value) {}),
+                          trailing: BlocBuilder<ThemeCubit, bool>(
+                            builder: (context, isDark) {
+                              return Switch(
+                                value: isDark,
+                                onChanged: (value) {
+                                  context.read<ThemeCubit>().toggleTheme(value);
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
