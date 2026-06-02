@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -78,9 +79,11 @@ class ProfileScreen extends StatelessWidget {
                         SettingsTile(
                           title: "App Language",
                           icon: Icons.language,
-                          subTitle: "English",
+                          subTitle: context.locale.languageCode == "en"
+                              ? "English"
+                              : "العربية",
                           onTap: () {
-                            //TODO: Implement Logic
+                            AppDialogs.showLanguageSheet(context);
                           },
                         ),
                         SettingsTile(
