@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'package:leave_management_system/core/widgets/general_error_widget.dart';
 import 'package:leave_management_system/core/widgets/leave_requests_sliver_list.dart';
 import 'package:leave_management_system/features/leave_history/logic/cubit/leave_history_cubit.dart';
+import 'package:leave_management_system/features/leave_history/logic/cubit/leave_request_details_cubit.dart';
 import 'package:leave_management_system/features/leave_history/ui/widgets/history_empty_state.dart';
 import 'package:leave_management_system/features/leave_history/ui/widgets/leave_history_shimmer.dart';
+import 'package:leave_management_system/features/leave_history/ui/widgets/request_details_bottom_sheet.dart';
 import 'package:leave_management_system/features/leave_history/ui/widgets/request_status_filter_widget.dart';
 
 class LeaveHistoryScreen extends StatelessWidget {
@@ -52,6 +55,23 @@ class LeaveHistoryScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
                           sliver: LeaveRequestsSliverList(
                             leaveRequests: leaveRequests,
+                            onRequestTapped: (request) {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => BlocProvider(
+                                  create: (context) =>
+                                      sl<LeaveRequestDetailsCubit>()
+                                        ..getLeaveRequestDetails(
+                                          request.requestId,
+                                        ),
+                                  child: RequestDetailsBottomSheet(
+                                    requestId: request.requestId,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                     ],
