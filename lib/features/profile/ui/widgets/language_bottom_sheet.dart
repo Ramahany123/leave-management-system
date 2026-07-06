@@ -28,6 +28,7 @@ class LanguageBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 24.h),
+          // TODO: localize text
           Text("Select Language", style: AppTextStyles.black20w600TextStyle),
           SizedBox(height: 16.h),
           _LanguageTile(

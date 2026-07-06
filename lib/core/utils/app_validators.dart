@@ -1,3 +1,4 @@
+//TODO: Localize the messages
 class AppValidators {
   static String? validateField(String? value) {
     if (value == null || value.isEmpty) {
