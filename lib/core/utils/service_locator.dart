@@ -11,6 +11,7 @@ import 'package:leave_management_system/features/employee_dashboard/logic/cubit/
 import 'package:leave_management_system/features/leave_history/data/repo/leave_history_repo.dart';
 import 'package:leave_management_system/features/leave_history/data/web_services/leave_history_web_services.dart';
 import 'package:leave_management_system/features/leave_history/logic/cubit/leave_history_cubit.dart';
+import 'package:leave_management_system/features/leave_history/logic/cubit/leave_request_details_cubit.dart';
 import 'package:leave_management_system/features/profile/data/repo/profile_repo.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
@@ -56,6 +57,7 @@ void setupLeaveHistoryDependencies() {
     () => LeaveHistoryRepo(leaveHistoryWebServices: sl()),
   );
   sl.registerFactory(() => LeaveHistoryCubit(leaveHistoryRepo: sl()));
+  sl.registerFactory(() => LeaveRequestDetailsCubit(leaveHistoryRepo: sl()));
 }
 
 void setupProfileDependencies() {
