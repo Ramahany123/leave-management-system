@@ -6,4 +6,6 @@ class ApiEndpoints {
   static const getLeaveRequestsHistory = "me/leave-requests";
   static const getProfile = "profile";
   static const changePassword = "profile/change-password";
+  static const updateContact = "profile/update-info";
+  static String getLeaveRequestDetails(int id) => "me/leave-requests/$id";
 }
