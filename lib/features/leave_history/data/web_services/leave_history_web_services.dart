@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:leave_management_system/core/models/leave_request_details_model.dart';
 import 'package:leave_management_system/core/networking/api_endpoints.dart';
 import 'package:leave_management_system/core/networking/api_service.dart';
 import 'package:leave_management_system/features/leave_history/data/models/leave_history_model.dart';
@@ -14,5 +15,12 @@ class LeaveHistoryWebServices {
       apiEndpoint: ApiEndpoints.getLeaveRequestsHistory,
     );
     return LeaveHistoryModel.fromJson(response.data);
+  }
+
+  Future<LeaveRequestDetailsModel> getLeaveRequestDetails(int id) async {
+    final Response response = await _apiService.getRequest(
+      apiEndpoint: ApiEndpoints.getLeaveRequestDetails(id),
+    );
+    return LeaveRequestDetailsModel.fromJson(response.data);
   }
 }
