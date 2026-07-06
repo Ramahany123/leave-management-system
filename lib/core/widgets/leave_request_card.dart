@@ -10,6 +10,7 @@ class LeaveRequestCard extends StatelessWidget {
   final Color statusColor;
   final Color statusBgColor;
   final IconData statusIcon;
+  final void Function()? onTap;
 
   const LeaveRequestCard({
     super.key,
@@ -19,55 +20,61 @@ class LeaveRequestCard extends StatelessWidget {
     required this.statusColor,
     required this.statusBgColor,
     required this.statusIcon,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-      decoration: BoxDecoration(
-        color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: AppColors.cardBorderColor),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Material(
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+          decoration: BoxDecoration(
+            color: AppColors.whiteColor,
+            borderRadius: BorderRadius.circular(20.r),
+            border: Border.all(color: AppColors.cardBorderColor),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: AppTextStyles.black16w600TextStyle),
-              SizedBox(height: 6.h),
-              Text(
-                date,
-                style: AppTextStyles.grey16w400TextStyle.copyWith(
-                  fontSize: 14.sp,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: AppTextStyles.black16w600TextStyle),
+                  SizedBox(height: 6.h),
+                  Text(
+                    date,
+                    style: AppTextStyles.grey16w400TextStyle.copyWith(
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                decoration: BoxDecoration(
+                  color: statusBgColor,
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: Row(
+                  children: [
+                    Icon(statusIcon, color: statusColor, size: 14.sp),
+                    SizedBox(width: 4.w),
+                    Text(
+                      status,
+                      style: TextStyle(
+                        color: statusColor,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-            decoration: BoxDecoration(
-              color: statusBgColor,
-              borderRadius: BorderRadius.circular(20.r),
-            ),
-            child: Row(
-              children: [
-                Icon(statusIcon, color: statusColor, size: 14.sp),
-                SizedBox(width: 4.w),
-                Text(
-                  status,
-                  style: TextStyle(
-                    color: statusColor,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

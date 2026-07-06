@@ -8,7 +8,12 @@ import 'leave_request_card.dart';
 
 class LeaveRequestsSliverList extends StatelessWidget {
   final List<LeaveRequestModel> leaveRequests;
-  const LeaveRequestsSliverList({super.key, required this.leaveRequests});
+  final void Function(LeaveRequestModel)? onRequestTapped;
+  const LeaveRequestsSliverList({
+    super.key,
+    required this.leaveRequests,
+    this.onRequestTapped,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +23,7 @@ class LeaveRequestsSliverList extends StatelessWidget {
       itemBuilder: (context, index) {
         final request = leaveRequests[index];
         return LeaveRequestCard(
+          onTap: () => onRequestTapped?.call(request),
           title: request.leaveTypeName,
           date:
               '${DateFormat('MMM dd').format(request.startDate)} - ${DateFormat('MMM dd, yyyy').format(request.endDate)}',
