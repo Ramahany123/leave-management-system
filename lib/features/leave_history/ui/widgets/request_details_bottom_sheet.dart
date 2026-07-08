@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/models/leave_request_details_model.dart';
+import 'package:leave_management_system/core/utils/request_status_extension.dart';
 import 'package:leave_management_system/core/widgets/build_info_section.dart';
 import 'package:leave_management_system/core/widgets/custom_bottom_sheet_shell.dart';
+import 'package:leave_management_system/core/widgets/status_badging.dart';
 import 'package:leave_management_system/features/leave_history/logic/cubit/leave_request_details_cubit.dart';
 import 'package:leave_management_system/features/leave_history/ui/widgets/request_details_shimmer.dart';
 
@@ -58,7 +60,10 @@ class RequestDetailsBottomSheet extends StatelessWidget {
               label: "Type",
               value: leaveRequestDetails.leaveType.typeName,
             ),
-            KeyValueRow(label: "Status", value: leaveRequestDetails.status),
+            KeyValueRow(
+              label: "Status",
+              widget: StatusBadging(status: leaveRequestDetails.status),
+            ),
             KeyValueRow(
               label: "Duration",
               value: "${leaveRequestDetails.duration} Days",

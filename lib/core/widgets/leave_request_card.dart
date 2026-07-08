@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/styles/app_colors.dart';
 import 'package:leave_management_system/core/styles/app_text_styles.dart';
 
+import 'status_badging.dart';
+
 class LeaveRequestCard extends StatelessWidget {
   final String title;
   final String date;
@@ -51,27 +53,7 @@ class LeaveRequestCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                decoration: BoxDecoration(
-                  color: statusBgColor,
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                child: Row(
-                  children: [
-                    Icon(statusIcon, color: statusColor, size: 14.sp),
-                    SizedBox(width: 4.w),
-                    Text(
-                      status,
-                      style: TextStyle(
-                        color: statusColor,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              StatusBadging(status: status),
             ],
           ),
         ),
