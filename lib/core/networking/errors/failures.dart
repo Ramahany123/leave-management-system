@@ -22,3 +22,7 @@ final class UnauthenticatedFailure extends Failure {
 final class NotFoundFailure extends Failure {
   const NotFoundFailure(super.message);
 }
+
+final class ValidationFailure extends Failure {
+  const ValidationFailure(super.message);
+}
