@@ -33,6 +33,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   dio: ^5.9.2
   easy_localization: ^3.0.8
+  file_picker: ^3.0.4
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
