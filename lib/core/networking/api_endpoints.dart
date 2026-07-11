@@ -8,4 +8,7 @@ class ApiEndpoints {
   static const changePassword = "profile/change-password";
   static const updateContact = "profile/update-info";
   static String getLeaveRequestDetails(int id) => "me/leave-requests/$id";
+  static const getDelegateUsers = "me/users";
+  static const getEligibleLeaveTypes = "me/eligible-leave-types";
+  static const createLeaveRequest = "me/leave-requests";
 }
