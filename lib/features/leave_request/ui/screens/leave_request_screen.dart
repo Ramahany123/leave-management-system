@@ -99,7 +99,7 @@ void _showSuccessDialog(BuildContext context, int requestId) {
   showDialog(
     context: context,
     barrierDismissible: false,
-    builder: (context) {
+    builder: (dialogContext) {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
@@ -118,6 +118,7 @@ void _showSuccessDialog(BuildContext context, int requestId) {
           TextButton(
             onPressed: () {
               GoRouter.of(context).pop(); // Pops Dialog
+              context.read<LeaveRequestCubit>().resetForm();
               GoRouter.of(context).goNamed(AppRoutes.employeeDashboardScreen);
             },
             child: const Text(
