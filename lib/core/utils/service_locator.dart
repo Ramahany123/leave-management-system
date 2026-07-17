@@ -12,6 +12,9 @@ import 'package:leave_management_system/features/leave_history/data/repo/leave_h
 import 'package:leave_management_system/features/leave_history/data/web_services/leave_history_web_services.dart';
 import 'package:leave_management_system/features/leave_history/logic/cubit/leave_history_cubit.dart';
 import 'package:leave_management_system/features/leave_history/logic/cubit/leave_request_details_cubit.dart';
+import 'package:leave_management_system/features/leave_request/data/repo/leave_request_repo.dart';
+import 'package:leave_management_system/features/leave_request/data/web_services/leave_request_web_services.dart';
+import 'package:leave_management_system/features/leave_request/logic/cubit/leave_request_cubit.dart';
 import 'package:leave_management_system/features/profile/data/repo/profile_repo.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
@@ -32,6 +35,8 @@ void setupServiceLocator() {
   setupLeaveHistoryDependencies();
 
   setupProfileDependencies();
+
+  setupLeaveRequestDependencies();
 }
 
 void setupAuthDependencies() {
@@ -65,4 +70,12 @@ void setupProfileDependencies() {
   sl.registerLazySingleton(() => ProfileRepo(profileWebServices: sl()));
   sl.registerFactory(() => ProfileCubit(profileRepo: sl()));
   sl.registerFactory(() => UpdateContactCubit(profileRepo: sl()));
+}
+
+void setupLeaveRequestDependencies() {
+  sl.registerLazySingleton(() => LeaveRequestWebServices(apiService: sl()));
+  sl.registerLazySingleton(
+    () => LeaveRequestRepo(leaveRequestWebServices: sl()),
+  );
+  sl.registerFactory(() => LeaveRequestCubit(leaveRequestRepo: sl()));
 }
