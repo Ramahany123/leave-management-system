@@ -68,6 +68,10 @@ class LeaveRequestValidator {
       }
     }
 
+    if (!fields.preLeaveAcknowledgement) {
+      return "You must accept the legal undertaking to submit.";
+    }
+
     return null; // All checks passed, the form is valid!
   }
 }

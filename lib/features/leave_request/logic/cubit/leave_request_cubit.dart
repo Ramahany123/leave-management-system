@@ -1,12 +1,15 @@
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:leave_management_system/features/leave_request/data/models/create_leave_request_response_model.dart';
 import 'package:leave_management_system/features/leave_request/data/models/leave_requet_body_model.dart';
 import 'package:leave_management_system/features/leave_request/data/repo/leave_request_repo.dart';
 import 'package:leave_management_system/features/leave_request/logic/leave_request_validator.dart';
+import 'package:leave_management_system/features/profile/data/repo/profile_repo.dart';
 
 import '../../../../core/networking/errors/failures.dart';
 import '../../../../core/utils/result.dart';
+import '../../../../core/utils/service_locator.dart';
 import '../../data/models/delegate_user_model.dart';
 import '../../data/models/eligible_leave_type_model.dart';
 import 'leave_request_form_fields.dart';
@@ -23,10 +26,16 @@ class LeaveRequestCubit extends Cubit<LeaveRequestState> {
 
   Future<void> loadFormData() async {
     emit(LeaveRequestFormLoading());
-    final results = await Future.wait([
+    final profileRepo = sl<ProfileRepo>();
+    final futures = <Future<dynamic>>[
       _leaveRequestRepo.getEligibleLeaveTypes(),
       _leaveRequestRepo.getDelegateUsers(),
-    ]);
+    ];
+    final bool shouldFetchProfile = profileRepo.currentUser == null;
+    if (shouldFetchProfile) {
+      futures.add(profileRepo.getProfile());
+    }
+    final results = await Future.wait(futures);
 
     final typesResult = results[0] as Result<EligibleLeaveTypesResponseModel>;
     final delegatesResult = results[1] as Result<DelegateUsersResponseModel>;
@@ -127,6 +136,11 @@ class LeaveRequestCubit extends Cubit<LeaveRequestState> {
     final updatedFiles = Map<int, String>.from(_formFields.selectedFiles);
     updatedFiles.remove(requirementId);
     _formFields = _formFields.copyWith(selectedFiles: updatedFiles);
+    _emitSuccessState();
+  }
+
+  void toggleAcknowledgement(bool value) {
+    _formFields = _formFields.copyWith(preLeaveAcknowledgement: value);
     _emitSuccessState();
   }
 
