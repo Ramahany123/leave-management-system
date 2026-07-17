@@ -11,6 +11,7 @@ import 'package:leave_management_system/features/employee_dashboard/logic/cubit/
 import 'package:leave_management_system/features/employee_dashboard/ui/screens/employee_dashboard_screen.dart';
 import 'package:leave_management_system/features/leave_history/logic/cubit/leave_history_cubit.dart';
 import 'package:leave_management_system/features/leave_history/ui/screens/leave_history_screen.dart';
+import 'package:leave_management_system/features/leave_request/logic/cubit/leave_request_cubit.dart';
 import 'package:leave_management_system/features/leave_request/ui/screens/leave_request_screen.dart';
 import 'package:leave_management_system/features/main_layout/ui/screens/main_layout.dart';
 import 'package:leave_management_system/features/manager_dashboard/ui/screens/manager_dashboard_screen.dart';
@@ -112,7 +113,10 @@ class RouterGenerationConfig {
               GoRoute(
                 path: AppRoutes.leaveRequestScreen,
                 name: AppRoutes.leaveRequestScreen,
-                builder: (context, state) => LeaveRequestScreen(),
+                builder: (context, state) => BlocProvider(
+                  create: (context) => sl<LeaveRequestCubit>()..loadFormData(),
+                  child: LeaveRequestScreen(),
+                ),
               ),
             ],
           ),
