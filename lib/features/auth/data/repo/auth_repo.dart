@@ -4,13 +4,17 @@ import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/constants/enums.dart';
 import 'package:leave_management_system/core/models/message_response_model.dart';
 import 'package:leave_management_system/core/networking/api_error_handler.dart';
+import 'package:leave_management_system/core/networking/errors/failures.dart';
 import 'package:leave_management_system/core/utils/result.dart';
+import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'package:leave_management_system/features/auth/data/models/activation_body_model.dart';
 import 'package:leave_management_system/features/auth/data/models/activation_response_model.dart';
 import 'package:leave_management_system/features/auth/data/models/change_password_body_model.dart';
 import 'package:leave_management_system/features/auth/data/models/login_body_model.dart';
 import 'package:leave_management_system/features/auth/data/models/login_response_model.dart';
 import 'package:leave_management_system/features/auth/data/web_services/auth_web_services.dart';
+import 'package:leave_management_system/features/profile/data/models/profile_response_model.dart';
+import 'package:leave_management_system/features/profile/data/repo/profile_repo.dart';
 
 import '../../../../core/cache/cache_helper.dart';
 
@@ -26,26 +30,19 @@ class AuthRepo extends ChangeNotifier {
   String _userName = "";
   String get userName => _userName;
 
+  Failure? _initialAuthFailure;
+  Failure? get initialAuthFailure => _initialAuthFailure;
+
   AuthRepo({required AuthWebServices authWebServices})
     : _authWebServices = authWebServices;
 
   Future<void> checkInitialAuthStatus() async {
+    _initialAuthFailure = null;
     final String? token = await SecureStorageHelper.getData(
       key: CacheKeys.userToken,
     );
-    final String? statusName = CacheHelper.getData(key: CacheKeys.authStatus);
     final String? userRole = CacheHelper.getData(key: CacheKeys.userRole);
     final String? userName = CacheHelper.getData(key: CacheKeys.userName);
-
-    if (token != null && token.isNotEmpty && statusName != null) {
-      try {
-        _currentAuthStatus = AuthStatus.values.byName(statusName);
-      } catch (e) {
-        _currentAuthStatus = AuthStatus.authenticated;
-      }
-    } else {
-      _currentAuthStatus = AuthStatus.unauthenticated;
-    }
 
     if (userRole != null) {
       _userRole = userRole;
@@ -53,6 +50,28 @@ class AuthRepo extends ChangeNotifier {
     if (userName != null) {
       _userName = userName;
     }
+
+    if (token == null || token.isEmpty) {
+      _currentAuthStatus = AuthStatus.unauthenticated;
+      notifyListeners();
+      return;
+    } else {
+      final result = await sl<ProfileRepo>().getProfile();
+      switch (result) {
+        case SuccessResult<ProfileResponseModel>(:final data):
+          _currentAuthStatus = data.user.isActive
+              ? AuthStatus.authenticated
+              : AuthStatus.activationRequired;
+
+        case FailureResult<ProfileResponseModel>(:final failure):
+          if (failure is UnauthenticatedFailure) {
+            await logout();
+          } else {
+            _initialAuthFailure = failure;
+          }
+      }
+    }
+
     notifyListeners();
   }
 
