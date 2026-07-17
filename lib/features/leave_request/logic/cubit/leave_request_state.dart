@@ -25,7 +25,13 @@ final class LeaveRequestFormError extends LeaveRequestState {
   LeaveRequestFormError({required this.failure});
 }
 
-final class LeaveRequestSubmitLoading extends LeaveRequestState {}
+final class LeaveRequestSubmitLoading extends LeaveRequestFormSuccess {
+  LeaveRequestSubmitLoading({
+    required super.delegateUsers,
+    required super.eligibleLeaveTypes,
+    required super.formFields,
+  });
+}
 
 final class LeaveRequestSubmitSuccess extends LeaveRequestState {
   final CreateLeaveRequestResponseModel createLeaveRequestResponse;
@@ -33,8 +39,13 @@ final class LeaveRequestSubmitSuccess extends LeaveRequestState {
   LeaveRequestSubmitSuccess({required this.createLeaveRequestResponse});
 }
 
-final class LeaveRequestSubmitError extends LeaveRequestState {
+final class LeaveRequestSubmitError extends LeaveRequestFormSuccess {
   final Failure failure;
 
-  LeaveRequestSubmitError({required this.failure});
+  LeaveRequestSubmitError({
+    required this.failure,
+    required super.delegateUsers,
+    required super.eligibleLeaveTypes,
+    required super.formFields,
+  });
 }

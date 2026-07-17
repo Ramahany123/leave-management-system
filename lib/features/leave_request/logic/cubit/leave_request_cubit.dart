@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:leave_management_system/features/leave_request/data/models/create_leave_request_response_model.dart';
@@ -65,12 +64,29 @@ class LeaveRequestCubit extends Cubit<LeaveRequestState> {
   Future<void> submitLeaveRequest() async {
     final validationError = LeaveRequestValidator.validate(_formFields);
     if (validationError != null) {
-      emit(
-        LeaveRequestSubmitError(failure: ValidationFailure(validationError)),
-      );
+      if (state is LeaveRequestFormSuccess) {
+        final currentState = state as LeaveRequestFormSuccess;
+        emit(
+          LeaveRequestSubmitError(
+            failure: ValidationFailure(validationError),
+            delegateUsers: currentState.delegateUsers,
+            eligibleLeaveTypes: currentState.eligibleLeaveTypes,
+            formFields: currentState.formFields,
+          ),
+        );
+      }
       return;
     }
-    emit(LeaveRequestSubmitLoading());
+    if (state is LeaveRequestFormSuccess) {
+      final currentState = state as LeaveRequestFormSuccess;
+      emit(
+        LeaveRequestSubmitLoading(
+          delegateUsers: currentState.delegateUsers,
+          eligibleLeaveTypes: currentState.eligibleLeaveTypes,
+          formFields: _formFields,
+        ),
+      );
+    }
 
     final body = LeaveRequestBodyModel(
       typeId: _formFields.selectedLeaveType!.typeId,
@@ -92,9 +108,24 @@ class LeaveRequestCubit extends Cubit<LeaveRequestState> {
         );
       },
       (failure) {
-        emit(LeaveRequestSubmitError(failure: failure));
+        if (state is LeaveRequestFormSuccess) {
+          final currentState = state as LeaveRequestFormSuccess;
+          emit(
+            LeaveRequestSubmitError(
+              failure: failure,
+              delegateUsers: currentState.delegateUsers,
+              eligibleLeaveTypes: currentState.eligibleLeaveTypes,
+              formFields: _formFields,
+            ),
+          );
+        }
       },
     );
+  }
+
+  void resetForm() {
+    _formFields = LeaveRequestFormFields();
+    loadFormData();
   }
 
   void selectLeaveType(EligibleLeaveTypeModel type) {
