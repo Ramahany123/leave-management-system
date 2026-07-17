@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../styles/app_colors.dart';
 
 class PrimaryButtonWidget extends StatelessWidget {
-  final void Function() onPressed;
+  final VoidCallback? onPressed;
   final bool isLoading;
   final double? height;
   final double? width;
   final Color? backgroundColor;
   final Widget child;
+
   const PrimaryButtonWidget({
     super.key,
-    required this.onPressed,
+    this.onPressed,
     this.isLoading = false,
     this.height,
     this.width,
@@ -24,10 +24,11 @@ class PrimaryButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor ?? AppColors.primaryBlue,
+        backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.primary,
+        disabledBackgroundColor: Colors.grey.shade400,
         fixedSize: Size(width ?? 331.w, height ?? 56.h),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(8.r),
+          borderRadius: BorderRadius.circular(8.r),
         ),
       ),
       child: isLoading
@@ -35,7 +36,7 @@ class PrimaryButtonWidget extends StatelessWidget {
               height: 24.h,
               width: 24.h,
               child: const CircularProgressIndicator(
-                color: AppColors.whiteColor,
+                color: Colors.white,
                 strokeWidth: 3,
               ),
             )
