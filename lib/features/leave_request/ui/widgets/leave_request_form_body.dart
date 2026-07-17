@@ -191,7 +191,10 @@ class LeaveRequestFormBody extends StatelessWidget {
                     }
                   },
                 ),
-                const Spacer(),
+                if (MediaQuery.of(context).viewInsets.bottom == 0)
+                  const Spacer()
+                else
+                  SizedBox(height: 24.h),
                 SizedBox(height: 24.h),
                 Center(
                   child: PrimaryButtonWidget(
