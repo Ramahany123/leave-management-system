@@ -41,6 +41,10 @@ class RouterGenerationConfig {
           state.matchedLocation == AppRoutes.adminDashboardScreen;
       final String userRole = sl<AuthRepo>().userRole;
 
+      if (authStatus == AuthStatus.initial) {
+        return isSplash ? null : AppRoutes.splashScreen;
+      }
+
       if (authStatus == AuthStatus.unauthenticated) {
         return isLoggingIn ? null : AppRoutes.loginScreen;
       }

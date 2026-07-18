@@ -21,7 +21,7 @@ import '../../../../core/cache/cache_helper.dart';
 class AuthRepo extends ChangeNotifier {
   final AuthWebServices _authWebServices;
 
-  AuthStatus _currentAuthStatus = AuthStatus.unauthenticated;
+  AuthStatus _currentAuthStatus = AuthStatus.initial;
   AuthStatus get currentAuthStatus => _currentAuthStatus;
 
   String _userRole = UserRoles.employeeRole;

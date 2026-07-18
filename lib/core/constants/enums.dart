@@ -1,1 +1,1 @@
-enum AuthStatus { activationRequired, authenticated, unauthenticated }
+enum AuthStatus { activationRequired, authenticated, unauthenticated, initial }

@@ -28,6 +28,7 @@ class AuthCubit extends Cubit<AuthState> {
             emit(AuthNeedActivation(user: loginResponse.user!));
             break;
           case AuthStatus.unauthenticated:
+          case AuthStatus.initial:
             emit(
               AuthError(
                 failure: ServerFailure(
