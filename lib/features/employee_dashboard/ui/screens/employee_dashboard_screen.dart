@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leave_management_system/core/language/locale_keys.g.dart';
-import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/widgets/general_error_widget.dart';
 import 'package:leave_management_system/features/employee_dashboard/logic/cubit/employee_dashboard_cubit.dart';
 import 'package:leave_management_system/features/employee_dashboard/ui/widgets/dashboard_shimmer.dart';
@@ -31,7 +31,7 @@ class EmployeeDashboardScreen extends StatelessWidget {
               BlocBuilder<EmployeeDashboardCubit, EmployeeDashboardState>(
                 builder: (context, state) {
                   return switch (state) {
-                    EmployeeDashboardLoading() => DashboardShimmer(),
+                    EmployeeDashboardLoading() => const DashboardShimmer(),
 
                     EmployeeDashboardSuccess(
                       employeeDashboardResponse: final data,
@@ -42,7 +42,9 @@ class EmployeeDashboardScreen extends StatelessWidget {
                         children: [
                           Text(
                             LocaleKeys.dashboard_leave_balance.tr(),
-                            style: AppTextStyles.primaryBlue20w600TextStyle,
+                            style: context.textTheme.titleLarge?.copyWith(
+                              color: context.colorScheme.primary,
+                            ),
                           ),
                           SizedBox(height: 16.h),
                           LeaveBalancesList(leaveBalances: data.leaveBalances),
@@ -52,7 +54,9 @@ class EmployeeDashboardScreen extends StatelessWidget {
                             children: [
                               Text(
                                 LocaleKeys.dashboard_recent_requests.tr(),
-                                style: AppTextStyles.primaryBlue20w600TextStyle,
+                                style: context.textTheme.titleLarge?.copyWith(
+                                  color: context.colorScheme.primary,
+                                ),
                               ),
                               TextButton(
                                 onPressed: () {
@@ -60,7 +64,9 @@ class EmployeeDashboardScreen extends StatelessWidget {
                                 },
                                 child: Text(
                                   LocaleKeys.dashboard_view_all.tr(),
-                                  style: AppTextStyles.primary14w600TextStyle,
+                                  style: context.textTheme.titleSmall?.copyWith(
+                                    color: context.colorScheme.primary,
+                                  ),
                                 ),
                               ),
                             ],
@@ -69,7 +75,7 @@ class EmployeeDashboardScreen extends StatelessWidget {
                           LeaveRequestsList(leaveRequests: data.recentRequests),
                           SizedBox(height: 80.h),
                         ],
-                      ), // Padding for FAB
+                      ),
 
                     EmployeeDashboardError(failure: final f) =>
                       GeneralErrorWidget(

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../styles/app_colors.dart';
-import '../styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/app_colors.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'outlined_button_widget.dart';
 import 'primary_button_widget.dart';
 
@@ -14,14 +13,15 @@ class LogoutDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(16.r),
+        borderRadius: BorderRadius.circular(16.r),
       ),
-      backgroundColor: AppColors.whiteColor,
+      backgroundColor: context.colorScheme.surface,
       contentPadding: EdgeInsets.all(24.r),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
+            padding: EdgeInsets.all(12.r),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.errorRed.withValues(alpha: 0.1),
@@ -29,16 +29,16 @@ class LogoutDialog extends StatelessWidget {
             child: Icon(Icons.logout, color: AppColors.errorRed, size: 32.sp),
           ),
           SizedBox(height: 16.h),
-          // Text
-          Text("Logout", style: AppTextStyles.black20w600TextStyle),
+          Text("Logout", style: context.textTheme.titleLarge),
           SizedBox(height: 8.h),
           Text(
             "Are you sure you want to log out of your account?",
             textAlign: TextAlign.center,
-            style: AppTextStyles.grey14w400TextStyle,
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: context.colorScheme.onSurfaceVariant,
+            ),
           ),
           SizedBox(height: 24.h),
-          // Actions
           Row(
             children: [
               Expanded(
@@ -47,7 +47,9 @@ class LogoutDialog extends StatelessWidget {
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     "Cancel",
-                    style: AppTextStyles.primary14w600TextStyle,
+                    style: context.textTheme.labelMedium?.copyWith(
+                      color: context.colorScheme.primary,
+                    ),
                   ),
                 ),
               ),
@@ -62,7 +64,9 @@ class LogoutDialog extends StatelessWidget {
                   },
                   child: Text(
                     "Logout",
-                    style: AppTextStyles.white14w500TextStyle,
+                    style: context.textTheme.labelMedium?.copyWith(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LeaveHistoryShimmer extends StatelessWidget {
@@ -8,14 +9,13 @@ class LeaveHistoryShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
+      baseColor: context.colorScheme.outline.withValues(alpha: 0.4),
+      highlightColor: context.colorScheme.outline.withValues(alpha: 0.1),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Filter Buttons Shimmer (Horizontal)
             SizedBox(
               height: 40.h,
               child: ListView.separated(
@@ -26,7 +26,7 @@ class LeaveHistoryShimmer extends StatelessWidget {
                 itemBuilder: (context, index) => Container(
                   width: 80.w,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.colorScheme.surface,
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                 ),
@@ -34,7 +34,6 @@ class LeaveHistoryShimmer extends StatelessWidget {
             ),
             SizedBox(height: 32.h),
 
-            // 2. Leave Request Cards Shimmer (Vertical)
             Expanded(
               child: ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
@@ -44,7 +43,7 @@ class LeaveHistoryShimmer extends StatelessWidget {
                   height: 90.h,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.colorScheme.surface,
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                 ),

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/models/leave_request_details_model.dart';
-import 'package:leave_management_system/core/styles/app_colors.dart';
-import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/request_status_extension.dart';
 import 'package:leave_management_system/core/widgets/build_info_section.dart';
 import 'package:leave_management_system/core/widgets/custom_bottom_sheet_shell.dart';
@@ -21,14 +20,13 @@ class RequestDetailsBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomBottomSheetShell(
-      //TODO: localize text
       title: "Leave Request Details",
       content: Flexible(
         child: BlocBuilder<LeaveRequestDetailsCubit, LeaveRequestDetailsState>(
           builder: (context, state) {
             return switch (state) {
               LeaveRequestDetailsInitial() ||
-              LeaveRequestDetailsLoading() => RequestDetailsShimmer(),
+              LeaveRequestDetailsLoading() => const RequestDetailsShimmer(),
               LeaveRequestDetailsError(failure: final f) => Center(
                 child: GeneralErrorWidget(
                   message: f.message,
@@ -40,7 +38,7 @@ class RequestDetailsBottomSheet extends StatelessWidget {
               LeaveRequestDetailsSuccess(
                 leaveRequestDetails: final leaveRequestDetails,
               ) =>
-                _buildBottomSheetContent(leaveRequestDetails),
+                _buildBottomSheetContent(context, leaveRequestDetails),
             };
           },
         ),
@@ -49,14 +47,14 @@ class RequestDetailsBottomSheet extends StatelessWidget {
   }
 
   Widget _buildBottomSheetContent(
+    BuildContext context,
     LeaveRequestDetailsModel leaveRequestDetails,
   ) {
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // SECTION 1: General Leave Information
-          buildInfoSection("LEAVE INFORMATION", [
+          buildInfoSection(context, "LEAVE INFORMATION", [
             KeyValueRow(
               label: "Type",
               value: leaveRequestDetails.leaveType.typeName,
@@ -73,8 +71,7 @@ class RequestDetailsBottomSheet extends StatelessWidget {
           ]),
           SizedBox(height: 24.h),
 
-          // SECTION 2: Dates & Timing
-          buildInfoSection("TIMING DETAILS", [
+          buildInfoSection(context, "TIMING DETAILS", [
             KeyValueRow(
               label: "Start Date",
               value: leaveRequestDetails.startDate.toReadableDate,
@@ -83,7 +80,6 @@ class RequestDetailsBottomSheet extends StatelessWidget {
               label: "End Date",
               value: leaveRequestDetails.endDate.toReadableDate,
             ),
-            // Only show "Returned At" if the user actually returned
             if (leaveRequestDetails.returnedAt != null)
               KeyValueRow(
                 label: "Returned At",
@@ -96,21 +92,17 @@ class RequestDetailsBottomSheet extends StatelessWidget {
           ]),
           SizedBox(height: 24.h),
 
-          // SECTION 3: Additional & Technical Info
-          buildInfoSection("ADDITIONAL DETAILS", [
+          buildInfoSection(context, "ADDITIONAL DETAILS", [
             KeyValueRow(
               label: "Pre-Leave Ack.",
               value: leaveRequestDetails.preLeaveAcknowledgement
                   ? "Completed"
                   : "Pending",
             ),
-            // Display attachment count rather than printing a raw list
-            //TODO: implement pdf viewer
             KeyValueRow(
               label: "Attachments",
               value: "${leaveRequestDetails.attachments.length} File(s)",
             ),
-            // Only show Delegate info if someone was delegated
             if (leaveRequestDetails.delegateUserId != null)
               KeyValueRow(
                 label: "Delegate ID",
@@ -123,16 +115,15 @@ class RequestDetailsBottomSheet extends StatelessWidget {
           ]),
           SizedBox(height: 24.h),
 
-          // SECTION 4: Approval Timeline
-          _buildApprovalTimeline(leaveRequestDetails.approvalSteps),
+          _buildApprovalTimeline(context, leaveRequestDetails.approvalSteps),
         ],
       ),
     );
   }
 
-  Widget _buildApprovalTimeline(List<DetailApprovalStep> steps) {
+  Widget _buildApprovalTimeline(BuildContext context, List<DetailApprovalStep> steps) {
     if (steps.isEmpty) return const SizedBox.shrink();
-    return buildInfoSection("APPROVAL TIMELINE", [
+    return buildInfoSection(context, "APPROVAL TIMELINE", [
       ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -162,14 +153,13 @@ class _ApprovalStepTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Left: Timeline Circle Indicator and Vertical Line
           Column(
             children: [
               Container(
                 width: 28.w,
                 height: 28.h,
                 decoration: BoxDecoration(
-                  color: statusColor.withAlpha(35),
+                  color: statusColor.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                   border: Border.all(color: statusColor, width: 2.w),
                 ),
@@ -183,13 +173,12 @@ class _ApprovalStepTile extends StatelessWidget {
                 Expanded(
                   child: Container(
                     width: 2.w,
-                    color: AppColors.cardBorderColor,
+                    color: context.colorScheme.outline,
                   ),
                 ),
             ],
           ),
           SizedBox(width: 12.w),
-          // Right: Content Card
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(bottom: 24.h),
@@ -201,7 +190,7 @@ class _ApprovalStepTile extends StatelessWidget {
                     children: [
                       Text(
                         step.displayName,
-                        style: AppTextStyles.black14w600TextStyle,
+                        style: context.textTheme.titleSmall,
                       ),
                       Text(
                         step.status,
@@ -216,7 +205,9 @@ class _ApprovalStepTile extends StatelessWidget {
                   SizedBox(height: 4.h),
                   Text(
                     step.roleAtApproval,
-                    style: AppTextStyles.grey12w500TextStyle,
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: context.colorScheme.onSurfaceVariant,
+                    ),
                   ),
                   if (step.comments != null && step.comments!.isNotEmpty) ...[
                     SizedBox(height: 8.h),
@@ -224,18 +215,15 @@ class _ApprovalStepTile extends StatelessWidget {
                       width: double.infinity,
                       padding: EdgeInsets.all(12.r),
                       decoration: BoxDecoration(
-                        color: AppColors.cardBorderColor.withAlpha(15),
+                        color: context.colorScheme.outline.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(12.r),
                         border: Border.all(
-                          color: AppColors.cardBorderColor.withAlpha(50),
+                          color: context.colorScheme.outline.withValues(alpha: 0.3),
                         ),
                       ),
                       child: Text(
                         step.comments!,
-                        style: AppTextStyles.black14w500TextStyle.copyWith(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 13.sp,
-                        ),
+                        style: context.textTheme.bodyMedium,
                       ),
                     ),
                   ],

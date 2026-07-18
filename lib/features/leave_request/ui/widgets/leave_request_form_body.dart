@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leave_management_system/core/routes/app_routes.dart';
-import 'package:leave_management_system/core/styles/app_colors.dart';
-import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/date_picker_helper.dart';
 import 'package:leave_management_system/core/utils/file_picker_helper.dart';
 import 'package:leave_management_system/core/utils/service_locator.dart';
@@ -82,7 +81,7 @@ class LeaveRequestFormBody extends StatelessWidget {
                   ),
                   SizedBox(height: 16.h),
                 ],
-                _buildFormLabel("Leave Type"),
+                _buildFormLabel(context, "Leave Type"),
                 CustomDropDown<EligibleLeaveTypeModel>(
                   hint: "Choose Leave Type...",
                   value: fields.selectedLeaveType,
@@ -101,7 +100,7 @@ class LeaveRequestFormBody extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          _buildFormLabel("Start Date"),
+                          _buildFormLabel(context, "Start Date"),
                           CustomDateSelector(
                             isEnabled: isFormActive,
                             hint: "YYYY-MM-DD",
@@ -117,7 +116,7 @@ class LeaveRequestFormBody extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildFormLabel("End Date"),
+                          _buildFormLabel(context, "End Date"),
                           CustomDateSelector(
                             selectedDate: fields.endDate,
                             hint: "YYYY-MM-DD",
@@ -131,7 +130,7 @@ class LeaveRequestFormBody extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 16.h),
-                _buildFormLabel("Reason"),
+                _buildFormLabel(context, "Reason"),
                 CustomTextField(
                   hintText: "Enter the justification for this request...",
                   controller: reasonController,
@@ -140,7 +139,7 @@ class LeaveRequestFormBody extends StatelessWidget {
                 ),
                 SizedBox(height: 16.h),
                 if (fields.selectedLeaveType?.requiresDelegate == true) ...[
-                  _buildFormLabel("Delegate"),
+                  _buildFormLabel(context, "Delegate"),
                   CustomDropDown<DelegateUserModel>(
                     isEnabled: isFormActive,
                     hint: "Select a colleague to delegate...",
@@ -157,7 +156,7 @@ class LeaveRequestFormBody extends StatelessWidget {
                   SizedBox(height: 16.h),
                 ],
                 if (fields.selectedLeaveType?.requiresDocument == true) ...[
-                  _buildFormLabel("Required Attachments"),
+                  _buildFormLabel(context, "Required Attachments"),
                   ...fields.selectedLeaveType!.requiredDocuments.map((doc) {
                     final docId = doc.documentRequirementId;
                     final bool isFileUploaded = fields.selectedFiles
@@ -181,7 +180,6 @@ class LeaveRequestFormBody extends StatelessWidget {
                   }),
                   SizedBox(height: 8.h),
                 ],
-
                 UndertakingCard(
                   value: fields.preLeaveAcknowledgement,
                   isEnabled: isFormActive,
@@ -199,19 +197,22 @@ class LeaveRequestFormBody extends StatelessWidget {
                 Center(
                   child: PrimaryButtonWidget(
                     isLoading: isSubmitLoading,
-                    onPressed: hasElectronicSignature
+                    onPressed:
+                        hasElectronicSignature && fields.preLeaveAcknowledgement
                         ? () {
-                            // Sync local text controller text to Cubit memory before posting
                             cubit.updateReason(reasonController.text);
                             cubit.submitLeaveRequest();
                           }
-                        : () {},
-                    backgroundColor: hasElectronicSignature
-                        ? AppColors.primaryBlue
+                        : null,
+                    backgroundColor:
+                        hasElectronicSignature && fields.preLeaveAcknowledgement
+                        ? context.colorScheme.primary
                         : Colors.grey.shade400,
                     child: Text(
                       "Submit Request",
-                      style: AppTextStyles.white16w600TextStyle,
+                      style: context.textTheme.labelLarge?.copyWith(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -222,14 +223,14 @@ class LeaveRequestFormBody extends StatelessWidget {
       ],
     );
   }
-}
 
-Widget _buildFormLabel(String labelText) {
-  return Align(
-    alignment: AlignmentDirectional.centerStart,
-    child: Padding(
-      padding: EdgeInsetsDirectional.only(bottom: 6.h, start: 4.w),
-      child: Text(labelText, style: AppTextStyles.black14w600TextStyle),
-    ),
-  );
+  Widget _buildFormLabel(BuildContext context, String labelText) {
+    return Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: Padding(
+        padding: EdgeInsetsDirectional.only(bottom: 6.h, start: 4.w),
+        child: Text(labelText, style: context.textTheme.titleSmall),
+      ),
+    );
+  }
 }

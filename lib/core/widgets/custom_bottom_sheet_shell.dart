@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../styles/app_colors.dart';
-import '../styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class CustomBottomSheetShell extends StatelessWidget {
   final String title;
@@ -17,7 +15,7 @@ class CustomBottomSheetShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
       ),
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
@@ -28,7 +26,7 @@ class CustomBottomSheetShell extends StatelessWidget {
             height: 4.h,
             width: 40.w,
             decoration: BoxDecoration(
-              color: AppColors.cardBorderColor,
+              color: context.colorScheme.outline,
               borderRadius: BorderRadius.circular(2.r),
             ),
           ),
@@ -36,12 +34,20 @@ class CustomBottomSheetShell extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: AppTextStyles.black20w600TextStyle),
+              Text(
+                title,
+                style: context.textTheme.titleLarge?.copyWith(
+                  color: context.colorScheme.onSurface,
+                ),
+              ),
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: const Icon(Icons.close, color: AppColors.greyColor),
+                icon: Icon(
+                  Icons.close,
+                  color: context.colorScheme.onSurfaceVariant,
+                ),
               ),
             ],
           ),

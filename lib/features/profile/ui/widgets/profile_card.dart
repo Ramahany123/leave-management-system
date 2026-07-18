@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/widgets/name_avatar.dart';
-
-import '../../../../core/styles/app_colors.dart';
-import '../../../../core/styles/app_text_styles.dart';
 
 class ProfileCard extends StatelessWidget {
   final String name;
@@ -21,14 +19,14 @@ class ProfileCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(24.r),
         border: Border(
-          top: BorderSide(color: AppColors.primaryBlue, width: 6.h),
+          top: BorderSide(color: context.colorScheme.primary, width: 6.h),
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.blackColor.withValues(alpha: 0.03),
+            color: context.colorScheme.onSurface.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -39,11 +37,26 @@ class ProfileCard extends StatelessWidget {
         children: [
           NameAvatar(name: name),
           SizedBox(height: 16.h),
-          Text(name, style: AppTextStyles.black24w600TextStyle),
+          Text(
+            name,
+            style: context.textTheme.headlineMedium?.copyWith(
+              color: context.colorScheme.onSurface,
+            ),
+          ),
           SizedBox(height: 4.h),
-          Text(jobTitle, style: AppTextStyles.primary14w600TextStyle),
+          Text(
+            jobTitle,
+            style: context.textTheme.titleSmall?.copyWith(
+              color: context.colorScheme.primary,
+            ),
+          ),
           SizedBox(height: 4.h),
-          Text(workPlace, style: AppTextStyles.grey14w400TextStyle),
+          Text(
+            workPlace,
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: context.colorScheme.onSurfaceVariant,
+            ),
+          ),
         ],
       ),
     );

@@ -1,8 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/styles/app_colors.dart';
-import '../../../../core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
   const LanguageBottomSheet({super.key});
@@ -13,7 +12,7 @@ class LanguageBottomSheet extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
       ),
       child: Column(
@@ -23,13 +22,12 @@ class LanguageBottomSheet extends StatelessWidget {
             width: 40.w,
             height: 4.h,
             decoration: BoxDecoration(
-              color: AppColors.cardBorderColor,
+              color: context.colorScheme.outline,
               borderRadius: BorderRadius.circular(2.r),
             ),
           ),
           SizedBox(height: 24.h),
-          // TODO: localize text
-          Text("Select Language", style: AppTextStyles.black20w600TextStyle),
+          Text("Select Language", style: context.textTheme.titleLarge),
           SizedBox(height: 16.h),
           _LanguageTile(
             title: "English",
@@ -71,12 +69,14 @@ class _LanguageTile extends StatelessWidget {
       onTap: onTap,
       title: Text(
         title,
-        style: isSelected
-            ? AppTextStyles.primary16w600TextStyle
-            : AppTextStyles.black16w500TextStyle,
+        style: context.textTheme.titleMedium?.copyWith(
+          color: isSelected
+              ? context.colorScheme.primary
+              : context.colorScheme.onSurface,
+        ),
       ),
       trailing: isSelected
-          ? const Icon(Icons.check_circle, color: AppColors.primaryBlue)
+          ? Icon(Icons.check_circle, color: context.colorScheme.primary)
           : null,
     );
   }

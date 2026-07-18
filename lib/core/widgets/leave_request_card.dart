@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:leave_management_system/core/styles/app_colors.dart';
-import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 import 'status_badging.dart';
 
@@ -28,14 +27,16 @@ class LeaveRequestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
+        borderRadius: BorderRadius.circular(20.r),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
           decoration: BoxDecoration(
-            color: AppColors.whiteColor,
+            color: context.colorScheme.surface,
             borderRadius: BorderRadius.circular(20.r),
-            border: Border.all(color: AppColors.cardBorderColor),
+            border: Border.all(color: context.colorScheme.outline),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,12 +44,17 @@ class LeaveRequestCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: AppTextStyles.black16w600TextStyle),
+                  Text(
+                    title,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      color: context.colorScheme.onSurface,
+                    ),
+                  ),
                   SizedBox(height: 6.h),
                   Text(
                     date,
-                    style: AppTextStyles.grey16w400TextStyle.copyWith(
-                      fontSize: 14.sp,
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: context.colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/animated_snack_dialogue.dart';
 import 'package:leave_management_system/features/auth/data/models/change_password_body_model.dart';
 
-import '../../../../core/styles/app_text_styles.dart';
 import '../../../../core/utils/app_validators.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/widgets/primary_button_widget.dart';
@@ -33,13 +33,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     super.dispose();
   }
 
+  //TODO: localize text
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Change Password"),
+        title: Text("Change Password", style: context.textTheme.titleLarge),
         centerTitle: true,
-      ), //TODO: localize text
+      ),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -67,8 +68,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // 1. Current Password
-                          _buildLabel("Current Password"),
+                          _buildLabel(context, "Current Password"),
                           CustomTextField(
                             controller: _currentPasswordController,
                             hintText: "Enter current password",
@@ -79,8 +79,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           ),
                           SizedBox(height: 24.h),
 
-                          // 2. New Password
-                          _buildLabel("New Password"),
+                          _buildLabel(context, "New Password"),
                           CustomTextField(
                             controller: _newPasswordController,
                             hintText: "Enter new password",
@@ -91,8 +90,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           ),
                           SizedBox(height: 24.h),
 
-                          // 3. Confirm New Password
-                          _buildLabel("Confirm New Password"),
+                          _buildLabel(context, "Confirm New Password"),
                           CustomTextField(
                             controller: _confirmPasswordController,
                             hintText: "Repeat new password",
@@ -105,8 +103,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             isEnabled: !isLoading,
                           ),
 
-                          const Spacer(), // This pushes the button to the bottom!
-                          // 4. Submit Button
+                          if (MediaQuery.of(context).viewInsets.bottom == 0)
+                            const Spacer()
+                          else
+                            SizedBox(height: 24.h),
+
                           PrimaryButtonWidget(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
@@ -126,7 +127,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             isLoading: isLoading,
                             child: Text(
                               "Update Password",
-                              style: AppTextStyles.white16w600TextStyle,
+                              style: context.textTheme.labelLarge?.copyWith(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],
@@ -142,12 +145,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
-  Widget _buildLabel(String label) {
+  Widget _buildLabel(BuildContext context, String label) {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.h),
       child: Align(
         alignment: AlignmentDirectional.centerStart,
-        child: Text(label, style: AppTextStyles.black16w500TextStyle),
+        child: Text(label, style: context.textTheme.titleSmall),
       ),
     );
   }

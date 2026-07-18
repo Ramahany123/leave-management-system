@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/cache/cache_helper.dart';
 import 'package:leave_management_system/core/logic/cubit/theme_cubit.dart';
+import 'package:leave_management_system/core/theme/dark_theme.dart';
+import 'package:leave_management_system/core/theme/light_theme.dart';
 import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'core/routes/router_generation_config.dart';
-import 'core/styles/theme_data.dart';
 import 'features/auth/data/repo/auth_repo.dart';
 
 void main() async {
@@ -44,8 +45,8 @@ class MyApp extends StatelessWidget {
               locale: context.locale,
               debugShowCheckedModeBanner: false,
               title: 'University Leave Management System',
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
+              theme: lightTheme,
+              darkTheme: darkTheme,
               themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
               routerConfig: RouterGenerationConfig.goRouter,
             );

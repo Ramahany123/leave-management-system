@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../styles/app_colors.dart';
-import '../styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class GeneralErrorWidget extends StatelessWidget {
   final String message;
@@ -19,18 +18,23 @@ class GeneralErrorWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, color: AppColors.errorRed, size: 48.sp),
+          Icon(Icons.error_outline, color: context.colorScheme.error, size: 48.sp),
           SizedBox(height: 16.h),
           Text(
             message,
             textAlign: TextAlign.center,
-            style: AppTextStyles.grey18w400TextStyle,
+            style: context.textTheme.bodyLarge?.copyWith(
+              color: context.colorScheme.onSurfaceVariant,
+            ),
           ),
+          SizedBox(height: 8.h),
           TextButton(
             onPressed: onRetry,
-            child: const Text(
+            child: Text(
               'Try Again',
-              style: TextStyle(color: Colors.blue),
+              style: context.textTheme.labelLarge?.copyWith(
+                color: context.colorScheme.primary,
+              ),
             ),
           ),
         ],

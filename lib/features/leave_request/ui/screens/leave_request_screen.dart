@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leave_management_system/core/routes/app_routes.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/animated_snack_dialogue.dart';
 import 'package:leave_management_system/features/leave_request/logic/cubit/leave_request_cubit.dart';
 import 'package:leave_management_system/features/leave_request/ui/widgets/leave_request_form_body.dart';
-import '../../../../core/styles/app_colors.dart';
-import '../../../../core/styles/app_text_styles.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/general_error_widget.dart';
 import '../widgets/leave_request_shimmer.dart';
 
@@ -31,18 +31,17 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
         title: Text(
           "Submit Leave Request",
-          style: AppTextStyles.black20w600TextStyle.copyWith(
-            color: Colors.white,
+          style: context.textTheme.titleLarge?.copyWith(
+            color: context.colorScheme.onPrimary,
           ),
         ),
-        backgroundColor: AppColors.primaryBlue,
+        backgroundColor: context.colorScheme.primary,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: context.colorScheme.onPrimary),
       ),
       body: SafeArea(
         child: BlocConsumer<LeaveRequestCubit, LeaveRequestState>(
@@ -68,13 +67,11 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
               );
             }
 
-            // B. Dropdown lists failed to load
             if (state is LeaveRequestFormError) {
               return Center(
                 child: GeneralErrorWidget(
                   message: state.failure.message,
-                  onRetry: () =>
-                      context.read<LeaveRequestCubit>().loadFormData(),
+                  onRetry: () => context.read<LeaveRequestCubit>().loadFormData(),
                 ),
               );
             }
@@ -85,49 +82,53 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
                 reasonController: _reasonController,
               );
             }
+
             return const SizedBox.shrink();
           },
         ),
       ),
     );
   }
-}
 
-// --- Sub-widgets Helper methods ---
+  void _showSuccessDialog(BuildContext context, int requestId) {
+    final cubit = context.read<LeaveRequestCubit>();
 
-void _showSuccessDialog(BuildContext context, int requestId) {
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (dialogContext) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        title: const Row(
-          children: [
-            Icon(Icons.check_circle, color: AppColors.successGreen),
-            SizedBox(width: 8),
-            Text("Request Submitted"),
-          ],
-        ),
-        content: Text(
-          "Your leave request (#$requestId) has been submitted successfully and is pending delegation and manager approvals.",
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              GoRouter.of(context).pop(); // Pops Dialog
-              context.read<LeaveRequestCubit>().resetForm();
-              GoRouter.of(context).goNamed(AppRoutes.employeeDashboardScreen);
-            },
-            child: const Text(
-              "OK",
-              style: TextStyle(color: AppColors.primaryBlue),
-            ),
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
           ),
-        ],
-      );
-    },
-  );
+          title: const Row(
+            children: [
+              Icon(Icons.check_circle, color: AppColors.successGreen),
+              SizedBox(width: 8),
+              Text("Request Submitted"),
+            ],
+          ),
+          content: Text(
+            "Your leave request (#$requestId) has been submitted successfully and is pending delegation and manager approvals.",
+            style: context.textTheme.bodyMedium,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                cubit.resetForm();
+                context.go(AppRoutes.employeeDashboardScreen);
+              },
+              child: Text(
+                "OK",
+                style: context.textTheme.labelLarge?.copyWith(
+                  color: context.colorScheme.primary,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/language/locale_keys.g.dart';
-import 'package:leave_management_system/core/styles/app_colors.dart';
-import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/animated_snack_dialogue.dart';
 import 'package:leave_management_system/core/utils/app_validators.dart';
 import 'package:leave_management_system/core/widgets/custom_text_field.dart';
@@ -35,6 +34,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
+  //TODO: localize text
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +46,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
                   if (state is AuthActivationSuccess) {
-                    //TODO: use localization for this text
                     showAnimatedSnakDialogue(
                       context,
                       message: "Account is Activated",
@@ -74,21 +73,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           children: [
                             Text(
                               LocaleKeys.onboarding_title.tr(),
-                              style: AppTextStyles.grey12w500TextStyle,
+                              style: context.textTheme.bodySmall?.copyWith(
+                                color: context.colorScheme.onSurfaceVariant,
+                              ),
                             ),
                             Text(
                               LocaleKeys.onboarding_step.tr(),
-                              style: AppTextStyles.grey12w500TextStyle,
+                              style: context.textTheme.bodySmall?.copyWith(
+                                color: context.colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 8.h),
                         LinearProgressIndicator(
                           value: 1,
-                          backgroundColor: AppColors.greyColor.withValues(
-                            alpha: 0.2,
-                          ),
-                          color: AppColors.primaryBlue,
+                          backgroundColor: context.colorScheme.outline
+                              .withValues(alpha: 0.2),
+                          color: context.colorScheme.primary,
                           minHeight: 8.h,
                           borderRadius: BorderRadius.circular(8.r),
                         ),
@@ -97,21 +99,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           alignment: AlignmentDirectional.centerStart,
                           child: Text(
                             LocaleKeys.onboarding_header.tr(),
-                            style: AppTextStyles.black24w600TextStyle,
+                            style: context.textTheme.headlineMedium?.copyWith(
+                              color: context.colorScheme.onSurface,
+                            ),
                           ),
                         ),
                         SizedBox(height: 8.h),
                         Text(
                           LocaleKeys.onboarding_sub_header.tr(),
-                          style: AppTextStyles.grey18w400TextStyle,
+                          style: context.textTheme.bodyLarge?.copyWith(
+                            color: context.colorScheme.onSurfaceVariant,
+                          ),
                         ),
                         SizedBox(height: 32.h),
                         Container(
                           padding: EdgeInsets.all(20.r),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: context.colorScheme.surface,
                             borderRadius: BorderRadius.circular(24.r),
-                            border: Border.all(color: Colors.grey.shade200),
+                            border: Border.all(
+                              color: context.colorScheme.outline,
+                            ),
                           ),
                           child: Form(
                             key: _formKey,
@@ -120,7 +128,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               children: [
                                 Text(
                                   LocaleKeys.onboarding_phone_label.tr(),
-                                  style: AppTextStyles.black16w500TextStyle,
+                                  style: context.textTheme.titleSmall,
                                 ),
                                 CustomTextField(
                                   isEnabled: !isLoading,
@@ -135,7 +143,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 SizedBox(height: 16.h),
                                 Text(
                                   LocaleKeys.onboarding_new_password_label.tr(),
-                                  style: AppTextStyles.black16w500TextStyle,
+                                  style: context.textTheme.titleSmall,
                                 ),
                                 CustomTextField(
                                   isEnabled: !isLoading,
@@ -147,7 +155,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 Text(
                                   LocaleKeys.onboarding_confirm_password_label
                                       .tr(),
-                                  style: AppTextStyles.black16w500TextStyle,
+                                  style: context.textTheme.titleSmall,
                                 ),
                                 CustomTextField(
                                   isEnabled: !isLoading,
@@ -163,7 +171,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                           ),
                         ),
-                        const Spacer(),
+                        if (MediaQuery.of(context).viewInsets.bottom == 0)
+                          const Spacer()
+                        else
+                          SizedBox(height: 24.h),
                         SizedBox(height: 24.h),
                         PrimaryButtonWidget(
                           isLoading: isLoading,
@@ -183,7 +194,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           },
                           child: Text(
                             LocaleKeys.onboarding_submit_button.tr(),
-                            style: AppTextStyles.white16w600TextStyle,
+                            style: context.textTheme.labelLarge?.copyWith(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],

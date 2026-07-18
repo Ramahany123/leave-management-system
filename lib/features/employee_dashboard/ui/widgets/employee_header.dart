@@ -2,8 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/language/locale_keys.g.dart';
-import 'package:leave_management_system/core/styles/app_colors.dart';
-import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/widgets/name_avatar.dart';
 import 'package:leave_management_system/features/auth/data/repo/auth_repo.dart';
 
@@ -25,23 +24,30 @@ class EmployeeHeader extends StatelessWidget {
             children: [
               Text(
                 LocaleKeys.dashboard_good_morning.tr(),
-                style: AppTextStyles.grey16w400TextStyle,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: context.colorScheme.onSurfaceVariant,
+                ),
               ),
               SizedBox(height: 4.h),
-              Text(name, style: AppTextStyles.primaryBlue20w600TextStyle),
+              Text(
+                name,
+                style: context.textTheme.titleLarge?.copyWith(
+                  color: context.colorScheme.primary,
+                ),
+              ),
             ],
           ),
         ),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.colorScheme.surface,
             shape: BoxShape.circle,
-            border: Border.all(color: AppColors.cardBorderColor),
+            border: Border.all(color: context.colorScheme.outline),
           ),
           child: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.notifications_none_outlined,
-              color: AppColors.primaryBlue,
+              color: context.colorScheme.primary,
             ),
             onPressed: () {},
           ),

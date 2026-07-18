@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:leave_management_system/core/styles/app_colors.dart';
-import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/app_colors.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
-//TODO: localize text
 class SignatureWarningCard extends StatelessWidget {
   final VoidCallback onUploadPressed;
 
@@ -15,7 +14,6 @@ class SignatureWarningCard extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        // Soft red background indicating warning
         color: AppColors.errorRed.withValues(alpha: 0.08),
         border: Border.all(
           color: AppColors.errorRed.withValues(alpha: 0.3),
@@ -35,7 +33,7 @@ class SignatureWarningCard extends StatelessWidget {
               SizedBox(width: 8.w),
               Text(
                 "Electronic Signature Required",
-                style: AppTextStyles.black16w600TextStyle.copyWith(
+                style: context.textTheme.titleMedium?.copyWith(
                   color: AppColors.errorRed,
                 ),
               ),
@@ -44,8 +42,8 @@ class SignatureWarningCard extends StatelessWidget {
           SizedBox(height: 8.h),
           Text(
             "You cannot submit leave requests until you upload your electronic signature. Please go to your profile settings to upload it.",
-            style: AppTextStyles.grey14w400TextStyle.copyWith(
-              color: AppColors.blackColor,
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: context.colorScheme.onSurface,
             ),
           ),
           SizedBox(height: 12.h),
@@ -62,7 +60,9 @@ class SignatureWarningCard extends StatelessWidget {
             icon: Icon(Icons.edit_document, color: Colors.white, size: 18.sp),
             label: Text(
               "Upload Signature Now",
-              style: AppTextStyles.white14w500TextStyle,
+              style: context.textTheme.labelMedium?.copyWith(
+                color: Colors.white,
+              ),
             ),
           ),
         ],

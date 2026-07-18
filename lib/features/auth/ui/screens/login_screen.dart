@@ -5,12 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leave_management_system/core/routes/app_routes.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/animated_snack_dialogue.dart';
 import 'package:leave_management_system/features/auth/data/models/login_body_model.dart';
 import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/language/locale_keys.g.dart';
-import '../../../../core/styles/app_text_styles.dart';
 import '../../../../core/utils/app_validators.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/widgets/primary_button_widget.dart';
@@ -75,19 +75,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: 35.h),
                           Text(
                             LocaleKeys.login_title.tr(),
-                            style: AppTextStyles.black24w600TextStyle,
+                            style: context.textTheme.headlineMedium?.copyWith(
+                              color: context.colorScheme.onSurface,
+                            ),
                           ),
                           SizedBox(height: 10.h),
                           Text(
                             LocaleKeys.login_subtitle.tr(),
-                            style: AppTextStyles.grey18w400TextStyle,
+                            style: context.textTheme.bodyLarge?.copyWith(
+                              color: context.colorScheme.onSurfaceVariant,
+                            ),
                           ),
                           SizedBox(height: 40.h),
                           Align(
                             alignment: AlignmentDirectional.centerStart,
                             child: Text(
                               LocaleKeys.login_email_label.tr(),
-                              style: AppTextStyles.black16w500TextStyle,
+                              style: context.textTheme.titleSmall,
                             ),
                           ),
                           CustomTextField(
@@ -102,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             alignment: AlignmentDirectional.centerStart,
                             child: Text(
                               LocaleKeys.login_password_label.tr(),
-                              style: AppTextStyles.black16w500TextStyle,
+                              style: context.textTheme.titleSmall,
                             ),
                           ),
                           CustomTextField(
@@ -127,14 +131,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Text(
                               LocaleKeys.login_submit_button.tr(),
-                              style: AppTextStyles.white16w600TextStyle,
+                              style: context.textTheme.labelLarge?.copyWith(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
 
                           SizedBox(height: 24.h),
                           Text(
                             LocaleKeys.login_onboarding_message.tr(),
-                            style: AppTextStyles.grey12w500TextStyle,
+                            style: context.textTheme.bodySmall?.copyWith(
+                              color: context.colorScheme.onSurfaceVariant,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                           SizedBox(height: 24.h),

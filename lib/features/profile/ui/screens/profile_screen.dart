@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leave_management_system/core/logic/cubit/theme_cubit.dart';
 import 'package:leave_management_system/core/routes/app_routes.dart';
-import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/app_colors.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/app_dialogs.dart';
 import 'package:leave_management_system/core/widgets/general_error_widget.dart';
 import 'package:leave_management_system/features/profile/ui/widgets/profile_card.dart';
 import 'package:leave_management_system/features/profile/ui/widgets/settings_group.dart';
 import 'package:leave_management_system/features/profile/ui/widgets/settings_tile.dart';
-import '../../../../core/styles/app_colors.dart';
 import '../../../../core/utils/service_locator.dart';
 import '../../../auth/data/repo/auth_repo.dart';
 import '../../logic/cubit/profile_cubit.dart';
@@ -29,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
           child: BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, state) {
               return switch (state) {
-                ProfileLoading() => ProfileScreenShimmer(),
+                ProfileLoading() => const ProfileScreenShimmer(),
                 ProfileError(failure: final f) => GeneralErrorWidget(
                   message: f.message,
                   onRetry: context.read<ProfileCubit>().getProfile,
@@ -43,8 +43,7 @@ class ProfileScreen extends StatelessWidget {
                       workPlace: user.workplace,
                     ),
 
-                    //TODO: localize text
-                    _buildSectionTitle("ACCOUNT & SECURITY"),
+                    _buildSectionTitle(context, "ACCOUNT & SECURITY"),
                     SettingsGroup(
                       children: [
                         SettingsTile(
@@ -74,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    _buildSectionTitle("PREFERENCES"),
+                    _buildSectionTitle(context, "PREFERENCES"),
                     SettingsGroup(
                       children: [
                         SettingsTile(
@@ -89,7 +88,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         SettingsTile(
                           title: "Dark Mode",
-                          icon: Icons.language,
+                          icon: Icons.dark_mode_outlined,
                           trailing: BlocBuilder<ThemeCubit, bool>(
                             builder: (context, isDark) {
                               return Switch(
@@ -103,7 +102,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    _buildSectionTitle("SESSION"),
+                    _buildSectionTitle(context, "SESSION"),
                     SettingsGroup(
                       children: [
                         SettingsTile(
@@ -129,17 +128,22 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _buildSectionTitle(String title) {
-  return Column(
-    children: [
-      SizedBox(height: 32.h),
-      Text(
-        title,
-        style: AppTextStyles.grey12w500TextStyle.copyWith(letterSpacing: 1.2),
-      ),
-      SizedBox(height: 16.h),
-    ],
-  );
+  Widget _buildSectionTitle(BuildContext context, String title) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 32.h),
+        Text(
+          title,
+          style: context.textTheme.bodySmall?.copyWith(
+            color: context.colorScheme.onSurfaceVariant,
+            letterSpacing: 1.2,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        SizedBox(height: 16.h),
+      ],
+    );
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:leave_management_system/core/theme/app_colors.dart';
 
 import '../constants/app_constants.dart';
-import '../styles/app_colors.dart';
 
 extension RequestStatusExtension on String {
   Color get getStatusColor {
@@ -11,11 +11,11 @@ extension RequestStatusExtension on String {
       case RequestStatues.rejected:
         return AppColors.errorRed;
       case RequestStatues.pending:
-        return AppColors.pendingYellow;
+        return AppColors.pendingAmber;
       case RequestStatues.cancelled:
-        return AppColors.greyColor;
+        return AppColors.slate500;
       default:
-        return AppColors.greyColor;
+        return AppColors.slate500;
     }
   }
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '../../../../core/styles/app_colors.dart';
 
 class ProfileScreenShimmer extends StatelessWidget {
   const ProfileScreenShimmer({super.key});
@@ -12,38 +11,35 @@ class ProfileScreenShimmer extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        _buildCardShimmer(),
+        _buildCardShimmer(context),
         SizedBox(height: 32.h),
 
-        // 2. Account & Security Section
-        _buildSectionHeaderShimmer(),
+        _buildSectionHeaderShimmer(context),
         SizedBox(height: 16.h),
-        _buildSettingsGroupShimmer(itemCount: 3),
-        SizedBox(height: 32.h),
-        // 3. Preferences Section
-        _buildSectionHeaderShimmer(),
-        SizedBox(height: 16.h),
-        _buildSettingsGroupShimmer(itemCount: 2),
-
+        _buildSettingsGroupShimmer(context, itemCount: 3),
         SizedBox(height: 32.h),
 
-        // 4. Session Section
-        _buildSectionHeaderShimmer(),
+        _buildSectionHeaderShimmer(context),
         SizedBox(height: 16.h),
-        _buildSettingsGroupShimmer(itemCount: 1),
+        _buildSettingsGroupShimmer(context, itemCount: 2),
+        SizedBox(height: 32.h),
+
+        _buildSectionHeaderShimmer(context),
+        SizedBox(height: 16.h),
+        _buildSettingsGroupShimmer(context, itemCount: 1),
       ],
     );
   }
 
-  Container _buildCardShimmer() {
+  Widget _buildCardShimmer(BuildContext context) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: AppColors.blackColor.withValues(alpha: 0.03),
+            color: context.colorScheme.onSurface.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -51,8 +47,8 @@ class ProfileScreenShimmer extends StatelessWidget {
       ),
       padding: EdgeInsets.symmetric(vertical: 24.h),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
+        baseColor: context.colorScheme.outline.withValues(alpha: 0.4),
+        highlightColor: context.colorScheme.outline.withValues(alpha: 0.1),
         child: Column(
           children: [
             const Skeleton(width: 80, height: 80, isCircle: true),
@@ -67,44 +63,44 @@ class ProfileScreenShimmer extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _buildSectionHeaderShimmer() {
-  return Shimmer.fromColors(
-    baseColor: Colors.grey[300]!,
-    highlightColor: Colors.grey[100]!,
-    child: Skeleton(width: 120.w, height: 12.h),
-  );
-}
+  Widget _buildSectionHeaderShimmer(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: context.colorScheme.outline.withValues(alpha: 0.4),
+      highlightColor: context.colorScheme.outline.withValues(alpha: 0.1),
+      child: Skeleton(width: 120.w, height: 12.h),
+    );
+  }
 
-Widget _buildSettingsGroupShimmer({required int itemCount}) {
-  return Container(
-    decoration: BoxDecoration(
-      color: AppColors.whiteColor,
-      borderRadius: BorderRadius.circular(12.r),
-    ),
-    child: Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Column(
-        children: List.generate(
-          itemCount,
-          (index) => Padding(
-            padding: EdgeInsets.all(16.r),
-            child: Row(
-              children: [
-                const Skeleton(width: 32, height: 32, isCircle: true),
-                SizedBox(width: 16.w),
-                const Skeleton(width: 120, height: 16),
-                const Spacer(),
-                const Skeleton(width: 20, height: 20),
-              ],
+  Widget _buildSettingsGroupShimmer(BuildContext context, {required int itemCount}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: context.colorScheme.surface,
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Shimmer.fromColors(
+        baseColor: context.colorScheme.outline.withValues(alpha: 0.4),
+        highlightColor: context.colorScheme.outline.withValues(alpha: 0.1),
+        child: Column(
+          children: List.generate(
+            itemCount,
+            (index) => Padding(
+              padding: EdgeInsets.all(16.r),
+              child: Row(
+                children: [
+                  const Skeleton(width: 32, height: 32, isCircle: true),
+                  SizedBox(width: 16.w),
+                  const Skeleton(width: 120, height: 16),
+                  const Spacer(),
+                  const Skeleton(width: 20, height: 20),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class Skeleton extends StatelessWidget {
@@ -123,7 +119,7 @@ class Skeleton extends StatelessWidget {
       width: width.w,
       height: height.h,
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: context.colorScheme.surface,
         shape: isCircle ? BoxShape.circle : BoxShape.rectangle,
         borderRadius: isCircle ? null : BorderRadius.circular(4.r),
       ),

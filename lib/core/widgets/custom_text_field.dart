@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../styles/app_colors.dart';
-import '../styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class CustomTextField extends StatefulWidget {
   final String? hintText;
@@ -40,7 +39,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 331.w,
-      // height: 56.h,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.h),
         child: TextFormField(
@@ -49,17 +47,48 @@ class _CustomTextFieldState extends State<CustomTextField> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: widget.controller,
           validator: widget.validator,
-          keyboardType: widget.textInputType ?? TextInputType.none,
+          keyboardType: widget.textInputType ?? TextInputType.text,
           obscureText: _isObscured,
-          cursorColor: AppColors.primaryBlue,
+          cursorColor: context.colorScheme.primary,
+          style: context.textTheme.bodyMedium?.copyWith(
+            color: widget.isEnabled
+                ? context.colorScheme.onSurface
+                : context.colorScheme.onSurfaceVariant,
+          ),
           decoration: InputDecoration(
+            filled: true,
+            fillColor: widget.isEnabled
+                ? context.colorScheme.surface
+                : context.colorScheme.outline.withValues(alpha: 0.15),
             contentPadding: EdgeInsets.symmetric(
               horizontal: 18.w,
               vertical: 18.h,
             ),
-            hint: Text(
-              widget.hintText ?? "",
-              style: AppTextStyles.grey16w400TextStyle,
+            hintText: widget.hintText,
+            hintStyle: context.textTheme.bodyMedium?.copyWith(
+              color: context.colorScheme.onSurfaceVariant,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: context.colorScheme.outline),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(
+                color: context.colorScheme.outline.withValues(alpha: 0.3),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: context.colorScheme.primary, width: 1.5),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: context.colorScheme.error),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: context.colorScheme.error, width: 1.5),
             ),
             suffixIcon: widget.isPassword
                 ? GestureDetector(
@@ -70,7 +99,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     },
                     child: Icon(
                       _isObscured ? Icons.visibility_off : Icons.visibility,
-                      color: Colors.grey,
+                      color: context.colorScheme.onSurfaceVariant,
                       size: 22.sp,
                     ),
                   )

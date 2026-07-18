@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class HistoryEmptyState extends StatelessWidget {
   const HistoryEmptyState({super.key});
@@ -9,18 +8,22 @@ class HistoryEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverFillRemaining(
-      hasScrollBody:
-          false, // This is important! It allows the content to be centered
+      hasScrollBody: false,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.description_outlined, size: 64.sp, color: Colors.grey),
+            Icon(
+              Icons.description_outlined,
+              size: 64.sp,
+              color: context.colorScheme.onSurfaceVariant,
+            ),
             SizedBox(height: 16.h),
-            //TODO: localize this message
             Text(
               "No requests found for this status",
-              style: AppTextStyles.grey18w400TextStyle,
+              style: context.textTheme.bodyLarge?.copyWith(
+                color: context.colorScheme.onSurfaceVariant,
+              ),
             ),
           ],
         ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../core/styles/app_colors.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class SettingsTile extends StatelessWidget {
   final String title;
@@ -22,27 +21,33 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final effectiveColor = contentColor ?? context.colorScheme.onSurface;
+
     return ListTile(
       onTap: onTap,
       leading: Container(
         padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
-          color: AppColors.cardBorderColor,
+          color: context.colorScheme.outline.withValues(alpha: 0.3),
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: contentColor),
+        child: Icon(icon, color: effectiveColor, size: 20.sp),
       ),
-      title: Text(title),
+      title: Text(
+        title,
+        style: context.textTheme.titleMedium?.copyWith(color: effectiveColor),
+      ),
       subtitle: subTitle != null
           ? Text(
               subTitle!,
-              style: TextStyle(color: contentColor?.withValues(alpha: 0.7)),
+              style: context.textTheme.bodySmall?.copyWith(
+                color: effectiveColor.withValues(alpha: 0.7),
+              ),
             )
           : null,
       trailing:
           trailing ??
-          Icon(Icons.keyboard_arrow_right, size: 24.sp, color: contentColor),
-      textColor: contentColor,
+          Icon(Icons.keyboard_arrow_right, size: 24.sp, color: effectiveColor),
     );
   }
 }

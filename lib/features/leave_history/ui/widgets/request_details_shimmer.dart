@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RequestDetailsShimmer extends StatelessWidget {
@@ -8,36 +9,34 @@ class RequestDetailsShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
+      baseColor: context.colorScheme.outline.withValues(alpha: 0.4),
+      highlightColor: context.colorScheme.outline.withValues(alpha: 0.1),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildShimmerSection(3), // Mirror LEAVE INFORMATION
+          _buildShimmerSection(context, 3),
           SizedBox(height: 24.h),
-          _buildShimmerSection(4), // Mirror TIMING DETAILS
+          _buildShimmerSection(context, 4),
           SizedBox(height: 24.h),
-          _buildShimmerSection(4), // Mirror ADDITIONAL DETAILS
+          _buildShimmerSection(context, 4),
         ],
       ),
     );
   }
 
-  Widget _buildShimmerSection(int rowCount) {
+  Widget _buildShimmerSection(BuildContext context, int rowCount) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Section Title Placeholder
         Container(
           width: 130.w,
           height: 12.h,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.colorScheme.surface,
             borderRadius: BorderRadius.circular(4.r),
           ),
         ),
         SizedBox(height: 12.h),
-        // Rows Placeholder
         ...List.generate(
           rowCount,
           (index) => Padding(
@@ -45,21 +44,19 @@ class RequestDetailsShimmer extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Label block (varied widths: 60.w, 75.w, 90.w, etc.)
                 Container(
                   width: (60 + (index * 15)).w,
                   height: 14.h,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.colorScheme.surface,
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),
-                // Value block (varied widths: 110.w, 90.w, 70.w, etc.)
                 Container(
                   width: (110 - (index * 20)).w,
                   height: 14.h,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.colorScheme.surface,
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),

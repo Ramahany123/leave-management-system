@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../styles/app_colors.dart';
-import '../styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class NameAvatar extends StatelessWidget {
   final String name;
@@ -12,10 +10,13 @@ class NameAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: 28.r,
-      backgroundColor: AppColors.primaryBlue,
+      backgroundColor: context.colorScheme.primary,
       child: Text(
         _getNameInitials(name),
-        style: AppTextStyles.white16w600TextStyle.copyWith(fontSize: 20.sp),
+        style: context.textTheme.titleMedium?.copyWith(
+          color: context.colorScheme.onPrimary,
+          fontSize: 20.sp,
+        ),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:leave_management_system/core/styles/app_colors.dart';
-import 'package:leave_management_system/core/styles/app_text_styles.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class LeaveBalanceCard extends StatelessWidget {
   final String title;
@@ -29,27 +28,32 @@ class LeaveBalanceCard extends StatelessWidget {
       width: width.w,
       padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: AppColors.cardBorderColor),
+        border: Border.all(color: context.colorScheme.outline),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(title, style: AppTextStyles.primary16w600TextStyle),
+          Text(
+            title,
+            style: context.textTheme.titleMedium?.copyWith(
+              color: context.colorScheme.primary,
+            ),
+          ),
           SizedBox(height: 20.h),
           if (isCircular && progressValue != null)
-            _buildCircularProgress()
+            _buildCircularProgress(context)
           else
-            _buildLargeText(),
+            _buildLargeText(context),
           SizedBox(height: 20.h),
-          _buildBottomBadge(),
+          _buildBottomBadge(context),
         ],
       ),
     );
   }
 
-  Widget _buildCircularProgress() {
+  Widget _buildCircularProgress(BuildContext context) {
     return SizedBox(
       height: 70.sp,
       width: 70.sp,
@@ -59,13 +63,14 @@ class LeaveBalanceCard extends StatelessWidget {
           CircularProgressIndicator(
             value: progressValue,
             strokeWidth: 8.w,
-            backgroundColor: AppColors.cardBorderColor,
-            color: AppColors.primaryBlue,
+            backgroundColor: context.colorScheme.outline,
+            color: context.colorScheme.primary,
           ),
           Center(
             child: Text(
               balance.toString(),
-              style: AppTextStyles.primaryBlue20w600TextStyle.copyWith(
+              style: context.textTheme.headlineMedium?.copyWith(
+                color: context.colorScheme.primary,
                 fontSize: 24.sp,
               ),
             ),
@@ -75,18 +80,21 @@ class LeaveBalanceCard extends StatelessWidget {
     );
   }
 
-  Widget _buildLargeText() {
+  Widget _buildLargeText(BuildContext context) {
     return Text(
       balance.toString(),
-      style: AppTextStyles.primaryBlue20w600TextStyle.copyWith(fontSize: 40.sp),
+      style: context.textTheme.headlineMedium?.copyWith(
+        color: context.colorScheme.primary,
+        fontSize: 40.sp,
+      ),
     );
   }
 
-  Widget _buildBottomBadge() {
+  Widget _buildBottomBadge(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: AppColors.backgroundLight,
+        color: context.colorScheme.outline.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(20.r),
       ),
       child: FittedBox(
@@ -95,11 +103,15 @@ class LeaveBalanceCard extends StatelessWidget {
         child: Text.rich(
           TextSpan(
             text: 'Taken: $taken ',
-            style: AppTextStyles.primary14w600TextStyle,
+            style: context.textTheme.titleSmall?.copyWith(
+              color: context.colorScheme.primary,
+            ),
             children: [
               TextSpan(
                 text: ' |  Total: $total',
-                style: AppTextStyles.grey14w400TextStyle,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: context.colorScheme.onSurfaceVariant,
+                ),
               ),
             ],
           ),

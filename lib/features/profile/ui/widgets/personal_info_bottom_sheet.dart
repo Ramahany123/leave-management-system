@@ -12,13 +12,12 @@ class PersonalInfoBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: localize texts
     return CustomBottomSheetShell(
       title: "Personal Information",
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          buildInfoSection("OFFICIAL DETAILS", [
+          buildInfoSection(context, "OFFICIAL DETAILS", [
             KeyValueRow(label: "National ID (SSN)", value: user.ssn),
             KeyValueRow(
               label: "Birth Date",
@@ -29,7 +28,7 @@ class PersonalInfoBottomSheet extends StatelessWidget {
           ]),
           SizedBox(height: 24.h),
 
-          buildInfoSection("UNIVERSITY DETAILS", [
+          buildInfoSection(context, "UNIVERSITY DETAILS", [
             KeyValueRow(
               label: "Hire Date",
               value: user.hireDate.toReadableDate,

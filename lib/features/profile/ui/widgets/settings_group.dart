@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/styles/app_colors.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class SettingsGroup extends StatelessWidget {
   final List<Widget> children;
@@ -10,25 +10,25 @@ class SettingsGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(12.r),
       ),
-      child: Column(children: _buildChildrenWithDividers()),
+      child: Column(children: _buildChildrenWithDividers(context)),
     );
   }
 
-  List<Widget> _buildChildrenWithDividers() {
+  List<Widget> _buildChildrenWithDividers(BuildContext context) {
     List<Widget> result = [];
     for (int i = 0; i < children.length; i++) {
       result.add(children[i]);
       if (i < children.length - 1) {
-        result.add(_buildDivider());
+        result.add(_buildDivider(context));
       }
     }
     return result;
   }
 }
 
-Widget _buildDivider() {
-  return Divider(height: 1.h, thickness: 1.h, color: AppColors.cardBorderColor);
+Widget _buildDivider(BuildContext context) {
+  return Divider(height: 1.h, thickness: 1.h, color: context.colorScheme.outline);
 }
