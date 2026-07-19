@@ -71,6 +71,16 @@ class ProfileScreen extends StatelessWidget {
                             ).pushNamed(AppRoutes.updateContactScreen);
                           },
                         ),
+                        SettingsTile(
+                          title: "Upload Signature",
+                          subTitle: user.signatureUrl != null
+                              ? "Signature uploaded"
+                              : "No signature",
+                          icon: Icons.edit_document,
+                          onTap: () {
+                            AppDialogs.showUploadSignatureSheet(context);
+                          },
+                        ),
                       ],
                     ),
                     _buildSectionTitle(context, "PREFERENCES"),

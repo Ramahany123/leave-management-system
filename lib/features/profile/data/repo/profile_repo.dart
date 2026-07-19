@@ -5,6 +5,7 @@ import 'package:leave_management_system/core/utils/result.dart';
 import 'package:leave_management_system/features/profile/data/models/profile_response_model.dart';
 import 'package:leave_management_system/features/profile/data/models/update_contact_body_model.dart';
 import 'package:leave_management_system/features/profile/data/models/update_contact_response_model.dart';
+import 'package:leave_management_system/features/profile/data/models/upload_signature_response_model.dart';
 import 'package:leave_management_system/features/profile/data/web_services/profile_web_services.dart';
 
 class ProfileRepo extends ChangeNotifier {
@@ -41,6 +42,25 @@ class ProfileRepo extends ChangeNotifier {
       }
       notifyListeners();
 
+      return SuccessResult(response);
+    } catch (e) {
+      return FailureResult(ApiErrorHandler.handle(e));
+    }
+  }
+
+  Future<Result<UploadSignatureResponseModel>> uploadSignature(
+    String filePath,
+  ) async {
+    try {
+      final response = await _profileWebServices.uploadSignature(filePath);
+      if (_currentUser != null) {
+        _currentUser = _currentUser!.copyWith(
+          signatureUrl: response.signatureUrl,
+        );
+      } else {
+        await getProfile();
+      }
+      notifyListeners();
       return SuccessResult(response);
     } catch (e) {
       return FailureResult(ApiErrorHandler.handle(e));

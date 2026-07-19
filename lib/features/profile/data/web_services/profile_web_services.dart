@@ -4,6 +4,7 @@ import 'package:leave_management_system/core/networking/api_service.dart';
 import 'package:leave_management_system/features/profile/data/models/profile_response_model.dart';
 import 'package:leave_management_system/features/profile/data/models/update_contact_body_model.dart';
 import 'package:leave_management_system/features/profile/data/models/update_contact_response_model.dart';
+import 'package:leave_management_system/features/profile/data/models/upload_signature_response_model.dart';
 
 //TODO: add option to upload signature
 class ProfileWebServices {
@@ -27,5 +28,20 @@ class ProfileWebServices {
       data: updateContactBody.toJson(),
     );
     return UpdateContactResponseModel.fromJson(response.data);
+  }
+
+  Future<UploadSignatureResponseModel> uploadSignature(String filePath) async {
+    final formData = FormData.fromMap({
+      "signature": await MultipartFile.fromFile(
+        filePath,
+        filename: filePath.split('/').last,
+      ),
+    });
+
+    final Response response = await _apiService.postRequest(
+      apiEndpoint: ApiEndpoints.uploadSignature,
+      data: formData,
+    );
+    return UploadSignatureResponseModel.fromJson(response.data);
   }
 }
