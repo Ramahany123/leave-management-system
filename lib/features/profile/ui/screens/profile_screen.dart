@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leave_management_system/core/constants/app_constants.dart';
+import 'package:leave_management_system/core/constants/enums.dart';
 import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/logic/cubit/theme_cubit.dart';
 import 'package:leave_management_system/core/routes/app_routes.dart';
@@ -83,6 +85,34 @@ class ProfileScreen extends StatelessWidget {
                               : LocaleKeys.profile_no_signature.tr(),
                           onTap: () {
                             AppDialogs.showUploadSignatureSheet(context);
+                          },
+                        ),
+                        ListenableBuilder(
+                          listenable: sl<AuthRepo>(),
+                          builder: (context, _) {
+                            final authRepo = sl<AuthRepo>();
+                            if (!UserRoles.managerRoles.contains(
+                              authRepo.userRole,
+                            )) {
+                              return SizedBox.shrink();
+                            }
+                            final bool isManagerMode =
+                                authRepo.currentViewMode == ViewMode.manager;
+                            return SettingsTile(
+                              title: LocaleKeys.profile_manager_mode.tr(),
+                              subTitle: isManagerMode
+                                  ? LocaleKeys.profile_switch_to_employee_view
+                                        .tr()
+                                  : LocaleKeys.profile_switch_to_manager_view
+                                        .tr(),
+                              icon: Icons.swap_horiz_rounded,
+                              trailing: Switch(
+                                value: isManagerMode,
+                                onChanged: (_) {
+                                  authRepo.toggleViewMode();
+                                },
+                              ),
+                            );
                           },
                         ),
                       ],
