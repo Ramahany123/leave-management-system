@@ -114,6 +114,7 @@ class UserModel {
     bool? isActive,
     DateTime? createdAt,
     DateTime? updatedAt,
+    String? signatureUrl,
   }) {
     return UserModel(
       phone: phone ?? this.phone,
@@ -134,6 +135,7 @@ class UserModel {
       isActive: isActive ?? this.isActive,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      signatureUrl: signatureUrl ?? this.signatureUrl,
     );
   }
 }
