@@ -33,6 +33,16 @@ class AuthRepo extends ChangeNotifier {
   Failure? _initialAuthFailure;
   Failure? get initialAuthFailure => _initialAuthFailure;
 
+  ViewMode _currentViewMode = ViewMode.employee;
+  ViewMode get currentViewMode => _currentViewMode;
+
+  void toggleViewMode() {
+    _currentViewMode == ViewMode.manager
+        ? _currentViewMode = ViewMode.employee
+        : _currentViewMode = ViewMode.manager;
+    notifyListeners();
+  }
+
   AuthRepo({required AuthWebServices authWebServices})
     : _authWebServices = authWebServices;
 
@@ -46,6 +56,9 @@ class AuthRepo extends ChangeNotifier {
 
     if (userRole != null) {
       _userRole = userRole;
+      _currentViewMode = UserRoles.managerRoles.contains(userRole)
+          ? ViewMode.manager
+          : ViewMode.employee;
     }
     if (userName != null) {
       _userName = userName;
@@ -62,7 +75,10 @@ class AuthRepo extends ChangeNotifier {
           _currentAuthStatus = data.user.isActive
               ? AuthStatus.authenticated
               : AuthStatus.activationRequired;
-
+          _userRole = data.user.role;
+          _currentViewMode = UserRoles.managerRoles.contains(data.user.role)
+              ? ViewMode.manager
+              : ViewMode.employee;
         case FailureResult<ProfileResponseModel>(:final failure):
           if (failure is UnauthenticatedFailure) {
             await logout();
@@ -101,6 +117,9 @@ class AuthRepo extends ChangeNotifier {
           _userName = response.user!.name;
         }
         _currentAuthStatus = response.status;
+        _currentViewMode = UserRoles.managerRoles.contains(_userRole)
+            ? ViewMode.manager
+            : ViewMode.employee;
         notifyListeners();
       }
 
@@ -136,6 +155,9 @@ class AuthRepo extends ChangeNotifier {
       _currentAuthStatus = response.status;
       _userRole = response.user.role;
       _userName = response.user.name;
+      _currentViewMode = UserRoles.managerRoles.contains(_userRole)
+          ? ViewMode.manager
+          : ViewMode.employee;
       notifyListeners();
       return SuccessResult(response);
     } catch (e) {
@@ -152,6 +174,7 @@ class AuthRepo extends ChangeNotifier {
     _currentAuthStatus = AuthStatus.unauthenticated;
     _userName = "";
     _userRole = UserRoles.employeeRole;
+    _currentViewMode = ViewMode.employee;
 
     notifyListeners();
   }
