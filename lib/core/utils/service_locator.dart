@@ -18,6 +18,7 @@ import 'package:leave_management_system/features/leave_request/logic/cubit/leave
 import 'package:leave_management_system/features/profile/data/repo/profile_repo.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
+import 'package:leave_management_system/features/profile/logic/cubit/upload_signature_cubit.dart';
 import '../../features/profile/data/web_services/profile_web_services.dart';
 import '../networking/api_service.dart';
 
@@ -44,6 +45,7 @@ void setupAuthDependencies() {
   sl.registerLazySingleton(() => AuthRepo(authWebServices: sl()));
   sl.registerFactory(() => AuthCubit(authRepo: sl()));
   sl.registerFactory(() => ChangePasswordCubit(authRepo: sl()));
+  sl.registerFactory(() => UploadSignatureCubit(profileRepo: sl()));
 }
 
 void setupEmployeeDashboardDependencies() {
