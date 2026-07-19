@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
@@ -27,7 +28,10 @@ class LanguageBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 24.h),
-          Text("Select Language", style: context.textTheme.titleLarge),
+          Text(
+            LocaleKeys.profile_select_language.tr(),
+            style: context.textTheme.titleLarge,
+          ),
           SizedBox(height: 16.h),
           _LanguageTile(
             title: "English",

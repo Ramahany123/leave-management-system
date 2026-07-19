@@ -1,8 +1,10 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/animated_snack_dialogue.dart';
 import 'package:leave_management_system/features/auth/data/models/change_password_body_model.dart';
@@ -33,12 +35,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     super.dispose();
   }
 
-  //TODO: localize text
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Change Password", style: context.textTheme.titleLarge),
+        title: Text(
+          LocaleKeys.change_password_title.tr(),
+          style: context.textTheme.titleLarge,
+        ),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -50,6 +54,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
                 child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
                   listener: (context, state) {
+                    if (!context.mounted) return;
                     if (state is ChangePasswordError) {
                       showAnimatedSnakDialogue(
                         context,
@@ -57,7 +62,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         type: AnimatedSnackBarType.error,
                       );
                     } else if (state is ChangePasswordSuccess) {
-                      showAnimatedSnakDialogue(context, message: state.message);
+                      showAnimatedSnakDialogue(
+                        context,
+                        message: state.message,
+                        type: AnimatedSnackBarType.success,
+                      );
                       context.pop();
                     }
                   },
@@ -68,10 +77,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildLabel(context, "Current Password"),
+                          _buildLabel(
+                            context,
+                            LocaleKeys.change_password_current_password_label.tr(),
+                          ),
                           CustomTextField(
                             controller: _currentPasswordController,
-                            hintText: "Enter current password",
+                            hintText:
+                                LocaleKeys.change_password_enter_current_password_hint.tr(),
                             isPassword: true,
                             validator: (value) =>
                                 AppValidators.validatePassword(value),
@@ -79,10 +92,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           ),
                           SizedBox(height: 24.h),
 
-                          _buildLabel(context, "New Password"),
+                          _buildLabel(
+                            context,
+                            LocaleKeys.change_password_new_password_label.tr(),
+                          ),
                           CustomTextField(
                             controller: _newPasswordController,
-                            hintText: "Enter new password",
+                            hintText:
+                                LocaleKeys.change_password_enter_new_password_hint.tr(),
                             isPassword: true,
                             validator: (value) =>
                                 AppValidators.validatePassword(value),
@@ -90,10 +107,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           ),
                           SizedBox(height: 24.h),
 
-                          _buildLabel(context, "Confirm New Password"),
+                          _buildLabel(
+                            context,
+                            LocaleKeys.change_password_confirm_new_password_label.tr(),
+                          ),
                           CustomTextField(
                             controller: _confirmPasswordController,
-                            hintText: "Repeat new password",
+                            hintText:
+                                LocaleKeys.change_password_repeat_new_password_hint.tr(),
                             isPassword: true,
                             validator: (value) =>
                                 AppValidators.validateConfirmPassword(
@@ -126,7 +147,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             },
                             isLoading: isLoading,
                             child: Text(
-                              "Update Password",
+                              LocaleKeys.change_password_update_password_button.tr(),
                               style: context.textTheme.labelLarge?.copyWith(
                                 color: Colors.white,
                               ),

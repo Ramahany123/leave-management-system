@@ -1,8 +1,10 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/routes/app_routes.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/animated_snack_dialogue.dart';
@@ -33,7 +35,7 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Submit Leave Request",
+          LocaleKeys.leave_request_form_title.tr(),
           style: context.textTheme.titleLarge?.copyWith(
             color: context.colorScheme.onPrimary,
           ),
@@ -46,6 +48,7 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
       body: SafeArea(
         child: BlocConsumer<LeaveRequestCubit, LeaveRequestState>(
           listener: (context, state) {
+            if (!context.mounted) return;
             if (state is LeaveRequestSubmitSuccess) {
               _showSuccessDialog(
                 context,
@@ -101,15 +104,17 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.r),
           ),
-          title: const Row(
+          title: Row(
             children: [
-              Icon(Icons.check_circle, color: AppColors.successGreen),
-              SizedBox(width: 8),
-              Text("Request Submitted"),
+              const Icon(Icons.check_circle, color: AppColors.successGreen),
+              const SizedBox(width: 8),
+              Text(LocaleKeys.leave_request_request_submitted_title.tr()),
             ],
           ),
           content: Text(
-            "Your leave request (#$requestId) has been submitted successfully and is pending delegation and manager approvals.",
+            LocaleKeys.leave_request_request_submitted_message.tr(
+              namedArgs: {'id': requestId.toString()},
+            ),
             style: context.textTheme.bodyMedium,
           ),
           actions: [
@@ -120,7 +125,7 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
                 context.go(AppRoutes.employeeDashboardScreen);
               },
               child: Text(
-                "OK",
+                LocaleKeys.leave_request_ok.tr(),
                 style: context.textTheme.labelLarge?.copyWith(
                   color: context.colorScheme.primary,
                 ),

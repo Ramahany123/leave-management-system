@@ -34,7 +34,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
-  //TODO: localize text
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,10 +44,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               hasScrollBody: false,
               child: BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
+                  if (!context.mounted) return;
                   if (state is AuthActivationSuccess) {
                     showAnimatedSnakDialogue(
                       context,
-                      message: "Account is Activated",
+                      message:
+                          LocaleKeys.onboarding_account_activated_success.tr(),
                       type: AnimatedSnackBarType.success,
                     );
                   } else if (state is AuthActivationError) {

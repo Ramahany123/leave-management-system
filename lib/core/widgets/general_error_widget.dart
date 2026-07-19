@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
 class GeneralErrorWidget extends StatelessWidget {
@@ -31,7 +33,7 @@ class GeneralErrorWidget extends StatelessWidget {
           TextButton(
             onPressed: onRetry,
             child: Text(
-              'Try Again',
+              LocaleKeys.common_try_again.tr(),
               style: context.textTheme.labelLarge?.copyWith(
                 color: context.colorScheme.primary,
               ),

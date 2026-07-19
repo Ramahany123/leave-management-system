@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/routes/app_routes.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/date_picker_helper.dart';
@@ -81,9 +83,12 @@ class LeaveRequestFormBody extends StatelessWidget {
                   ),
                   SizedBox(height: 16.h),
                 ],
-                _buildFormLabel(context, "Leave Type"),
+                _buildFormLabel(
+                  context,
+                  LocaleKeys.leave_request_leave_type.tr(),
+                ),
                 CustomDropDown<EligibleLeaveTypeModel>(
-                  hint: "Choose Leave Type...",
+                  hint: LocaleKeys.leave_request_choose_leave_type.tr(),
                   value: fields.selectedLeaveType,
                   items: state.eligibleLeaveTypes,
                   itemAsString: (type) => type.typeName,
@@ -100,10 +105,13 @@ class LeaveRequestFormBody extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          _buildFormLabel(context, "Start Date"),
+                          _buildFormLabel(
+                            context,
+                            LocaleKeys.leave_request_start_date.tr(),
+                          ),
                           CustomDateSelector(
                             isEnabled: isFormActive,
-                            hint: "YYYY-MM-DD",
+                            hint: LocaleKeys.leave_request_date_hint.tr(),
                             selectedDate: fields.startDate,
                             onTap: () =>
                                 _handleDateSelection(context, cubit, true),
@@ -116,10 +124,13 @@ class LeaveRequestFormBody extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildFormLabel(context, "End Date"),
+                          _buildFormLabel(
+                            context,
+                            LocaleKeys.leave_request_end_date.tr(),
+                          ),
                           CustomDateSelector(
                             selectedDate: fields.endDate,
-                            hint: "YYYY-MM-DD",
+                            hint: LocaleKeys.leave_request_date_hint.tr(),
                             isEnabled: isFormActive,
                             onTap: () =>
                                 _handleDateSelection(context, cubit, false),
@@ -130,19 +141,22 @@ class LeaveRequestFormBody extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 16.h),
-                _buildFormLabel(context, "Reason"),
+                _buildFormLabel(context, LocaleKeys.leave_request_reason.tr()),
                 CustomTextField(
-                  hintText: "Enter the justification for this request...",
+                  hintText: LocaleKeys.leave_request_reason_hint.tr(),
                   controller: reasonController,
                   isEnabled: isFormActive,
                   textInputType: TextInputType.text,
                 ),
                 SizedBox(height: 16.h),
                 if (fields.selectedLeaveType?.requiresDelegate == true) ...[
-                  _buildFormLabel(context, "Delegate"),
+                  _buildFormLabel(
+                    context,
+                    LocaleKeys.leave_request_delegate.tr(),
+                  ),
                   CustomDropDown<DelegateUserModel>(
                     isEnabled: isFormActive,
-                    hint: "Select a colleague to delegate...",
+                    hint: LocaleKeys.leave_request_select_delegate_hint.tr(),
                     value: fields.selectedDelegate,
                     items: state.delegateUsers,
                     itemAsString: (delegateUser) =>
@@ -156,7 +170,10 @@ class LeaveRequestFormBody extends StatelessWidget {
                   SizedBox(height: 16.h),
                 ],
                 if (fields.selectedLeaveType?.requiresDocument == true) ...[
-                  _buildFormLabel(context, "Required Attachments"),
+                  _buildFormLabel(
+                    context,
+                    LocaleKeys.leave_request_required_attachments.tr(),
+                  ),
                   ...fields.selectedLeaveType!.requiredDocuments.map((doc) {
                     final docId = doc.documentRequirementId;
                     final bool isFileUploaded = fields.selectedFiles
@@ -209,7 +226,7 @@ class LeaveRequestFormBody extends StatelessWidget {
                         ? context.colorScheme.primary
                         : Colors.grey.shade400,
                     child: Text(
-                      "Submit Request",
+                      LocaleKeys.leave_request_submit.tr(),
                       style: context.textTheme.labelLarge?.copyWith(
                         color: Colors.white,
                       ),

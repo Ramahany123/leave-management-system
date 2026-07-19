@@ -1,8 +1,10 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/animated_snack_dialogue.dart';
 import 'package:leave_management_system/features/profile/data/models/update_contact_body_model.dart';
@@ -34,7 +36,10 @@ class _UpdateContactScreenState extends State<UpdateContactScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Update Contact", style: context.textTheme.titleLarge),
+        title: Text(
+          LocaleKeys.profile_update_contact_title.tr(),
+          style: context.textTheme.titleLarge,
+        ),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -46,6 +51,7 @@ class _UpdateContactScreenState extends State<UpdateContactScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
                 child: BlocConsumer<UpdateContactCubit, UpdateContactState>(
                   listener: (context, state) {
+                    if (!context.mounted) return;
                     if (state is UpdateContactError) {
                       showAnimatedSnakDialogue(
                         context,
@@ -55,7 +61,8 @@ class _UpdateContactScreenState extends State<UpdateContactScreen> {
                     } else if (state is UpdateContactSuccess) {
                       showAnimatedSnakDialogue(
                         context,
-                        message: "Phone number changed successfully",
+                        message: LocaleKeys.profile_phone_updated_success.tr(),
+                        type: AnimatedSnackBarType.success,
                       );
                       context.pop();
                     }
@@ -67,19 +74,25 @@ class _UpdateContactScreenState extends State<UpdateContactScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildLabel(context, "Phone"),
+                          _buildLabel(
+                            context,
+                            LocaleKeys.profile_phone.tr(),
+                          ),
                           CustomTextField(
                             controller: _phoneController,
-                            hintText: "Enter new phone number",
+                            hintText: LocaleKeys.profile_enter_new_phone_hint.tr(),
                             validator: (value) =>
                                 AppValidators.validateField(value),
                             isEnabled: !isLoading,
                           ),
                           SizedBox(height: 24.h),
-                          _buildLabel(context, "Password"),
+                          _buildLabel(
+                            context,
+                            LocaleKeys.login_password_label.tr(),
+                          ),
                           CustomTextField(
                             controller: _passwordController,
-                            hintText: "Enter your password",
+                            hintText: LocaleKeys.profile_enter_password_hint.tr(),
                             isPassword: true,
                             validator: (value) =>
                                 AppValidators.validatePassword(value),
@@ -108,7 +121,7 @@ class _UpdateContactScreenState extends State<UpdateContactScreen> {
                               }
                             },
                             child: Text(
-                              "Save",
+                              LocaleKeys.profile_save.tr(),
                               style: context.textTheme.labelLarge?.copyWith(
                                 color: Colors.white,
                               ),

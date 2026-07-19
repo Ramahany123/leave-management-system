@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/logic/cubit/theme_cubit.dart';
 import 'package:leave_management_system/core/routes/app_routes.dart';
 import 'package:leave_management_system/core/theme/app_colors.dart';
@@ -43,18 +44,21 @@ class ProfileScreen extends StatelessWidget {
                       workPlace: user.workplace,
                     ),
 
-                    _buildSectionTitle(context, "ACCOUNT & SECURITY"),
+                    _buildSectionTitle(
+                      context,
+                      LocaleKeys.profile_account_security_section.tr(),
+                    ),
                     SettingsGroup(
                       children: [
                         SettingsTile(
-                          title: "Personal Info",
+                          title: LocaleKeys.profile_personal_info.tr(),
                           icon: Icons.person_outline,
                           onTap: () {
                             AppDialogs.showPersonalInfoSheet(context, user);
                           },
                         ),
                         SettingsTile(
-                          title: "Change Password",
+                          title: LocaleKeys.profile_change_password.tr(),
                           icon: Icons.lock_outline,
                           onTap: () {
                             GoRouter.of(
@@ -63,7 +67,7 @@ class ProfileScreen extends StatelessWidget {
                           },
                         ),
                         SettingsTile(
-                          title: "Update Contact",
+                          title: LocaleKeys.profile_update_contact.tr(),
                           icon: Icons.phone_outlined,
                           onTap: () {
                             GoRouter.of(
@@ -72,22 +76,25 @@ class ProfileScreen extends StatelessWidget {
                           },
                         ),
                         SettingsTile(
-                          title: "Upload Signature",
-                          subTitle: user.signatureUrl != null
-                              ? "Signature uploaded"
-                              : "No signature",
+                          title: LocaleKeys.profile_upload_signature.tr(),
                           icon: Icons.edit_document,
+                          subTitle: user.signatureUrl != null
+                              ? LocaleKeys.profile_signature_uploaded.tr()
+                              : LocaleKeys.profile_no_signature.tr(),
                           onTap: () {
                             AppDialogs.showUploadSignatureSheet(context);
                           },
                         ),
                       ],
                     ),
-                    _buildSectionTitle(context, "PREFERENCES"),
+                    _buildSectionTitle(
+                      context,
+                      LocaleKeys.profile_preferences_section.tr(),
+                    ),
                     SettingsGroup(
                       children: [
                         SettingsTile(
-                          title: "App Language",
+                          title: LocaleKeys.profile_app_language.tr(),
                           icon: Icons.language,
                           subTitle: context.locale.languageCode == "en"
                               ? "English"
@@ -97,7 +104,7 @@ class ProfileScreen extends StatelessWidget {
                           },
                         ),
                         SettingsTile(
-                          title: "Dark Mode",
+                          title: LocaleKeys.profile_dark_mode.tr(),
                           icon: Icons.dark_mode_outlined,
                           trailing: BlocBuilder<ThemeCubit, bool>(
                             builder: (context, isDark) {
@@ -112,11 +119,14 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    _buildSectionTitle(context, "SESSION"),
+                    _buildSectionTitle(
+                      context,
+                      LocaleKeys.profile_session_section.tr(),
+                    ),
                     SettingsGroup(
                       children: [
                         SettingsTile(
-                          title: "Logout",
+                          title: LocaleKeys.profile_logout.tr(),
                           icon: Icons.logout,
                           contentColor: AppColors.errorRed,
                           onTap: () {

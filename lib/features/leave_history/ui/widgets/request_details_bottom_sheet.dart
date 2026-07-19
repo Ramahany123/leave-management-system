@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/models/leave_request_details_model.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/request_status_extension.dart';
@@ -20,7 +22,7 @@ class RequestDetailsBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomBottomSheetShell(
-      title: "Leave Request Details",
+      title: LocaleKeys.leave_history_details_title.tr(),
       content: Flexible(
         child: BlocBuilder<LeaveRequestDetailsCubit, LeaveRequestDetailsState>(
           builder: (context, state) {
@@ -54,65 +56,90 @@ class RequestDetailsBottomSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          buildInfoSection(context, "LEAVE INFORMATION", [
-            KeyValueRow(
-              label: "Type",
-              value: leaveRequestDetails.leaveType.typeName,
-            ),
-            KeyValueRow(
-              label: "Status",
-              widget: StatusBadging(status: leaveRequestDetails.status),
-            ),
-            KeyValueRow(
-              label: "Duration",
-              value: "${leaveRequestDetails.duration} Days",
-            ),
-            KeyValueRow(label: "Reason", value: leaveRequestDetails.reason),
-          ]),
+          buildInfoSection(
+            context,
+            LocaleKeys.leave_history_leave_information.tr(),
+            [
+              KeyValueRow(
+                label: LocaleKeys.leave_history_type.tr(),
+                value: leaveRequestDetails.leaveType.typeName,
+              ),
+              KeyValueRow(
+                label: LocaleKeys.leave_history_status.tr(),
+                widget: StatusBadging(status: leaveRequestDetails.status),
+              ),
+              KeyValueRow(
+                label: LocaleKeys.leave_history_duration.tr(),
+                value: LocaleKeys.leave_history_days_format.tr(
+                  namedArgs: {'count': leaveRequestDetails.duration.toString()},
+                ),
+              ),
+              KeyValueRow(
+                label: LocaleKeys.leave_history_reason.tr(),
+                value: leaveRequestDetails.reason,
+              ),
+            ],
+          ),
           SizedBox(height: 24.h),
 
-          buildInfoSection(context, "TIMING DETAILS", [
-            KeyValueRow(
-              label: "Start Date",
-              value: leaveRequestDetails.startDate.toReadableDate,
-            ),
-            KeyValueRow(
-              label: "End Date",
-              value: leaveRequestDetails.endDate.toReadableDate,
-            ),
-            if (leaveRequestDetails.returnedAt != null)
+          buildInfoSection(
+            context,
+            LocaleKeys.leave_history_timing_details.tr(),
+            [
               KeyValueRow(
-                label: "Returned At",
-                value: leaveRequestDetails.returnedAt!.toReadableDate,
+                label: LocaleKeys.leave_history_start_date.tr(),
+                value: leaveRequestDetails.startDate.toReadableDate,
               ),
-            KeyValueRow(
-              label: "Applied On",
-              value: leaveRequestDetails.createdAt.toReadableDate,
-            ),
-          ]),
+              KeyValueRow(
+                label: LocaleKeys.leave_history_end_date.tr(),
+                value: leaveRequestDetails.endDate.toReadableDate,
+              ),
+              if (leaveRequestDetails.returnedAt != null)
+                KeyValueRow(
+                  label: LocaleKeys.leave_history_returned_at.tr(),
+                  value: leaveRequestDetails.returnedAt!.toReadableDate,
+                ),
+              KeyValueRow(
+                label: LocaleKeys.leave_history_applied_on.tr(),
+                value: leaveRequestDetails.createdAt.toReadableDate,
+              ),
+            ],
+          ),
           SizedBox(height: 24.h),
 
-          buildInfoSection(context, "ADDITIONAL DETAILS", [
-            KeyValueRow(
-              label: "Pre-Leave Ack.",
-              value: leaveRequestDetails.preLeaveAcknowledgement
-                  ? "Completed"
-                  : "Pending",
-            ),
-            KeyValueRow(
-              label: "Attachments",
-              value: "${leaveRequestDetails.attachments.length} File(s)",
-            ),
-            if (leaveRequestDetails.delegateUserId != null)
+          buildInfoSection(
+            context,
+            LocaleKeys.leave_history_additional_details.tr(),
+            [
               KeyValueRow(
-                label: "Delegate ID",
-                value: leaveRequestDetails.delegateUserId.toString(),
+                label: LocaleKeys.leave_history_pre_leave_ack.tr(),
+                value: leaveRequestDetails.preLeaveAcknowledgement
+                    ? LocaleKeys.leave_history_completed.tr()
+                    : LocaleKeys.leave_history_pending.tr(),
               ),
-            KeyValueRow(
-              label: "Approval Steps",
-              value: "${leaveRequestDetails.approvalSteps.length} Step(s)",
-            ),
-          ]),
+              KeyValueRow(
+                label: LocaleKeys.leave_history_attachments.tr(),
+                value: LocaleKeys.leave_history_files_format.tr(
+                  namedArgs: {
+                    'count': leaveRequestDetails.attachments.length.toString(),
+                  },
+                ),
+              ),
+              if (leaveRequestDetails.delegateUserId != null)
+                KeyValueRow(
+                  label: LocaleKeys.leave_history_delegate_id.tr(),
+                  value: leaveRequestDetails.delegateUserId.toString(),
+                ),
+              KeyValueRow(
+                label: LocaleKeys.leave_history_approval_steps.tr(),
+                value: LocaleKeys.leave_history_steps_format.tr(
+                  namedArgs: {
+                    'count': leaveRequestDetails.approvalSteps.length.toString(),
+                  },
+                ),
+              ),
+            ],
+          ),
           SizedBox(height: 24.h),
 
           _buildApprovalTimeline(context, leaveRequestDetails.approvalSteps),
@@ -121,22 +148,29 @@ class RequestDetailsBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildApprovalTimeline(BuildContext context, List<DetailApprovalStep> steps) {
+  Widget _buildApprovalTimeline(
+    BuildContext context,
+    List<DetailApprovalStep> steps,
+  ) {
     if (steps.isEmpty) return const SizedBox.shrink();
-    return buildInfoSection(context, "APPROVAL TIMELINE", [
-      ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: steps.length,
-        itemBuilder: (context, index) {
-          final step = steps[index];
-          return _ApprovalStepTile(
-            step: step,
-            isLast: index == steps.length - 1,
-          );
-        },
-      ),
-    ]);
+    return buildInfoSection(
+      context,
+      LocaleKeys.leave_history_approval_timeline.tr(),
+      [
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: steps.length,
+          itemBuilder: (context, index) {
+            final step = steps[index];
+            return _ApprovalStepTile(
+              step: step,
+              isLast: index == steps.length - 1,
+            );
+          },
+        ),
+      ],
+    );
   }
 }
 

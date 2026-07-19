@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/theme/app_colors.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 
@@ -32,7 +34,7 @@ class SignatureWarningCard extends StatelessWidget {
               ),
               SizedBox(width: 8.w),
               Text(
-                "Electronic Signature Required",
+                LocaleKeys.leave_request_signature_required_title.tr(),
                 style: context.textTheme.titleMedium?.copyWith(
                   color: AppColors.errorRed,
                 ),
@@ -41,7 +43,7 @@ class SignatureWarningCard extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            "You cannot submit leave requests until you upload your electronic signature. Please go to your profile settings to upload it.",
+            LocaleKeys.leave_request_signature_required_message.tr(),
             style: context.textTheme.bodyMedium?.copyWith(
               color: context.colorScheme.onSurface,
             ),
@@ -59,7 +61,7 @@ class SignatureWarningCard extends StatelessWidget {
             ),
             icon: Icon(Icons.edit_document, color: Colors.white, size: 18.sp),
             label: Text(
-              "Upload Signature Now",
+              LocaleKeys.leave_request_upload_signature_now.tr(),
               style: context.textTheme.labelMedium?.copyWith(
                 color: Colors.white,
               ),
