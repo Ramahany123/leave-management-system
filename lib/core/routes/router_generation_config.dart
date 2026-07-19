@@ -14,7 +14,9 @@ import 'package:leave_management_system/features/leave_history/ui/screens/leave_
 import 'package:leave_management_system/features/leave_request/logic/cubit/leave_request_cubit.dart';
 import 'package:leave_management_system/features/leave_request/ui/screens/leave_request_screen.dart';
 import 'package:leave_management_system/features/main_layout/ui/screens/main_layout.dart';
+import 'package:leave_management_system/features/manager_coverage/ui/screens/manager_coverage_screen.dart';
 import 'package:leave_management_system/features/manager_dashboard/ui/screens/manager_dashboard_screen.dart';
+import 'package:leave_management_system/features/manager_reports/ui/screens/manager_reports_screen.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
 import 'package:leave_management_system/features/profile/ui/screens/profile_screen.dart';
 import 'package:leave_management_system/features/profile/ui/screens/update_contact_screen.dart';
@@ -35,11 +37,21 @@ class RouterGenerationConfig {
       final bool isSplash = state.matchedLocation == AppRoutes.splashScreen;
       final bool isOnboarding =
           state.matchedLocation == AppRoutes.onboardingScreen;
+      final bool isEmployeeRoute =
+          state.matchedLocation == AppRoutes.employeeDashboardScreen ||
+          state.matchedLocation == AppRoutes.leaveHistoryScreen ||
+          state.matchedLocation == AppRoutes.leaveRequestScreen ||
+          state.matchedLocation == AppRoutes.profileScreen;
       final bool isManagerRoute =
-          state.matchedLocation == AppRoutes.managerDashboardScreen;
+          state.matchedLocation == AppRoutes.managerDashboardScreen ||
+          state.matchedLocation == AppRoutes.managerCoverageScreen ||
+          state.matchedLocation == AppRoutes.managerReportsScreen ||
+          state.matchedLocation == AppRoutes.managerProfileScreen;
       final bool isAdminRoute =
           state.matchedLocation == AppRoutes.adminDashboardScreen;
       final String userRole = sl<AuthRepo>().userRole;
+
+      final ViewMode currentViewMode = sl<AuthRepo>().currentViewMode;
 
       if (authStatus == AuthStatus.initial) {
         return isSplash ? null : AppRoutes.splashScreen;
@@ -58,8 +70,19 @@ class RouterGenerationConfig {
           } else if (userRole == UserRoles.adminRole) {
             return AppRoutes.adminDashboardScreen;
           } else if (UserRoles.managerRoles.contains(userRole)) {
-            return AppRoutes.managerDashboardScreen;
+            return currentViewMode == ViewMode.manager
+                ? AppRoutes.managerDashboardScreen
+                : AppRoutes.employeeDashboardScreen;
           }
+        }
+        // If in Manager mode but currently on an Employee route -> redirect to Manager Dashboard
+        if (currentViewMode == ViewMode.manager && isEmployeeRoute) {
+          return AppRoutes.managerDashboardScreen;
+        }
+
+        // If in Employee mode but currently on a Manager route -> redirect to Employee Dashboard
+        if (currentViewMode == ViewMode.employee && isManagerRoute) {
+          return AppRoutes.employeeDashboardScreen;
         }
 
         // To prevent access from employee to other roles
@@ -151,16 +174,60 @@ class RouterGenerationConfig {
           ),
         ],
       ),
+
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return MainLayout(navigationShell: navigationShell);
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.managerDashboardScreen,
+                name: AppRoutes.managerDashboardScreen,
+                builder: (context, state) => ManagerDashboardScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.managerCoverageScreen,
+                name: AppRoutes.managerCoverageScreen,
+                builder: (context, state) => ManagerCoverageScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.managerReportsScreen,
+                name: AppRoutes.managerReportsScreen,
+                builder: (context, state) => ManageReportsScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.managerProfileScreen,
+                name: AppRoutes.managerProfileScreen,
+                builder: (context, state) => BlocProvider(
+                  create: (context) => sl<ProfileCubit>()..getProfile(),
+                  child: ProfileScreen(),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+
       GoRoute(
         path: AppRoutes.splashScreen,
         name: AppRoutes.splashScreen,
         builder: (context, state) => SplashScreen(),
       ),
-      GoRoute(
-        path: AppRoutes.managerDashboardScreen,
-        name: AppRoutes.managerDashboardScreen,
-        builder: (context, state) => ManagerDashboardScreen(),
-      ),
+
       GoRoute(
         path: AppRoutes.adminDashboardScreen,
         name: AppRoutes.adminDashboardScreen,
