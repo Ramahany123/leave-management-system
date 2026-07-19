@@ -11,7 +11,7 @@ class DioFactory {
       BaseOptions(
         baseUrl: ApiEndpoints.baseUrl,
         receiveDataWhenStatusError: true,
-        connectTimeout: const Duration(seconds: 60),
+        connectTimeout: const Duration(seconds: 280),
         receiveTimeout: const Duration(seconds: 60),
       ),
     );
