@@ -102,7 +102,10 @@
     "home": "Home",
     "request": "Request",
     "history": "History",
-    "profile": "Profile"
+    "profile": "Profile",
+    "approvals": "Approvals",
+    "coverage": "Coverage",
+    "reports": "Reports"
   },
   "profile": {
     "account_security_section": "ACCOUNT & SECURITY",
@@ -139,7 +142,12 @@
     "enter_new_phone_hint": "Enter new phone number",
     "enter_password_hint": "Enter your password",
     "save": "Save",
-    "phone_updated_success": "Phone number changed successfully"
+    "phone_updated_success": "Phone number changed successfully",
+    "manager_mode": "Manager Mode",
+    "switch_to_employee_view": "Switch to Employee View",
+    "switch_to_manager_view": "Switch to Manager View",
+    "employee_view_subtitle": "Access your personal leave requests and balance",
+    "manager_view_subtitle": "Manage team approvals and department coverage"
   },
   "change_password": {
     "title": "Change Password",

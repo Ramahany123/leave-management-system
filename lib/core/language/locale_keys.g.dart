@@ -97,6 +97,9 @@ abstract class  LocaleKeys {
   static const navigation_request = 'navigation.request';
   static const navigation_history = 'navigation.history';
   static const navigation_profile = 'navigation.profile';
+  static const navigation_approvals = 'navigation.approvals';
+  static const navigation_coverage = 'navigation.coverage';
+  static const navigation_reports = 'navigation.reports';
   static const navigation = 'navigation';
   static const profile_account_security_section = 'profile.account_security_section';
   static const profile_personal_info = 'profile.personal_info';
@@ -133,6 +136,11 @@ abstract class  LocaleKeys {
   static const profile_enter_password_hint = 'profile.enter_password_hint';
   static const profile_save = 'profile.save';
   static const profile_phone_updated_success = 'profile.phone_updated_success';
+  static const profile_manager_mode = 'profile.manager_mode';
+  static const profile_switch_to_employee_view = 'profile.switch_to_employee_view';
+  static const profile_switch_to_manager_view = 'profile.switch_to_manager_view';
+  static const profile_employee_view_subtitle = 'profile.employee_view_subtitle';
+  static const profile_manager_view_subtitle = 'profile.manager_view_subtitle';
   static const profile = 'profile';
   static const change_password_title = 'change_password.title';
   static const change_password_current_password_label = 'change_password.current_password_label';

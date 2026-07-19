@@ -102,7 +102,10 @@
     "home": "الرئيسية",
     "request": "طلب",
     "history": "السجل",
-    "profile": "الملف الشخصي"
+    "profile": "الملف الشخصي",
+    "approvals": "الموافقات",
+    "coverage": "التغطية",
+    "reports": "التقارير"
   },
   "profile": {
     "account_security_section": "الحساب والأمان",
@@ -139,7 +142,12 @@
     "enter_new_phone_hint": "أدخل رقم الهاتف الجديد",
     "enter_password_hint": "أدخل كلمة المرور",
     "save": "حفظ",
-    "phone_updated_success": "تم تغيير رقم الهاتف بنجاح"
+    "phone_updated_success": "تم تغيير رقم الهاتف بنجاح",
+    "manager_mode": "وضع المدير",
+    "switch_to_employee_view": "الانتقال إلى وضع الموظف",
+    "switch_to_manager_view": "الانتقال إلى وضع المدير",
+    "employee_view_subtitle": "الوصول لطلبات ورصيد الإجازات الشخصية",
+    "manager_view_subtitle": "إدارة موافقات وتغطية القسم"
   },
   "change_password": {
     "title": "تغيير كلمة المرور",
