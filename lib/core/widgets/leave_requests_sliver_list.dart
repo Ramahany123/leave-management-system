@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../models/leave_request_model.dart';
-import '../utils/request_status_extension.dart';
 import 'leave_request_card.dart';
 
 class LeaveRequestsSliverList extends StatelessWidget {
@@ -28,9 +27,6 @@ class LeaveRequestsSliverList extends StatelessWidget {
           date:
               '${DateFormat('MMM dd').format(request.startDate)} - ${DateFormat('MMM dd, yyyy').format(request.endDate)}',
           status: request.status,
-          statusColor: request.status.getStatusColor,
-          statusBgColor: request.status.getStatusColor.withValues(alpha: 0.1),
-          statusIcon: request.status.getStatusIcon,
         );
       },
     );

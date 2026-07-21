@@ -8,9 +8,7 @@ class LeaveRequestCard extends StatelessWidget {
   final String title;
   final String date;
   final String status;
-  final Color statusColor;
-  final Color statusBgColor;
-  final IconData statusIcon;
+
   final void Function()? onTap;
 
   const LeaveRequestCard({
@@ -18,9 +16,7 @@ class LeaveRequestCard extends StatelessWidget {
     required this.title,
     required this.date,
     required this.status,
-    required this.statusColor,
-    required this.statusBgColor,
-    required this.statusIcon,
+
     this.onTap,
   });
 

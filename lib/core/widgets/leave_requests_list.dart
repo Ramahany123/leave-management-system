@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/models/leave_request_model.dart';
-import 'package:leave_management_system/core/utils/request_status_extension.dart';
 import 'package:leave_management_system/core/widgets/leave_request_card.dart';
 
 class LeaveRequestsList extends StatelessWidget {
@@ -24,9 +23,6 @@ class LeaveRequestsList extends StatelessWidget {
           date:
               '${DateFormat('MMM dd').format(request.startDate)} - ${DateFormat('MMM dd, yyyy').format(request.endDate)}',
           status: request.status,
-          statusColor: request.status.getStatusColor,
-          statusBgColor: request.status.getStatusColor.withValues(alpha: 0.1),
-          statusIcon: request.status.getStatusIcon,
         );
       },
     );
