@@ -15,6 +15,9 @@ import 'package:leave_management_system/features/leave_history/logic/cubit/leave
 import 'package:leave_management_system/features/leave_request/data/repo/leave_request_repo.dart';
 import 'package:leave_management_system/features/leave_request/data/web_services/leave_request_web_services.dart';
 import 'package:leave_management_system/features/leave_request/logic/cubit/leave_request_cubit.dart';
+import 'package:leave_management_system/features/manager_dashboard/data/repo/manager_dashboard_repo.dart';
+import 'package:leave_management_system/features/manager_dashboard/data/web_services/manager_dashboard_web_services.dart';
+import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_dashboard_cubit.dart';
 import 'package:leave_management_system/features/profile/data/repo/profile_repo.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
@@ -38,6 +41,8 @@ void setupServiceLocator() {
   setupProfileDependencies();
 
   setupLeaveRequestDependencies();
+
+  setupManagerDashboardDependencies();
 }
 
 void setupAuthDependencies() {
@@ -80,4 +85,12 @@ void setupLeaveRequestDependencies() {
     () => LeaveRequestRepo(leaveRequestWebServices: sl()),
   );
   sl.registerFactory(() => LeaveRequestCubit(leaveRequestRepo: sl()));
+}
+
+void setupManagerDashboardDependencies() {
+  sl.registerLazySingleton(() => ManagerDashboardWebServices(apiService: sl()));
+  sl.registerLazySingleton(
+    () => ManagerDashboardRepo(dashboardWebServices: sl()),
+  );
+  sl.registerFactory(() => ManagerDashboardCubit(managerDashboardRepo: sl()));
 }
