@@ -8,7 +8,7 @@ import 'package:leave_management_system/core/theme/theme_context_extension.dart'
 import 'package:leave_management_system/core/widgets/general_error_widget.dart';
 import 'package:leave_management_system/features/employee_dashboard/logic/cubit/employee_dashboard_cubit.dart';
 import 'package:leave_management_system/features/employee_dashboard/ui/widgets/dashboard_shimmer.dart';
-import 'package:leave_management_system/features/employee_dashboard/ui/widgets/employee_header.dart';
+import 'package:leave_management_system/core/widgets/user_header.dart';
 import 'package:leave_management_system/features/employee_dashboard/ui/widgets/leave_balances_list.dart';
 import 'package:leave_management_system/core/widgets/leave_requests_list.dart';
 
@@ -26,7 +26,7 @@ class EmployeeDashboardScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const EmployeeHeader(),
+              const UserHeader(),
               SizedBox(height: 32.h),
               BlocBuilder<EmployeeDashboardCubit, EmployeeDashboardState>(
                 builder: (context, state) {
