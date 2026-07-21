@@ -158,5 +158,13 @@
     "confirm_new_password_label": "تأكيد كلمة المرور الجديدة",
     "repeat_new_password_hint": "أعد إدخال كلمة المرور الجديدة",
     "update_password_button": "تحديث كلمة المرور"
+  },
+  "manager_dashboard": {
+    "pending_approvals": "الطلبات المعلقة",
+    "awaiting_signature": "في انتظار الاعتماد",
+    "team_on_leave": "الموظفون في إجازة",
+    "currently_absent": "غائبون حالياً",
+    "awaiting_review": "قيد المراجعة",
+    "no_requests": "لا توجد طلبات معلقة"
   }
 }

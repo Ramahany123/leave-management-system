@@ -151,5 +151,12 @@ abstract class  LocaleKeys {
   static const change_password_repeat_new_password_hint = 'change_password.repeat_new_password_hint';
   static const change_password_update_password_button = 'change_password.update_password_button';
   static const change_password = 'change_password';
+  static const manager_dashboard_pending_approvals = 'manager_dashboard.pending_approvals';
+  static const manager_dashboard_awaiting_signature = 'manager_dashboard.awaiting_signature';
+  static const manager_dashboard_team_on_leave = 'manager_dashboard.team_on_leave';
+  static const manager_dashboard_currently_absent = 'manager_dashboard.currently_absent';
+  static const manager_dashboard_awaiting_review = 'manager_dashboard.awaiting_review';
+  static const manager_dashboard_no_requests = 'manager_dashboard.no_requests';
+  static const manager_dashboard = 'manager_dashboard';
 
 }
