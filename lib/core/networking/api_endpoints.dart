@@ -12,4 +12,12 @@ class ApiEndpoints {
   static const changePassword = "profile/change-password";
   static const updateContact = "profile/update-info";
   static const uploadSignature = "profile/signature";
+
+  static const getManagerDashboard = "manager/dashboard";
+  static const getApprovalTasks = "manager/approval-tasks";
+  static String getApprovalTaskDetails(int id) => "manager/approval-tasks/:$id";
+  static String approveTask(int id) => "manager/approval-tasks/:$id/approve";
+  static String rejectTask(int id) => "manager/approval-tasks/:$id/reject";
+  static const getMembersOnLeave = "manager/team-on-leave";
+  static String getManagerReport = "manager/reports";
 }
