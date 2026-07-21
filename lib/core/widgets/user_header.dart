@@ -6,10 +6,10 @@ import 'package:leave_management_system/core/theme/theme_context_extension.dart'
 import 'package:leave_management_system/core/widgets/name_avatar.dart';
 import 'package:leave_management_system/features/auth/data/repo/auth_repo.dart';
 
-import '../../../../core/utils/service_locator.dart';
+import '../utils/service_locator.dart';
 
-class EmployeeHeader extends StatelessWidget {
-  const EmployeeHeader({super.key});
+class UserHeader extends StatelessWidget {
+  const UserHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
