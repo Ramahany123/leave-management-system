@@ -15,9 +15,12 @@ class ApiEndpoints {
 
   static const getManagerDashboard = "manager/dashboard";
   static const getApprovalTasks = "manager/approval-tasks";
-  static String getApprovalTaskDetails(int id) => "manager/approval-tasks/:$id";
-  static String approveTask(int id) => "manager/approval-tasks/:$id/approve";
-  static String rejectTask(int id) => "manager/approval-tasks/:$id/reject";
+  static String getApprovalTaskDetails(int stepId) =>
+      "manager/approval-tasks/$stepId";
+  static String approveTask(int stepId) =>
+      "manager/approval-tasks/$stepId/approve";
+  static String rejectTask(int stepId) =>
+      "manager/approval-tasks/$stepId/reject";
   static const getMembersOnLeave = "manager/team-on-leave";
   static String getManagerReport = "manager/reports";
 }
