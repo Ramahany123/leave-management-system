@@ -22,6 +22,10 @@ import 'package:leave_management_system/features/profile/data/repo/profile_repo.
 import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/upload_signature_cubit.dart';
+import '../../features/manager_task_details/data/repo/task_details_repo.dart';
+import '../../features/manager_task_details/data/web_services/task_details_web_services.dart';
+import '../../features/manager_task_details/logic/cubit/task_approval_action_cubit.dart';
+import '../../features/manager_task_details/logic/cubit/task_details_cubit.dart';
 import '../../features/profile/data/web_services/profile_web_services.dart';
 import '../networking/api_service.dart';
 
@@ -43,6 +47,8 @@ void setupServiceLocator() {
   setupLeaveRequestDependencies();
 
   setupManagerDashboardDependencies();
+
+  setupManagerTaskDetailsDependencies();
 }
 
 void setupAuthDependencies() {
@@ -93,4 +99,11 @@ void setupManagerDashboardDependencies() {
     () => ManagerDashboardRepo(dashboardWebServices: sl()),
   );
   sl.registerFactory(() => ManagerDashboardCubit(managerDashboardRepo: sl()));
+}
+
+void setupManagerTaskDetailsDependencies() {
+  sl.registerLazySingleton(() => TaskDetailsWebServices(apiService: sl()));
+  sl.registerLazySingleton(() => TaskDetailsRepo(taskDetailsWebServices: sl()));
+  sl.registerFactory(() => TaskDetailsCubit(taskDetailsRepo: sl()));
+  sl.registerFactory(() => TaskApprovalActionCubit(detailsRepo: sl()));
 }
