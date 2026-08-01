@@ -5,7 +5,7 @@ import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/models/user_model.dart';
 import 'package:leave_management_system/core/widgets/custom_bottom_sheet_shell.dart';
 import '../../../../core/utils/date_extension.dart';
-import '../../../../core/widgets/build_info_section.dart';
+import '../../../../core/widgets/info_section.dart';
 import '../../../../core/widgets/key_value_row_widget.dart';
 
 class PersonalInfoBottomSheet extends StatelessWidget {
@@ -19,10 +19,9 @@ class PersonalInfoBottomSheet extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          buildInfoSection(
-            context,
-            LocaleKeys.profile_official_details.tr(),
-            [
+          InfoSection(
+            title: LocaleKeys.profile_official_details.tr(),
+            children: [
               KeyValueRow(
                 label: LocaleKeys.profile_national_id.tr(),
                 value: user.ssn,
@@ -43,10 +42,9 @@ class PersonalInfoBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
 
-          buildInfoSection(
-            context,
-            LocaleKeys.profile_university_details.tr(),
-            [
+          InfoSection(
+            title: LocaleKeys.profile_university_details.tr(),
+            children: [
               KeyValueRow(
                 label: LocaleKeys.profile_hire_date.tr(),
                 value: user.hireDate.toReadableDate,
