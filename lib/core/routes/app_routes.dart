@@ -11,6 +11,7 @@ class AppRoutes {
   static const changePasswordScreen = "/changePasswordScreen";
   static const updateContactScreen = "/updateContactScreen";
   static const managerDashboardScreen = "/managerDashboard";
+  static const managerPendingApprovalsScreen = "/managerPendingApprovals";
   static const managerCoverageScreen = "/managerCoverage";
   static const managerReportsScreen = "/managerReports";
   static const managerProfileScreen = "/managerProfile";
