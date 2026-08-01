@@ -21,15 +21,20 @@ class KeyValueRow extends StatelessWidget {
               color: context.colorScheme.onSurfaceVariant,
             ),
           ),
-          widget ??
-              (value != null
-                  ? Text(
-                      value!,
-                      style: context.textTheme.titleSmall?.copyWith(
-                        color: context.colorScheme.onSurface,
-                      ),
-                    )
-                  : const SizedBox.shrink()),
+          SizedBox(width: 12.w),
+          Expanded(
+            child:
+                widget ??
+                (value != null
+                    ? Text(
+                        value!,
+                        textAlign: TextAlign.end,
+                        style: context.textTheme.titleSmall?.copyWith(
+                          color: context.colorScheme.onSurface,
+                        ),
+                      )
+                    : const SizedBox.shrink()),
+          ),
         ],
       ),
     );
