@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/app_validators.dart';
@@ -46,24 +47,31 @@ class _RejectionReasonDialogState extends State<RejectionReasonDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => GoRouter.of(context).pop(),
-          child: Text("Cancel", style: context.textTheme.bodyMedium),
-        ),
-        PrimaryButtonWidget(
-          backgroundColor: context.colorScheme.errorContainer,
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              context.pop();
-              widget.onConfirm(_reasonController.text.trim());
-            }
-          },
-          child: Text(
-            "Reject",
-            style: context.textTheme.bodyMedium!.copyWith(
-              color: context.colorScheme.onErrorContainer,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              onPressed: () => GoRouter.of(context).pop(),
+              child: Text("Cancel", style: context.textTheme.bodyMedium),
             ),
-          ),
+            PrimaryButtonWidget(
+              width: 100.w,
+              height: 50.h,
+              backgroundColor: context.colorScheme.errorContainer,
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  context.pop();
+                  widget.onConfirm(_reasonController.text.trim());
+                }
+              },
+              child: Text(
+                "Reject",
+                style: context.textTheme.titleMedium!.copyWith(
+                  color: context.colorScheme.onErrorContainer,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

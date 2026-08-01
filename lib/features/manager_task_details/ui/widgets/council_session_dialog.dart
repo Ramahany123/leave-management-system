@@ -93,27 +93,34 @@ class _CouncilSessionDialogState extends State<CouncilSessionDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => context.pop(),
-          child: Text("Cancel", style: context.textTheme.bodyMedium),
-        ),
-        PrimaryButtonWidget(
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              context.pop();
-              widget.onConfirm(
-                _sessionNumberController.text.trim(),
-                _selectedDate!,
-                _commentsController.text.trim(),
-              );
-            }
-          },
-          child: Text(
-            "Confirm",
-            style: context.textTheme.bodyMedium!.copyWith(
-              color: context.colorScheme.onErrorContainer,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              onPressed: () => context.pop(),
+              child: Text("Cancel", style: context.textTheme.bodyMedium),
             ),
-          ),
+            PrimaryButtonWidget(
+              width: 100.w,
+              height: 50.h,
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  context.pop();
+                  widget.onConfirm(
+                    _sessionNumberController.text.trim(),
+                    _selectedDate!,
+                    _commentsController.text.trim(),
+                  );
+                }
+              },
+              child: Text(
+                "Confirm",
+                style: context.textTheme.bodyMedium!.copyWith(
+                  color: context.colorScheme.onErrorContainer,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
