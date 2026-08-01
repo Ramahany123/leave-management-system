@@ -17,6 +17,7 @@ import 'package:leave_management_system/features/main_layout/ui/screens/main_lay
 import 'package:leave_management_system/features/manager_coverage/ui/screens/manager_coverage_screen.dart';
 import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_dashboard_cubit.dart';
 import 'package:leave_management_system/features/manager_dashboard/ui/screens/manager_dashboard_screen.dart';
+import 'package:leave_management_system/features/manager_dashboard/ui/screens/manager_pending_approvals_screen.dart';
 import 'package:leave_management_system/features/manager_reports/ui/screens/manager_reports_screen.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
 import 'package:leave_management_system/features/profile/ui/screens/profile_screen.dart';
@@ -47,6 +48,7 @@ class RouterGenerationConfig {
           state.matchedLocation == AppRoutes.managerDashboardScreen ||
           state.matchedLocation == AppRoutes.managerCoverageScreen ||
           state.matchedLocation == AppRoutes.managerReportsScreen ||
+          state.matchedLocation == AppRoutes.managerPendingApprovalsScreen ||
           state.matchedLocation == AppRoutes.managerProfileScreen;
       final bool isAdminRoute =
           state.matchedLocation == AppRoutes.adminDashboardScreen;
@@ -253,6 +255,11 @@ class RouterGenerationConfig {
           create: (context) => sl<UpdateContactCubit>(),
           child: UpdateContactScreen(),
         ),
+      ),
+      GoRoute(
+        path: AppRoutes.managerPendingApprovalsScreen,
+        name: AppRoutes.managerPendingApprovalsScreen,
+        builder: (context, state) => ManagerPendingApprovalsScreen(),
       ),
     ],
   );
