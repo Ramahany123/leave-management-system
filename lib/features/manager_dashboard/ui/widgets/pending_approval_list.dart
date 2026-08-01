@@ -9,8 +9,13 @@ import '../../../../core/theme/theme_context_extension.dart';
 
 class PendingApprovalList extends StatelessWidget {
   final List<PendingApprovalModel> pendingApprovals;
-  const PendingApprovalList({super.key, required this.pendingApprovals});
-  //TODO: implement onTap
+
+  final void Function(PendingApprovalModel pendingTask)? onTaskTapped;
+  const PendingApprovalList({
+    super.key,
+    required this.pendingApprovals,
+    this.onTaskTapped,
+  });
   @override
   Widget build(BuildContext context) {
     if (pendingApprovals.isEmpty) {
@@ -21,13 +26,14 @@ class PendingApprovalList extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       clipBehavior: Clip.none,
       itemBuilder: (context, index) {
-        final item = pendingApprovals[index];
-        final request = item.request;
+        final task = pendingApprovals[index];
+        final request = task.request;
         return LeaveRequestCard(
           title: "${request.user.name} • ${request.leaveTypeName}",
           date:
               "${DateFormat("MMM dd").format(request.startDate)} - ${DateFormat("MMM dd").format(request.endDate)}",
           status: request.status,
+          onTap: () => onTaskTapped?.call(task),
         );
       },
       separatorBuilder: (context, index) => SizedBox(height: 12.h),

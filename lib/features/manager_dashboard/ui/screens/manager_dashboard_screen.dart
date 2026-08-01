@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leave_management_system/core/language/locale_keys.g.dart';
+import 'package:leave_management_system/core/utils/app_dialogs.dart';
 import 'package:leave_management_system/core/widgets/general_error_widget.dart';
 import 'package:leave_management_system/core/widgets/user_header.dart';
 import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_dashboard_cubit.dart';
@@ -85,8 +86,7 @@ class ManagerDashboardScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                LocaleKeys
-                                    .manager_dashboard_awaiting_review
+                                LocaleKeys.manager_dashboard_awaiting_review
                                     .tr(),
                                 style: context.textTheme.titleLarge?.copyWith(
                                   color: context.colorScheme.primary,
@@ -108,6 +108,17 @@ class ManagerDashboardScreen extends StatelessWidget {
                           SizedBox(height: 16.h),
                           PendingApprovalList(
                             pendingApprovals: data.pendingApprovals,
+                            onTaskTapped: (task) async {
+                              await AppDialogs.showTaskDetailsSheet(
+                                context,
+                                task.stepId,
+                              );
+                              if (context.mounted) {
+                                context
+                                    .read<ManagerDashboardCubit>()
+                                    .getManagerDashboard();
+                              }
+                            },
                           ),
                           SizedBox(height: 80.h),
                         ],
