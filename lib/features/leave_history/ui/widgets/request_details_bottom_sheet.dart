@@ -4,14 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/models/leave_request_details_model.dart';
-import 'package:leave_management_system/core/theme/theme_context_extension.dart';
-import 'package:leave_management_system/core/utils/request_status_extension.dart';
-import 'package:leave_management_system/core/widgets/build_info_section.dart';
+import 'package:leave_management_system/core/widgets/info_section.dart';
 import 'package:leave_management_system/core/widgets/custom_bottom_sheet_shell.dart';
 import 'package:leave_management_system/core/widgets/status_badging.dart';
 import 'package:leave_management_system/features/leave_history/logic/cubit/leave_request_details_cubit.dart';
 import 'package:leave_management_system/features/leave_history/ui/widgets/request_details_shimmer.dart';
 import '../../../../core/utils/date_extension.dart';
+import '../../../../core/widgets/approval_step_tile.dart';
 import '../../../../core/widgets/general_error_widget.dart';
 import '../../../../core/widgets/key_value_row_widget.dart';
 
@@ -56,10 +55,9 @@ class RequestDetailsBottomSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          buildInfoSection(
-            context,
-            LocaleKeys.leave_history_leave_information.tr(),
-            [
+          InfoSection(
+            title: LocaleKeys.leave_history_leave_information.tr(),
+            children: [
               KeyValueRow(
                 label: LocaleKeys.leave_history_type.tr(),
                 value: leaveRequestDetails.leaveType.typeName,
@@ -82,10 +80,9 @@ class RequestDetailsBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
 
-          buildInfoSection(
-            context,
-            LocaleKeys.leave_history_timing_details.tr(),
-            [
+          InfoSection(
+            title: LocaleKeys.leave_history_timing_details.tr(),
+            children: [
               KeyValueRow(
                 label: LocaleKeys.leave_history_start_date.tr(),
                 value: leaveRequestDetails.startDate.toReadableDate,
@@ -107,10 +104,9 @@ class RequestDetailsBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
 
-          buildInfoSection(
-            context,
-            LocaleKeys.leave_history_additional_details.tr(),
-            [
+          InfoSection(
+            title: LocaleKeys.leave_history_additional_details.tr(),
+            children: [
               KeyValueRow(
                 label: LocaleKeys.leave_history_pre_leave_ack.tr(),
                 value: leaveRequestDetails.preLeaveAcknowledgement
@@ -134,7 +130,8 @@ class RequestDetailsBottomSheet extends StatelessWidget {
                 label: LocaleKeys.leave_history_approval_steps.tr(),
                 value: LocaleKeys.leave_history_steps_format.tr(
                   namedArgs: {
-                    'count': leaveRequestDetails.approvalSteps.length.toString(),
+                    'count': leaveRequestDetails.approvalSteps.length
+                        .toString(),
                   },
                 ),
               ),
@@ -153,120 +150,25 @@ class RequestDetailsBottomSheet extends StatelessWidget {
     List<DetailApprovalStep> steps,
   ) {
     if (steps.isEmpty) return const SizedBox.shrink();
-    return buildInfoSection(
-      context,
-      LocaleKeys.leave_history_approval_timeline.tr(),
-      [
+    return InfoSection(
+      title: LocaleKeys.leave_history_approval_timeline.tr(),
+      children: [
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: steps.length,
           itemBuilder: (context, index) {
             final step = steps[index];
-            return _ApprovalStepTile(
-              step: step,
+            return ApprovalStepTile(
               isLast: index == steps.length - 1,
+              status: step.status,
+              displayName: step.displayName,
+              roleAtApproval: step.roleAtApproval,
+              comments: step.comments,
             );
           },
         ),
       ],
-    );
-  }
-}
-
-class _ApprovalStepTile extends StatelessWidget {
-  final DetailApprovalStep step;
-  final bool isLast;
-
-  const _ApprovalStepTile({required this.step, required this.isLast});
-
-  @override
-  Widget build(BuildContext context) {
-    final statusColor = step.status.getStatusColor;
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            children: [
-              Container(
-                width: 28.w,
-                height: 28.h,
-                decoration: BoxDecoration(
-                  color: statusColor.withValues(alpha: 0.15),
-                  shape: BoxShape.circle,
-                  border: Border.all(color: statusColor, width: 2.w),
-                ),
-                child: Icon(
-                  step.status.getStatusIcon,
-                  color: statusColor,
-                  size: 14.sp,
-                ),
-              ),
-              if (!isLast)
-                Expanded(
-                  child: Container(
-                    width: 2.w,
-                    color: context.colorScheme.outline,
-                  ),
-                ),
-            ],
-          ),
-          SizedBox(width: 12.w),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 24.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        step.displayName,
-                        style: context.textTheme.titleSmall,
-                      ),
-                      Text(
-                        step.status,
-                        style: TextStyle(
-                          color: statusColor,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    step.roleAtApproval,
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: context.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  if (step.comments != null && step.comments!.isNotEmpty) ...[
-                    SizedBox(height: 8.h),
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(12.r),
-                      decoration: BoxDecoration(
-                        color: context.colorScheme.outline.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(12.r),
-                        border: Border.all(
-                          color: context.colorScheme.outline.withValues(alpha: 0.3),
-                        ),
-                      ),
-                      child: Text(
-                        step.comments!,
-                        style: context.textTheme.bodyMedium,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
