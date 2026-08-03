@@ -94,7 +94,9 @@ class ManagerDashboardScreen extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  context.go(AppRoutes.managerCoverageScreen);
+                                  context.push(
+                                    AppRoutes.managerPendingApprovalsScreen,
+                                  );
                                 },
                                 child: Text(
                                   LocaleKeys.dashboard_view_all.tr(),
@@ -107,7 +109,9 @@ class ManagerDashboardScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 16.h),
                           PendingApprovalList(
-                            pendingApprovals: data.pendingApprovals,
+                            pendingApprovals: data.pendingApprovals
+                                .take(5)
+                                .toList(),
                             onTaskTapped: (task) async {
                               await AppDialogs.showTaskDetailsSheet(
                                 context,
