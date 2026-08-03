@@ -11,8 +11,9 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final bool isEnabled;
   final List<TextInputFormatter>? textInputFormatter;
-  final Icon? prefixIcon;
-  final Icon? suffixIcon;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final void Function(String)? onChanged;
   const CustomTextField({
     super.key,
     this.hintText,
@@ -24,6 +25,7 @@ class CustomTextField extends StatefulWidget {
     this.textInputFormatter,
     this.prefixIcon,
     this.suffixIcon,
+    this.onChanged,
   });
 
   @override
@@ -46,6 +48,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.h),
         child: TextFormField(
+          onChanged: widget.onChanged,
           inputFormatters: widget.textInputFormatter,
           enabled: widget.isEnabled,
           autovalidateMode: AutovalidateMode.onUserInteraction,
