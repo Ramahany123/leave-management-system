@@ -18,6 +18,7 @@ import 'package:leave_management_system/features/leave_request/logic/cubit/leave
 import 'package:leave_management_system/features/manager_dashboard/data/repo/manager_dashboard_repo.dart';
 import 'package:leave_management_system/features/manager_dashboard/data/web_services/manager_dashboard_web_services.dart';
 import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_dashboard_cubit.dart';
+import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_pending_approvals_cubit.dart';
 import 'package:leave_management_system/features/profile/data/repo/profile_repo.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
@@ -106,4 +107,5 @@ void setupManagerTaskDetailsDependencies() {
   sl.registerLazySingleton(() => TaskDetailsRepo(taskDetailsWebServices: sl()));
   sl.registerFactory(() => TaskDetailsCubit(taskDetailsRepo: sl()));
   sl.registerFactory(() => TaskApprovalActionCubit(detailsRepo: sl()));
+  sl.registerFactory(() => ManagerPendingApprovalsCubit(dashboardRepo: sl()));
 }
