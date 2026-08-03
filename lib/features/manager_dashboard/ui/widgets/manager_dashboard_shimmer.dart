@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'pending_approvals_list_shimmer.dart';
+
 class ManagerDashboardShimmer extends StatelessWidget {
   const ManagerDashboardShimmer({super.key});
 
@@ -52,20 +54,7 @@ class ManagerDashboardShimmer extends StatelessWidget {
           SizedBox(height: 16.h),
 
           // Pending Tasks List Skeleton
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 3,
-            separatorBuilder: (context, index) => SizedBox(height: 12.h),
-            itemBuilder: (context, index) => Container(
-              height: 84.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: context.colorScheme.surface,
-                borderRadius: BorderRadius.circular(20.r),
-              ),
-            ),
-          ),
+          PendingApprovalsListShimmer(),
         ],
       ),
     );
