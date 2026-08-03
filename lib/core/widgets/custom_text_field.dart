@@ -11,6 +11,8 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final bool isEnabled;
   final List<TextInputFormatter>? textInputFormatter;
+  final Icon? prefixIcon;
+  final Icon? suffixIcon;
   const CustomTextField({
     super.key,
     this.hintText,
@@ -20,6 +22,8 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.isEnabled = true,
     this.textInputFormatter,
+    this.prefixIcon,
+    this.suffixIcon,
   });
 
   @override
@@ -80,7 +84,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(color: context.colorScheme.primary, width: 1.5),
+              borderSide: BorderSide(
+                color: context.colorScheme.primary,
+                width: 1.5,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
@@ -88,8 +95,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(color: context.colorScheme.error, width: 1.5),
+              borderSide: BorderSide(
+                color: context.colorScheme.error,
+                width: 1.5,
+              ),
             ),
+            prefixIcon: widget.prefixIcon,
             suffixIcon: widget.isPassword
                 ? GestureDetector(
                     onTap: () {
@@ -103,7 +114,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       size: 22.sp,
                     ),
                   )
-                : null,
+                : widget.suffixIcon,
           ),
         ),
       ),
