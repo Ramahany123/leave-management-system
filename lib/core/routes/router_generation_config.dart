@@ -16,6 +16,7 @@ import 'package:leave_management_system/features/leave_request/ui/screens/leave_
 import 'package:leave_management_system/features/main_layout/ui/screens/main_layout.dart';
 import 'package:leave_management_system/features/manager_coverage/ui/screens/manager_coverage_screen.dart';
 import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_dashboard_cubit.dart';
+import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_pending_approvals_cubit.dart';
 import 'package:leave_management_system/features/manager_dashboard/ui/screens/manager_dashboard_screen.dart';
 import 'package:leave_management_system/features/manager_dashboard/ui/screens/manager_pending_approvals_screen.dart';
 import 'package:leave_management_system/features/manager_reports/ui/screens/manager_reports_screen.dart';
@@ -259,7 +260,11 @@ class RouterGenerationConfig {
       GoRoute(
         path: AppRoutes.managerPendingApprovalsScreen,
         name: AppRoutes.managerPendingApprovalsScreen,
-        builder: (context, state) => ManagerPendingApprovalsScreen(),
+        builder: (context, state) => BlocProvider(
+          create: (context) =>
+              sl<ManagerPendingApprovalsCubit>()..fetchPendingApprovals(),
+          child: ManagerPendingApprovalsScreen(),
+        ),
       ),
     ],
   );
