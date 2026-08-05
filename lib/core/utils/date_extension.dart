@@ -8,4 +8,8 @@ extension DateFormatter on DateTime {
   String get toShortDate {
     return DateFormat("dd/MM/yyyy").format(this);
   }
+
+  String get toApiDate {
+    return DateFormat("yyyy-MM-dd").format(this);
+  }
 }
