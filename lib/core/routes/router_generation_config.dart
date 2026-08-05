@@ -204,7 +204,8 @@ class RouterGenerationConfig {
                 path: AppRoutes.managerCoverageScreen,
                 name: AppRoutes.managerCoverageScreen,
                 builder: (context, state) => BlocProvider(
-                  create: (context) => sl<ManagerCoverageCubit>(),
+                  create: (context) =>
+                      sl<ManagerCoverageCubit>()..getTeamOnLeave(),
                   child: ManagerCoverageScreen(),
                 ),
               ),
