@@ -14,6 +14,7 @@ import 'package:leave_management_system/features/leave_history/ui/screens/leave_
 import 'package:leave_management_system/features/leave_request/logic/cubit/leave_request_cubit.dart';
 import 'package:leave_management_system/features/leave_request/ui/screens/leave_request_screen.dart';
 import 'package:leave_management_system/features/main_layout/ui/screens/main_layout.dart';
+import 'package:leave_management_system/features/manager_coverage/logic/cubit/manager_coverage_cubit.dart';
 import 'package:leave_management_system/features/manager_coverage/ui/screens/manager_coverage_screen.dart';
 import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_dashboard_cubit.dart';
 import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_pending_approvals_cubit.dart';
@@ -202,7 +203,10 @@ class RouterGenerationConfig {
               GoRoute(
                 path: AppRoutes.managerCoverageScreen,
                 name: AppRoutes.managerCoverageScreen,
-                builder: (context, state) => ManagerCoverageScreen(),
+                builder: (context, state) => BlocProvider(
+                  create: (context) => sl<ManagerCoverageCubit>(),
+                  child: ManagerCoverageScreen(),
+                ),
               ),
             ],
           ),

@@ -15,6 +15,8 @@ import 'package:leave_management_system/features/leave_history/logic/cubit/leave
 import 'package:leave_management_system/features/leave_request/data/repo/leave_request_repo.dart';
 import 'package:leave_management_system/features/leave_request/data/web_services/leave_request_web_services.dart';
 import 'package:leave_management_system/features/leave_request/logic/cubit/leave_request_cubit.dart';
+import 'package:leave_management_system/features/manager_coverage/data/repo/manager_coverage_repo.dart';
+import 'package:leave_management_system/features/manager_coverage/logic/cubit/manager_coverage_cubit.dart';
 import 'package:leave_management_system/features/manager_dashboard/data/repo/manager_dashboard_repo.dart';
 import 'package:leave_management_system/features/manager_dashboard/data/web_services/manager_dashboard_web_services.dart';
 import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_dashboard_cubit.dart';
@@ -23,6 +25,7 @@ import 'package:leave_management_system/features/profile/data/repo/profile_repo.
 import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/upload_signature_cubit.dart';
+import '../../features/manager_coverage/data/web_services/manager_coverage_web_services.dart';
 import '../../features/manager_task_details/data/repo/task_details_repo.dart';
 import '../../features/manager_task_details/data/web_services/task_details_web_services.dart';
 import '../../features/manager_task_details/logic/cubit/task_approval_action_cubit.dart';
@@ -50,6 +53,8 @@ void setupServiceLocator() {
   setupManagerDashboardDependencies();
 
   setupManagerTaskDetailsDependencies();
+
+  setupManagerCoverageDependencies();
 }
 
 void setupAuthDependencies() {
@@ -108,4 +113,12 @@ void setupManagerTaskDetailsDependencies() {
   sl.registerFactory(() => TaskDetailsCubit(taskDetailsRepo: sl()));
   sl.registerFactory(() => TaskApprovalActionCubit(detailsRepo: sl()));
   sl.registerFactory(() => ManagerPendingApprovalsCubit(dashboardRepo: sl()));
+}
+
+void setupManagerCoverageDependencies() {
+  sl.registerLazySingleton(() => ManagerCoverageWebServices(apiService: sl()));
+  sl.registerLazySingleton(
+    () => ManagerCoverageRepo(converageWebServices: sl()),
+  );
+  sl.registerFactory(() => ManagerCoverageCubit(coverageRepo: sl()));
 }
