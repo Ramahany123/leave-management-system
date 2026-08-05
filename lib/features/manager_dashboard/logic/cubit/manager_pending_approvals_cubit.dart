@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:leave_management_system/features/manager_dashboard/data/models/pending_approval_model.dart';
 import 'package:leave_management_system/features/manager_dashboard/data/repo/manager_dashboard_repo.dart';
-import '../../../../core/extensions/string_extensions.dart';
 import '../../../../core/networking/errors/failures.dart';
 
 part 'manager_pending_approvals_state.dart';
@@ -37,9 +36,10 @@ class ManagerPendingApprovalsCubit extends Cubit<ManagerPendingApprovalsState> {
   void _applyFiltersAndEmit() {
     List<PendingApprovalModel> filteredList = _allPendingApprovals;
     if (_searchQuery.isNotEmpty) {
+      final exp = RegExp(RegExp.escape(_searchQuery), caseSensitive: false);
       filteredList = filteredList.where((task) {
-        return task.request.leaveTypeName.normalizedContains(_searchQuery) ||
-            task.request.user.name.normalizedContains(_searchQuery);
+        return exp.hasMatch(task.request.leaveTypeName) ||
+            exp.hasMatch(task.request.user.name);
       }).toList();
     }
     emit(ManagerPendingApprovalsSuccess(pendingApprovals: filteredList));
