@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/utils/app_dialogs.dart';
-import 'package:leave_management_system/core/widgets/custom_text_field.dart';
+import 'package:leave_management_system/core/widgets/custom_search_field.dart';
 import 'package:leave_management_system/core/widgets/general_error_widget.dart';
 import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_pending_approvals_cubit.dart';
 import 'package:leave_management_system/features/manager_dashboard/ui/widgets/pending_approval_list.dart';
@@ -47,26 +47,11 @@ class _ManagerPendingApprovalsScreenState
         padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
         child: Column(
           children: [
-            ValueListenableBuilder<TextEditingValue>(
-              valueListenable: _searchController,
-              builder: (context, textValue, child) {
-                return CustomTextField(
-                  controller: _searchController,
-                  hintText: "search name/leave type",
-                  prefixIcon: Icon(Icons.search),
-                  onChanged: (val) {
-                    _pendingApprovalsCubit.searchPendingApprovals(val);
-                  },
-                  suffixIcon: textValue.text.isNotEmpty
-                      ? IconButton(
-                          onPressed: () {
-                            _searchController.clear();
-                            _pendingApprovalsCubit.searchPendingApprovals('');
-                          },
-                          icon: Icon(Icons.clear),
-                        )
-                      : null,
-                );
+            CustomSearchField(
+              controller: _searchController,
+              hintText: "search name/leave type",
+              onChanged: (val) {
+                _pendingApprovalsCubit.searchPendingApprovals(val);
               },
             ),
             SizedBox(height: 12.h),
