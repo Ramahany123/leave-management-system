@@ -158,5 +158,13 @@ abstract class  LocaleKeys {
   static const manager_dashboard_awaiting_review = 'manager_dashboard.awaiting_review';
   static const manager_dashboard_no_requests = 'manager_dashboard.no_requests';
   static const manager_dashboard = 'manager_dashboard';
+  static const manager_coverage_title = 'manager_coverage.title';
+  static const manager_coverage_search_hint = 'manager_coverage.search_hint';
+  static const manager_coverage_today = 'manager_coverage.today';
+  static const manager_coverage_pick_date = 'manager_coverage.pick_date';
+  static const manager_coverage_no_members_on_leave = 'manager_coverage.no_members_on_leave';
+  static const manager_coverage_no_matching_results = 'manager_coverage.no_matching_results';
+  static const manager_coverage_active_leaves_count = 'manager_coverage.active_leaves_count';
+  static const manager_coverage = 'manager_coverage';
 
 }

@@ -166,5 +166,14 @@
     "currently_absent": "غائبون حالياً",
     "awaiting_review": "قيد المراجعة",
     "no_requests": "لا توجد طلبات معلقة"
+  },
+  "manager_coverage": {
+    "title": "تغطية القسم",
+    "search_hint": "البحث بالاسم أو القسم...",
+    "today": "اليوم",
+    "pick_date": "اختر تاريخاً",
+    "no_members_on_leave": "لا يوجد موظفون في إجازة في هذا التاريخ",
+    "no_matching_results": "لا توجد نتائج تطابق البحث",
+    "active_leaves_count": "{count} موظف(ين) في إجازة"
   }
 }

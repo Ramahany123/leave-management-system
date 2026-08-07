@@ -166,5 +166,14 @@
     "currently_absent": "Currently Absent",
     "awaiting_review": "Awaiting Review",
     "no_requests": "There are no requests"
+  },
+  "manager_coverage": {
+    "title": "Department Coverage",
+    "search_hint": "Search by name or department...",
+    "today": "Today",
+    "pick_date": "Pick Date",
+    "no_members_on_leave": "No team members are on leave on this date",
+    "no_matching_results": "No results match your search",
+    "active_leaves_count": "{count} employee(s) on leave"
   }
 }
