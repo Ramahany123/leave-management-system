@@ -12,6 +12,7 @@ class ManagerCoverageCubit extends Cubit<ManagerCoverageState> {
   final ManagerCoverageRepo _coverageRepo;
   String _searchQuery = "";
   DateTime _selectedDate = DateTime.now();
+  DateTime get selectedDate => _selectedDate;
   List<TeamMemberOnLeave> _allEmployeeList = [];
   TeamOnLeaveModel? _currentTeamOnLeaveModel;
 
