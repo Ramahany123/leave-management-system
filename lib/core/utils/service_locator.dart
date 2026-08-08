@@ -21,11 +21,14 @@ import 'package:leave_management_system/features/manager_dashboard/data/repo/man
 import 'package:leave_management_system/features/manager_dashboard/data/web_services/manager_dashboard_web_services.dart';
 import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_dashboard_cubit.dart';
 import 'package:leave_management_system/features/manager_dashboard/logic/cubit/manager_pending_approvals_cubit.dart';
+import 'package:leave_management_system/features/manager_reports/data/repo/manager_report_repo.dart';
+import 'package:leave_management_system/features/manager_reports/logic/cubit/manager_report_cubit.dart';
 import 'package:leave_management_system/features/profile/data/repo/profile_repo.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/upload_signature_cubit.dart';
 import '../../features/manager_coverage/data/web_services/manager_coverage_web_services.dart';
+import '../../features/manager_reports/data/web_services/manager_report_web_services.dart';
 import '../../features/manager_task_details/data/repo/task_details_repo.dart';
 import '../../features/manager_task_details/data/web_services/task_details_web_services.dart';
 import '../../features/manager_task_details/logic/cubit/task_approval_action_cubit.dart';
@@ -39,22 +42,15 @@ void setupServiceLocator() {
   sl.registerLazySingleton(() => DioFactory().getDio);
   sl.registerLazySingleton(() => ApiService(sl<Dio>()));
 
-  //Auth dpenedencies
   setupAuthDependencies();
-  //Employee Dashboard dpenedencies
   setupEmployeeDashboardDependencies();
-
   setupLeaveHistoryDependencies();
-
   setupProfileDependencies();
-
   setupLeaveRequestDependencies();
-
   setupManagerDashboardDependencies();
-
   setupManagerTaskDetailsDependencies();
-
   setupManagerCoverageDependencies();
+  setupManagerReportDependencies();
 }
 
 void setupAuthDependencies() {
@@ -121,4 +117,10 @@ void setupManagerCoverageDependencies() {
     () => ManagerCoverageRepo(converageWebServices: sl()),
   );
   sl.registerFactory(() => ManagerCoverageCubit(coverageRepo: sl()));
+}
+
+void setupManagerReportDependencies() {
+  sl.registerLazySingleton(() => ManagerReportWebServices(apiService: sl()));
+  sl.registerLazySingleton(() => ManagerReportRepo(reportWebServices: sl()));
+  sl.registerFactory(() => ManagerReportCubit(reportRepo: sl()));
 }
