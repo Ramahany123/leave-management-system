@@ -20,7 +20,7 @@ class ManagerReportWebServices {
       "status": status,
     };
     queryParameters.removeWhere(
-      (key, value) => value == null || (value is String && value.isNotEmpty),
+      (key, value) => value == null || (value is String && value.isEmpty),
     );
     final Response response = await _apiService.getRequest(
       apiEndpoint: ApiEndpoints.getManagerReport,
