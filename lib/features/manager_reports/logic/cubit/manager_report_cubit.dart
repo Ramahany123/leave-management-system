@@ -11,10 +11,13 @@ part 'manager_report_state.dart';
 class ManagerReportCubit extends Cubit<ManagerReportState> {
   final ManagerReportRepo _reportRepo;
   DateTimeRange? _selectedDateRange;
+  DateTimeRange? get selectedDateRange => _selectedDateRange;
   String _searchQuery = '';
   String? _selectedStatus;
+  String? get selectedStatus => _selectedStatus;
   List<ReportRecord> _allRecordsList = [];
   ManagerReportsModel? _currentReportModel;
+  ManagerReportsModel? get currentReportModel => _currentReportModel;
 
   ManagerReportCubit({required ManagerReportRepo reportRepo})
     : _reportRepo = reportRepo,
