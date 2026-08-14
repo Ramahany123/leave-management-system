@@ -175,5 +175,18 @@
     "no_members_on_leave": "لا يوجد موظفون في إجازة في هذا التاريخ",
     "no_matching_results": "لا توجد نتائج تطابق البحث",
     "active_leaves_count": "{count} موظف(ين) في إجازة"
+  },
+  "manager_reports": {
+    "title": "تقارير الإجازات",
+    "total": "الإجمالي",
+    "approved": "المقبولة",
+    "rejected": "المرفوضة",
+    "pending": "المعلقة",
+    "all": "الكل",
+    "cancelled": "الملغية",
+    "filter_by_date": "تحديد الفترة",
+    "search_hint": "البحث باسم الموظف أو القسم...",
+    "no_reports_found": "لا توجد تقارير تطابق الفلاتر المحددة",
+    "comments_history": "سجل الملاحظات والاعتمادات"
   }
 }

@@ -166,5 +166,17 @@ abstract class  LocaleKeys {
   static const manager_coverage_no_matching_results = 'manager_coverage.no_matching_results';
   static const manager_coverage_active_leaves_count = 'manager_coverage.active_leaves_count';
   static const manager_coverage = 'manager_coverage';
+  static const manager_reports_title = 'manager_reports.title';
+  static const manager_reports_total = 'manager_reports.total';
+  static const manager_reports_approved = 'manager_reports.approved';
+  static const manager_reports_rejected = 'manager_reports.rejected';
+  static const manager_reports_pending = 'manager_reports.pending';
+  static const manager_reports_all = 'manager_reports.all';
+  static const manager_reports_cancelled = 'manager_reports.cancelled';
+  static const manager_reports_filter_by_date = 'manager_reports.filter_by_date';
+  static const manager_reports_search_hint = 'manager_reports.search_hint';
+  static const manager_reports_no_reports_found = 'manager_reports.no_reports_found';
+  static const manager_reports_comments_history = 'manager_reports.comments_history';
+  static const manager_reports = 'manager_reports';
 
 }

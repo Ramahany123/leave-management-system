@@ -175,5 +175,18 @@
     "no_members_on_leave": "No team members are on leave on this date",
     "no_matching_results": "No results match your search",
     "active_leaves_count": "{count} employee(s) on leave"
+  },
+  "manager_reports": {
+    "title": "Leave Reports",
+    "total": "Total",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "all": "All",
+    "filter_by_date": "Filter by Date",
+    "search_hint": "Search by employee name or department...",
+    "no_reports_found": "No reports found for the selected filters",
+    "comments_history": "Approval Comments History"
   }
 }
