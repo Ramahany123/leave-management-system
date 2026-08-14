@@ -26,6 +26,7 @@ import 'package:leave_management_system/features/profile/ui/screens/profile_scre
 import 'package:leave_management_system/features/profile/ui/screens/update_contact_screen.dart';
 import 'package:leave_management_system/features/splash/ui/screens/splash_screen.dart';
 import '../../features/auth/data/repo/auth_repo.dart';
+import '../../features/manager_reports/logic/cubit/manager_report_cubit.dart';
 import '../../features/profile/logic/cubit/profile_cubit.dart';
 import '../constants/enums.dart';
 import 'app_routes.dart';
@@ -216,7 +217,11 @@ class RouterGenerationConfig {
               GoRoute(
                 path: AppRoutes.managerReportsScreen,
                 name: AppRoutes.managerReportsScreen,
-                builder: (context, state) => ManageReportsScreen(),
+                builder: (context, state) => BlocProvider(
+                  create: (context) =>
+                      sl<ManagerReportCubit>()..getManagerReports(),
+                  child: ManageReportsScreen(),
+                ),
               ),
             ],
           ),
