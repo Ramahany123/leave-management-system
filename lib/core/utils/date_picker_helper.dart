@@ -18,4 +18,18 @@ class DatePickerHelper {
       },
     );
   }
+
+  static Future<DateTimeRange?> pickDateRange(
+    BuildContext context, {
+    DateTimeRange<DateTime>? initialDateRange,
+    DateTime? firstDate,
+    DateTime? lastDate,
+  }) async {
+    return await showDateRangePicker(
+      context: context,
+      firstDate: firstDate ?? DateTime(2024),
+      lastDate: lastDate ?? DateTime.now().add(Duration(days: 365)),
+      initialDateRange: initialDateRange,
+    );
+  }
 }
