@@ -19,53 +19,57 @@ class ManageReportsScreen extends StatelessWidget {
     final reportCubit = context.read<ManagerReportCubit>();
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
-          child: BlocBuilder<ManagerReportCubit, ManagerReportState>(
-            builder: (context, state) {
-              final (
-                reportModel,
-                currentRange,
-                currentStatus,
-              ) = switch (state) {
-                ManagerReportSuccess(
-                  :final managerReportsModel,
-                  :final selectedRange,
-                  :final selectedStatus,
-                ) =>
-                  (managerReportsModel, selectedRange, selectedStatus),
-                _ => (
-                  reportCubit.currentReportModel,
-                  reportCubit.selectedDateRange,
-                  reportCubit.selectedStatus,
-                ),
-              };
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ReportFilterBar(
-                    selectedRange: currentRange,
-                    selectedStatus: currentStatus,
+        child: RefreshIndicator(
+          onRefresh: reportCubit.getManagerReports,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+            child: BlocBuilder<ManagerReportCubit, ManagerReportState>(
+              builder: (context, state) {
+                final (
+                  reportModel,
+                  currentRange,
+                  currentStatus,
+                ) = switch (state) {
+                  ManagerReportSuccess(
+                    :final managerReportsModel,
+                    :final selectedRange,
+                    :final selectedStatus,
+                  ) =>
+                    (managerReportsModel, selectedRange, selectedStatus),
+                  _ => (
+                    reportCubit.currentReportModel,
+                    reportCubit.selectedDateRange,
+                    reportCubit.selectedStatus,
                   ),
-                  ReportStatisticsGrid(stats: reportModel?.statistics),
-                  ReportSearchBar(),
-                  switch (state) {
-                    ManagerReportLoading() => ManagerReportsShimmer(),
-                    ManagerReportError(:final failure) => GeneralErrorWidget(
-                      message: failure.message,
-                      onRetry: context
-                          .read<ManagerReportCubit>()
-                          .getManagerReports,
+                };
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ReportFilterBar(
+                      selectedRange: currentRange,
+                      selectedStatus: currentStatus,
                     ),
-                    ManagerReportSuccess(:final filteredReports) =>
-                      filteredReports.isEmpty
-                          ? ReportEmptyState()
-                          : ReportItemsList(filteredReports: filteredReports),
-                  },
-                ],
-              );
-            },
+                    ReportStatisticsGrid(stats: reportModel?.statistics),
+                    ReportSearchBar(),
+                    switch (state) {
+                      ManagerReportLoading() => ManagerReportsShimmer(),
+                      ManagerReportError(:final failure) => GeneralErrorWidget(
+                        message: failure.message,
+                        onRetry: context
+                            .read<ManagerReportCubit>()
+                            .getManagerReports,
+                      ),
+                      ManagerReportSuccess(:final filteredReports) =>
+                        filteredReports.isEmpty
+                            ? ReportEmptyState()
+                            : ReportItemsList(filteredReports: filteredReports),
+                    },
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
