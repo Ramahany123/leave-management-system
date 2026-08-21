@@ -1,6 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:leave_management_system/core/networking/dio_factory.dart';
+import 'package:leave_management_system/features/admin_org_structure/logic/cubit/college_details_cubit.dart';
+import 'package:leave_management_system/features/admin_org_structure/logic/cubit/college_form_cubit.dart';
+import 'package:leave_management_system/features/admin_org_structure/logic/cubit/colleges_cubit.dart';
+import 'package:leave_management_system/features/admin_org_structure/logic/cubit/departments_cubit.dart';
 import 'package:leave_management_system/features/auth/data/repo/auth_repo.dart';
 import 'package:leave_management_system/features/auth/data/web_services/auth_web_services.dart';
 import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dart';
@@ -27,6 +31,9 @@ import 'package:leave_management_system/features/profile/data/repo/profile_repo.
 import 'package:leave_management_system/features/profile/logic/cubit/profile_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/update_contact_cubit.dart';
 import 'package:leave_management_system/features/profile/logic/cubit/upload_signature_cubit.dart';
+import '../../features/admin_org_structure/data/repo/admin_org_repo.dart';
+import '../../features/admin_org_structure/data/web_service/admin_org_web_services.dart';
+import '../../features/admin_org_structure/logic/cubit/department_form_cubit.dart';
 import '../../features/manager_coverage/data/web_services/manager_coverage_web_services.dart';
 import '../../features/manager_reports/data/web_services/manager_report_web_services.dart';
 import '../../features/manager_task_details/data/repo/task_details_repo.dart';
@@ -51,6 +58,7 @@ void setupServiceLocator() {
   setupManagerTaskDetailsDependencies();
   setupManagerCoverageDependencies();
   setupManagerReportDependencies();
+  setupAdminOrgDependencies();
 }
 
 void setupAuthDependencies() {
@@ -123,4 +131,18 @@ void setupManagerReportDependencies() {
   sl.registerLazySingleton(() => ManagerReportWebServices(apiService: sl()));
   sl.registerLazySingleton(() => ManagerReportRepo(reportWebServices: sl()));
   sl.registerFactory(() => ManagerReportCubit(reportRepo: sl()));
+}
+
+void setupAdminOrgDependencies() {
+  sl.registerLazySingleton<AdminOrgWebServices>(
+    () => AdminOrgWebServices(apiService: sl()),
+  );
+  sl.registerLazySingleton<AdminOrgRepo>(
+    () => AdminOrgRepo(orgWebServices: sl()),
+  );
+  sl.registerFactory(() => CollegeDetailsCubit(orgRepo: sl()));
+  sl.registerFactory(() => CollegeFormCubit(orgRepo: sl()));
+  sl.registerFactory(() => CollegesCubit(orgRepo: sl()));
+  sl.registerFactory(() => DepartmentsCubit(orgRepo: sl()));
+  sl.registerFactory(() => DepartmentFormCubit(orgRepo: sl()));
 }
