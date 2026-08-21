@@ -35,4 +35,16 @@ class ApiService {
       data: data,
     );
   }
+
+  Future<Response<T>> deleteRequest<T>({
+    required String apiEndpoint,
+    Map<String, dynamic>? queryParameters,
+    Object? data,
+  }) async {
+    return await _dio.delete(
+      apiEndpoint,
+      queryParameters: queryParameters,
+      data: data,
+    );
+  }
 }
