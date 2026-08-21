@@ -1,53 +1,66 @@
 # 🎓 University Leave Management System (Mobile Client)
 
 [![Flutter Version](https://img.shields.io/badge/Flutter-3.41.2-02569B?logo=flutter)](https://flutter.dev)
-[![Architecture](https://img.shields.io/badge/Architecture-Feature--First%20%2B%20BLoC-blueviolet)](#-architecture--design-patterns)
-[![Theme](https://img.shields.io/badge/Theme-Light%20%7C%20Dark-orange)](#-theming--global-dark-mode)
-[![Localization](https://img.shields.io/badge/Language-English%20%7C%20العربية-success)](#-internationalization--rtl)
+[![Architecture](https://img.shields.io/badge/Architecture-Feature--First%20%2B%20BLoC-blueviolet)](#-architecture--engineering-standards)
+[![Theme](https://img.shields.io/badge/Theme-Light%20%7C%20Dark-orange)](#-core-system-capabilities--integration-pillars)
+[![Localization](https://img.shields.io/badge/Language-English%20%7C%20العربية-success)](#-internationalization--rtl-support)
 
 An enterprise-grade, cross-platform mobile application designed to digitize, automate, and govern the full lifecycle of university staff and faculty leave requests. Built in strict compliance with **Egyptian Labor Law**, organizational governance hierarchies, and multi-tier approval workflows.
 
 ---
 
-## 🌟 Key Highlights & System Capabilities
+## 🌟 Core System Capabilities & Integration Pillars
 
-### 🔐 1. Multi-Tier Role-Based Access Control (RBAC)
+### 🔄 1. Complete End-to-End Enterprise Integration
 
-The application dynamically adapts its navigation shell, permissions, and available dashboards based on the authenticated user's role:
-
-- **Staff & Academic Employees:** Dashboard leave balance tracking, smart request submission, electronic signature verification, and request timeline tracking.
-- **Department Heads, Deans & Presidents:** Pending approval queues with signature stamping, real-time team coverage calendars to prevent understaffing, and multi-criteria analytical reports.
-- **HR Administrators:** Central command portal for organizational structure (Colleges & Departments), user onboarding via 14-digit National ID (SSN), leave policy workflow configuration, and global status overrides.
+- **Full-Stack REST Architecture:** Flutter client integrated with a Node.js/Express backend (Sequelize ORM & MySQL) and Cloudinary media cloud.
+- **Automated Security & Session Pipeline:** Secure JWT token lifecycle with automatic Bearer injection interceptors, dynamic disk-to-RAM auth synchronization, and token-guarded API endpoints.
 
 ---
 
-### 📋 2. Smart Form Engine & Labor Law Validations
+### 👥 2. Strict Role-Based Access Control (RBAC)
 
-The leave submission engine performs automated client-side and server-side rule verification:
-
-- **Egyptian Labor Law Compliance:** Dynamic tenure-based and age-based balance calculations with automated fiscal year boundary (June 30 / July 1) crossover prevention.
-- **Progressive Form Disclosure:** Dynamic rendering of delegate selection dropdowns and required document upload cards based on the selected leave type's policies.
-- **Electronic Signature Enforcement:** Pre-submission verification ensuring users upload their digital signature before entering approval workflows.
-- **Attachment Pipeline:** Direct multi-file document uploads handled via Cloudinary and multipart form data.
+- **Role-Tailored Dashboards:** Seamless routing and persistent navigation shells customized for **Employees**, **Department Heads**, **Deans**, **University Presidents**, and **HR Administrators**.
+- **Two-Zone Router Protection:** Centralized `GoRouter` redirect guards enforcing authentication state and preventing unauthorized cross-role route access.
 
 ---
 
-### 🏛️ 3. Full Organizational Structure & Governance
+### ⚖️ 3. Egyptian Labor Law & Smart Rule Engine
 
-- **Colleges & Departments:** Hierarchical management with Dean and Department Head appointment workflows.
-- **Safety Deletion Guards:** Backend-aligned safety checks preventing deletion of colleges containing active departments or departments containing active personnel.
-- **Dynamic Approval Sequences:** Visual multi-step approval workflow builder supporting Department Heads, Deans, University Presidents, and Academic Councils.
+- **Tenure & Age-Based Balances:** Automated balance calculations derived from employment category, gender, and years of service with automatic July 1st fiscal year resets.
+- **Business Rule Enforcement:** Automated client/server validation for 30-day retroactive limits, fiscal year boundary crossings (June 30 / July 1), minimum gap days, and lifetime limits (e.g. Hajj leave).
+- **Early Return Execution ("قطع الإجازة"):** Direct capability for employees to officially cut active leaves short with automatic balance adjustments.
 
 ---
 
-## 🎨 Theming & Global Dark Mode
+### ✍️ 4. Electronic Signatures & Document Verification
 
-The application features a modular, custom **Material 3 Design System** supporting seamless runtime switching between **Light** and **Dark** modes:
+- **Signature Gatekeeping:** Pre-submission enforcement requiring users to upload an electronic signature before submitting requests.
+- **Multi-File Cloudinary Pipeline:** Multipart document uploads for medical and official attachments with progressive disclosure based on leave policies.
 
-- **Centralized Token Architecture:** Semantic color palette tokens defined in `app_colors.dart` and typography scales in `app_typography.dart`.
-- **Global Reactive Theme State:** Root-level `ThemeCubit` provided above `MaterialApp` to manage dynamic brightness transitions.
-- **Persistent Preferences:** User theme selection is automatically saved to disk via `CacheHelper` (`shared_preferences`) and restored at startup.
-- **Theme-Aware Skeletons & Shimmers:** All loading states (`Shimmer.fromColors`) derive background and highlight fills dynamically from `context.colorScheme.outline` and `context.colorScheme.surface`, ensuring visual contrast and zero UI jank across both modes.
+---
+
+### 📊 5. Department Coverage & Operational Intelligence
+
+- **Understaffing Prevention:** Real-time departmental absence calendar enabling managers to check staff availability before approving leaves.
+- **Analytical Reporting:** Multi-criteria date range querying, status breakdowns, and $0\text{ms}$ latency in-memory search across university personnel.
+
+---
+
+### 🏛️ 6. HR Administrative Governance & Policy Engine
+
+- **Organizational Hierarchy:** Complete CRUD management for Colleges and Departments with Dean/Head leadership assignment and deletion safety blocks.
+- **National ID (SSN) Onboarding:** Seamless staff onboarding where initial accounts are securely seeded with 14-digit National IDs requiring mandatory first-time activation.
+- **Dynamic Workflow Engine:** Visual configuration of custom approval sequences (Head $\rightarrow$ Dean $\rightarrow$ President $\rightarrow$ Councils) and category eligibility rules (`Academic`, `Administrative`, `Service`, `All`).
+- **Administrative Status Override:** HR emergency override capability (`Approved`/`Rejected`/`Cancelled`) with automatic balance adjustments and instant employee notifications.
+
+---
+
+### 🎨 7. Production-Grade UX, Theming & Localization
+
+- **Material 3 Design System:** Full **Light & Dark mode** support with custom token architecture and persistent runtime state.
+- **Complete Bilingual Support:** English & Arabic with code-generated translation keys (`easy_localization`) and bidirectional layout mirroring (RTL/LTR).
+- **Theme-Aware Skeleton Shimmers:** Loading UX that mirrors exact layout geometries across both light and dark themes.
 
 ---
 
