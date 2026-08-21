@@ -23,4 +23,10 @@ class ApiEndpoints {
       "manager/approval-tasks/$stepId/reject";
   static const getMembersOnLeave = "manager/team-on-leave";
   static String getManagerReport = "manager/reports";
+
+  static const adminDepartments = "admin/departments";
+  static String adminDepartment(int id) => "admin/departments/$id";
+
+  static const adminColleges = "admin/colleges";
+  static String adminCollege(int id) => "admin/colleges/$id";
 }
