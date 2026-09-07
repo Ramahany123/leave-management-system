@@ -3,8 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:leave_management_system/core/routes/app_routes.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/animated_snack_dialogue.dart';
 import 'package:leave_management_system/features/auth/data/models/login_body_model.dart';
@@ -45,13 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
               width: double.infinity,
               child: BlocListener<AuthCubit, AuthState>(
                 listener: (context, state) {
-                  if (state is AuthAuthenticated) {
-                    GoRouter.of(
-                      context,
-                    ).pushReplacement(AppRoutes.employeeDashboardScreen);
-                  } else if (state is AuthNeedActivation) {
-                    GoRouter.of(context).pushNamed(AppRoutes.onboardingScreen);
-                  } else if (state is AuthError) {
+                  if (state is AuthError) {
                     showAnimatedSnakDialogue(
                       context,
                       type: AnimatedSnackBarType.error,
