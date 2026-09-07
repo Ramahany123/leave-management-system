@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'package:leave_management_system/features/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
+import 'package:leave_management_system/features/admin_org_structure/logic/cubit/departments_cubit.dart';
+import 'package:leave_management_system/features/admin_org_structure/ui/screens/admin_org_structure_screen.dart';
 import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:leave_management_system/features/auth/logic/cubit/change_password_cubit.dart';
 import 'package:leave_management_system/features/auth/ui/screens/change_password_screen.dart';
@@ -25,6 +27,7 @@ import 'package:leave_management_system/features/profile/logic/cubit/update_cont
 import 'package:leave_management_system/features/profile/ui/screens/profile_screen.dart';
 import 'package:leave_management_system/features/profile/ui/screens/update_contact_screen.dart';
 import 'package:leave_management_system/features/splash/ui/screens/splash_screen.dart';
+import '../../features/admin_org_structure/logic/cubit/colleges_cubit.dart';
 import '../../features/auth/data/repo/auth_repo.dart';
 import '../../features/manager_reports/logic/cubit/manager_report_cubit.dart';
 import '../../features/profile/logic/cubit/profile_cubit.dart';
@@ -54,7 +57,8 @@ class RouterGenerationConfig {
           state.matchedLocation == AppRoutes.managerPendingApprovalsScreen ||
           state.matchedLocation == AppRoutes.managerProfileScreen;
       final bool isAdminRoute =
-          state.matchedLocation == AppRoutes.adminDashboardScreen;
+          state.matchedLocation == AppRoutes.adminDashboardScreen ||
+          state.matchedLocation == AppRoutes.adminOrgStructureScreen;
       final String userRole = sl<AuthRepo>().userRole;
 
       final ViewMode currentViewMode = sl<AuthRepo>().currentViewMode;
@@ -99,6 +103,10 @@ class RouterGenerationConfig {
         //to prevent access from manager to admin role
         if (UserRoles.managerRoles.contains(userRole) && isAdminRoute) {
           return AppRoutes.managerDashboardScreen;
+        }
+        //to prevent access from admin to manager role
+        if (userRole == UserRoles.adminRole && isManagerRoute) {
+          return AppRoutes.adminDashboardScreen;
         }
       }
       return null;
@@ -274,6 +282,21 @@ class RouterGenerationConfig {
           create: (context) =>
               sl<ManagerPendingApprovalsCubit>()..fetchPendingApprovals(),
           child: ManagerPendingApprovalsScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.adminOrgStructureScreen,
+        name: AppRoutes.adminOrgStructureScreen,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => sl<CollegesCubit>()..getAllColleges(),
+            ),
+            BlocProvider(
+              create: (context) => sl<DepartmentsCubit>()..getAllDepartments(),
+            ),
+          ],
+          child: AdminOrgStructureScreen(),
         ),
       ),
     ],
