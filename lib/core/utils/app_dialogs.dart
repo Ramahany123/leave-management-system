@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:leave_management_system/core/models/user_model.dart';
 import 'package:leave_management_system/core/utils/service_locator.dart';
+import 'package:leave_management_system/core/widgets/delete_confirmation_dialog.dart';
 import 'package:leave_management_system/core/widgets/logout_dialog.dart';
+import 'package:leave_management_system/features/admin_org_structure/logic/cubit/college_details_cubit.dart';
+import 'package:leave_management_system/features/admin_org_structure/logic/cubit/college_form_cubit.dart';
+import 'package:leave_management_system/features/admin_org_structure/logic/cubit/colleges_cubit.dart';
+import 'package:leave_management_system/features/admin_org_structure/logic/cubit/department_form_cubit.dart';
+import 'package:leave_management_system/features/admin_org_structure/ui/widgets/college_form_bottom_sheet.dart';
+import 'package:leave_management_system/features/admin_org_structure/ui/widgets/department_form_bottom_sheet.dart';
 import 'package:leave_management_system/features/manager_task_details/logic/cubit/task_approval_action_cubit.dart';
 import 'package:leave_management_system/features/manager_task_details/logic/cubit/task_details_cubit.dart';
 import 'package:leave_management_system/features/manager_task_details/ui/widgets/council_session_dialog.dart';
@@ -12,6 +19,9 @@ import 'package:leave_management_system/features/profile/ui/widgets/language_bot
 import 'package:leave_management_system/features/profile/ui/widgets/personal_info_bottom_sheet.dart';
 import 'package:leave_management_system/features/profile/ui/widgets/upload_signature_bottom_sheet.dart';
 
+import '../../features/admin_org_structure/data/models/all_colleges_model.dart';
+import '../../features/admin_org_structure/data/models/all_departements_model.dart';
+import '../../features/admin_org_structure/ui/widgets/college_details_bottom_sheet.dart';
 import '../../features/profile/logic/cubit/upload_signature_cubit.dart';
 
 //TODO: use Future<void>
@@ -88,6 +98,76 @@ class AppDialogs {
           BlocProvider<TaskApprovalActionCubit>(create: (context) => sl()),
         ],
         child: TaskDetailsBottomSheet(stepId: stepId),
+      ),
+    );
+  }
+
+  static Future<bool?> showDeparmtentFormSheet(
+    BuildContext context, {
+    Department? department,
+  }) async {
+    final collegesCubit = context.read<CollegesCubit>();
+    return await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => sl<DepartmentFormCubit>()),
+          BlocProvider.value(value: collegesCubit),
+        ],
+        child: DepartmentFormBottomSheet(department: department),
+      ),
+    );
+  }
+
+  static Future<bool?> showCollegeFormSheet(
+    BuildContext context, {
+    CollegeModel? college,
+  }) async {
+    return await showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) => BlocProvider(
+        create: (context) => sl<CollegeFormCubit>(),
+        child: CollegeFormBottomSheet(college: college),
+      ),
+    );
+  }
+
+  static Future<bool?> showCollegeDetailsSheet(
+    BuildContext context,
+    int collegeId,
+  ) async {
+    return await showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) => BlocProvider(
+        create: (context) =>
+            sl<CollegeDetailsCubit>()..getCollegeDetails(collegeId),
+        child: CollegeDetailsBottomSheet(collegeId: collegeId),
+      ),
+    );
+  }
+
+  static Future<bool?> showDeleteConfirmationDialog(
+    BuildContext context, {
+    final String? title,
+    required final String message,
+    final String? confirmText,
+    final String? cancelText,
+  }) async {
+    return await showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) => DeleteConfirmationDialog(
+        message: message,
+        title: title,
+        confirmText: confirmText,
+        cancelText: cancelText,
       ),
     );
   }
