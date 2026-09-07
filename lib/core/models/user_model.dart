@@ -13,8 +13,8 @@ class UserModel {
   final DateTime hireDate;
   final DateTime dateOfBirth;
   final String gender;
-  final int departmentId;
-  final int collegeId;
+  final int? departmentId;
+  final int? collegeId;
   final bool isActive;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -35,8 +35,8 @@ class UserModel {
     required this.hireDate,
     required this.dateOfBirth,
     required this.gender,
-    required this.departmentId,
-    required this.collegeId,
+    this.departmentId,
+    this.collegeId,
     required this.isActive,
     required this.createdAt,
     required this.updatedAt,
@@ -59,8 +59,8 @@ class UserModel {
       hireDate: DateTime.parse(json['hire_date'] as String),
       dateOfBirth: DateTime.parse(json['date_of_birth'] as String),
       gender: json['gender'] as String,
-      departmentId: json['department_id'] as int,
-      collegeId: json['college_id'] as int,
+      departmentId: json['department_id'] as int?,
+      collegeId: json['college_id'] as int?,
       isActive: json['is_active'] as bool,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
