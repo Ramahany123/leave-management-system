@@ -188,5 +188,24 @@
     "search_hint": "البحث باسم الموظف أو القسم...",
     "no_reports_found": "لا توجد تقارير تطابق الفلاتر المحددة",
     "comments_history": "سجل الملاحظات والاعتمادات"
+  },
+  "admin_dashboard": {
+    "title": "البوابة الإدارية",
+    "welcome": "مرحباً بك",
+    "role_badge": "مسؤول الموارد البشرية",
+    "modules_section_title": "الإدارة والتحكم",
+    "modules_section_subtitle": "اختر الوحدة الإدارية لإدارة عمليات وأنظمة الجامعة",
+    "status_active": "مفعل",
+    "status_in_progress": "المرحلة الحالية",
+    "status_upcoming": "قريباً",
+    "org_structure_title": "الهيكل التنظيمي",
+    "org_structure_desc": "إدارة الكليات، الأقسام الأكاديمية، وتعيين القيادات",
+    "users_management_title": "إدارة المستخدمين",
+    "users_management_desc": "دليل الموظفين، تسجيل الرقم القومي، وحالة الحسابات",
+    "leave_config_title": "سياسات الإجازات ومسارات الاعتماد",
+    "leave_config_desc": "تهيئة أنواع الإجازات، قواعد الأرصدة، وسلاسل الموافقات",
+    "audit_ledger_title": "سجل الطلبات والتدقيق الشامل",
+    "audit_ledger_desc": "سجل تدقيق الطلبات على مستوى الجامعة والتعديل الإداري",
+    "upcoming_feature_notice": "هذه الوحدة الإدارية ستكون متاحة في مرحلة قادمة."
   }
 }

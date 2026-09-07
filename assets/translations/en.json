@@ -188,5 +188,24 @@
     "search_hint": "Search by employee name or department...",
     "no_reports_found": "No reports found for the selected filters",
     "comments_history": "Approval Comments History"
+  },
+  "admin_dashboard": {
+    "title": "Admin Portal",
+    "welcome": "Welcome back",
+    "role_badge": "HR Administrator",
+    "modules_section_title": "Administrative Management",
+    "modules_section_subtitle": "Select an administrative domain to manage university operations",
+    "status_active": "Active",
+    "status_in_progress": "Phase 2",
+    "status_upcoming": "Upcoming",
+    "org_structure_title": "Organizational Structure",
+    "org_structure_desc": "Manage colleges, academic departments, and leadership appointments",
+    "users_management_title": "User Management",
+    "users_management_desc": "Staff directory, national ID onboarding, and account status",
+    "leave_config_title": "Leave Policies & Workflows",
+    "leave_config_desc": "Configure leave categories, balance rules, and approval sequences",
+    "audit_ledger_title": "Global Requests & Audit",
+    "audit_ledger_desc": "University-wide leave audit ledger and emergency status overrides",
+    "upcoming_feature_notice": "This administrative module will be available in an upcoming milestone."
   }
 }

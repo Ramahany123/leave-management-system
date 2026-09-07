@@ -178,5 +178,23 @@ abstract class  LocaleKeys {
   static const manager_reports_no_reports_found = 'manager_reports.no_reports_found';
   static const manager_reports_comments_history = 'manager_reports.comments_history';
   static const manager_reports = 'manager_reports';
+  static const admin_dashboard_title = 'admin_dashboard.title';
+  static const admin_dashboard_welcome = 'admin_dashboard.welcome';
+  static const admin_dashboard_role_badge = 'admin_dashboard.role_badge';
+  static const admin_dashboard_modules_section_title = 'admin_dashboard.modules_section_title';
+  static const admin_dashboard_modules_section_subtitle = 'admin_dashboard.modules_section_subtitle';
+  static const admin_dashboard_status_active = 'admin_dashboard.status_active';
+  static const admin_dashboard_status_in_progress = 'admin_dashboard.status_in_progress';
+  static const admin_dashboard_status_upcoming = 'admin_dashboard.status_upcoming';
+  static const admin_dashboard_org_structure_title = 'admin_dashboard.org_structure_title';
+  static const admin_dashboard_org_structure_desc = 'admin_dashboard.org_structure_desc';
+  static const admin_dashboard_users_management_title = 'admin_dashboard.users_management_title';
+  static const admin_dashboard_users_management_desc = 'admin_dashboard.users_management_desc';
+  static const admin_dashboard_leave_config_title = 'admin_dashboard.leave_config_title';
+  static const admin_dashboard_leave_config_desc = 'admin_dashboard.leave_config_desc';
+  static const admin_dashboard_audit_ledger_title = 'admin_dashboard.audit_ledger_title';
+  static const admin_dashboard_audit_ledger_desc = 'admin_dashboard.audit_ledger_desc';
+  static const admin_dashboard_upcoming_feature_notice = 'admin_dashboard.upcoming_feature_notice';
+  static const admin_dashboard = 'admin_dashboard';
 
 }
