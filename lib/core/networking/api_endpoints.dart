@@ -29,4 +29,7 @@ class ApiEndpoints {
 
   static const adminColleges = "admin/colleges";
   static String adminCollege(int id) => "admin/colleges/$id";
+
+  static const adminAllUsers = "admin/users";
+  static String adminUser(int id) => "admin/users/$id";
 }
