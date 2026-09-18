@@ -52,9 +52,7 @@ class AdminDashboardScreen extends StatelessWidget {
                 description: LocaleKeys.admin_dashboard_users_management_desc
                     .tr(),
                 icon: Icons.people_alt_outlined,
-                onTap: () {
-                  // Will link to AppRoutes.adminUsersScreen in Phase 2B
-                },
+                onTap: () => context.push(AppRoutes.adminUserManagementScreen),
               ),
               SizedBox(height: 14.h),
               AdminModuleCard(
