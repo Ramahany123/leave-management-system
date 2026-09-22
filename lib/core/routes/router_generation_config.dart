@@ -5,6 +5,11 @@ import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'package:leave_management_system/features/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/departments_cubit.dart';
 import 'package:leave_management_system/features/admin_org_structure/ui/screens/admin_org_structure_screen.dart';
+import 'package:leave_management_system/features/admin_user_management/data/models/admin_user_model.dart';
+import 'package:leave_management_system/features/admin_user_management/logic/cubit/admin_user_form_cubit.dart';
+import 'package:leave_management_system/features/admin_user_management/logic/cubit/admin_users_cubit.dart';
+import 'package:leave_management_system/features/admin_user_management/ui/screens/admin_user_management_screen.dart';
+import 'package:leave_management_system/features/admin_user_management/ui/screens/admin_user_management_form.dart';
 import 'package:leave_management_system/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:leave_management_system/features/auth/logic/cubit/change_password_cubit.dart';
 import 'package:leave_management_system/features/auth/ui/screens/change_password_screen.dart';
@@ -45,20 +50,15 @@ class RouterGenerationConfig {
       final bool isSplash = state.matchedLocation == AppRoutes.splashScreen;
       final bool isOnboarding =
           state.matchedLocation == AppRoutes.onboardingScreen;
-      final bool isEmployeeRoute =
-          state.matchedLocation == AppRoutes.employeeDashboardScreen ||
-          state.matchedLocation == AppRoutes.leaveHistoryScreen ||
-          state.matchedLocation == AppRoutes.leaveRequestScreen ||
-          state.matchedLocation == AppRoutes.profileScreen;
-      final bool isManagerRoute =
-          state.matchedLocation == AppRoutes.managerDashboardScreen ||
-          state.matchedLocation == AppRoutes.managerCoverageScreen ||
-          state.matchedLocation == AppRoutes.managerReportsScreen ||
-          state.matchedLocation == AppRoutes.managerPendingApprovalsScreen ||
-          state.matchedLocation == AppRoutes.managerProfileScreen;
-      final bool isAdminRoute =
-          state.matchedLocation == AppRoutes.adminDashboardScreen ||
-          state.matchedLocation == AppRoutes.adminOrgStructureScreen;
+      final bool isEmployeeRoute = AppRoutes.employeeRoutes.contains(
+        state.matchedLocation,
+      );
+      final bool isManagerRoute = AppRoutes.managerRoutes.contains(
+        state.matchedLocation,
+      );
+      final bool isAdminRoute = AppRoutes.adminRoutes.contains(
+        state.matchedLocation,
+      );
       final String userRole = sl<AuthRepo>().userRole;
 
       final ViewMode currentViewMode = sl<AuthRepo>().currentViewMode;
@@ -104,8 +104,9 @@ class RouterGenerationConfig {
         if (UserRoles.managerRoles.contains(userRole) && isAdminRoute) {
           return AppRoutes.managerDashboardScreen;
         }
-        //to prevent access from admin to manager role
-        if (userRole == UserRoles.adminRole && isManagerRoute) {
+        //to prevent access from admin to manager or employee role
+        if (userRole == UserRoles.adminRole &&
+            (isManagerRoute || isEmployeeRoute)) {
           return AppRoutes.adminDashboardScreen;
         }
       }
@@ -297,6 +298,36 @@ class RouterGenerationConfig {
             ),
           ],
           child: AdminOrgStructureScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.adminProfileScreen,
+        name: AppRoutes.adminProfileScreen,
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<ProfileCubit>()..getProfile(),
+          child: ProfileScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.adminUserManagementScreen,
+        name: AppRoutes.adminUserManagementScreen,
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<AdminUsersCubit>()..getAllUsers(),
+          child: AdminUserManagementScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.adminUserManagementFormScreen,
+        name: AppRoutes.adminUserManagementFormScreen,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => sl<AdminUserFormCubit>()),
+            BlocProvider(
+              create: (context) => sl<CollegesCubit>()..getAllColleges(),
+            ),
+            BlocProvider(create: (context) => sl<DepartmentsCubit>()),
+          ],
+          child: AdminUserManagementForm(user: state.extra as AdminUserModel?),
         ),
       ),
     ],
