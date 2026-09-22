@@ -24,20 +24,16 @@ class PrimaryButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.primary,
-        disabledBackgroundColor: Colors.grey.shade400,
+        backgroundColor: backgroundColor,
         fixedSize: Size(width ?? 331.w, height ?? 56.h),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.r),
-        ),
       ),
       child: isLoading
           ? SizedBox(
               height: 24.h,
               width: 24.h,
-              child: const CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 3,
+              child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.onPrimary,
+                strokeWidth: 2.5,
               ),
             )
           : child,
