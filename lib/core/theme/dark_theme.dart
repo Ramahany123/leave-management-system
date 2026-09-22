@@ -21,6 +21,18 @@ ThemeData get darkTheme => ThemeData(
         bodyColor: AppColors.white,
         displayColor: AppColors.white,
       ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.navy700,
+          foregroundColor: AppColors.white,
+          textStyle: AppTypography.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+        ),
+      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.slate800,
