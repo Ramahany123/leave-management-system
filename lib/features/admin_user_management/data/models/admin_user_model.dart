@@ -5,7 +5,7 @@ class AdminUserResponseModel {
   AdminUserResponseModel({required this.isSuccess, required this.users});
 
   factory AdminUserResponseModel.fromJson(Map<String, dynamic> json) {
-    final List<Map<String, dynamic>> data = json["data"];
+    final List data = json["data"] as List;
     return AdminUserResponseModel(
       isSuccess: json["success"],
       users: data.map((i) => AdminUserModel.fromJson(i)).toList(),
