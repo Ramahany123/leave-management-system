@@ -17,9 +17,9 @@ class UpdateUserRequestModel {
   final String? phone;
   final String? signatureUrl;
 
-  UpdateUserRequestModel(
+  UpdateUserRequestModel({
     this.phone,
-    this.signatureUrl, {
+    this.signatureUrl,
     this.name,
     this.email,
     this.ssn,
