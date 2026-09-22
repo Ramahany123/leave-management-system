@@ -7,12 +7,20 @@ class DatePickerHelper {
     DateTime? initialDate,
     DateTime? firstDate,
     DateTime? lastDate,
+    String? helpText,
   }) async {
     return await showDatePicker(
       context: context,
       initialDate: initialDate ?? DateTime.now(),
       firstDate: firstDate ?? DateTime.now().subtract(const Duration(days: 30)),
       lastDate: lastDate ?? DateTime.now().add(const Duration(days: 365)),
+      helpText: helpText,
+      selectableDayPredicate: (day) {
+        if (day.weekday == DateTime.friday) {
+          return false;
+        }
+        return true;
+      },
       builder: (datePickerContext, child) {
         return Theme(data: context.theme, child: child!);
       },
