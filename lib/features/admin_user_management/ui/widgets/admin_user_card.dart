@@ -8,6 +8,7 @@ import 'package:leave_management_system/features/admin_user_management/data/mode
 class AdminUserCard extends StatelessWidget {
   final AdminUserModel user;
   final bool isDeleting;
+  final VoidCallback? onEdit;
   final VoidCallback? onDelete;
   final VoidCallback? onTap;
 
@@ -15,6 +16,7 @@ class AdminUserCard extends StatelessWidget {
     super.key,
     required this.user,
     this.isDeleting = false,
+    this.onEdit,
     this.onDelete,
     this.onTap,
   });
@@ -125,6 +127,19 @@ class AdminUserCard extends StatelessWidget {
                         ],
                       ),
                     ),
+                    if (onEdit != null) ...[
+                      SizedBox(width: 8.w),
+                      IconButton(
+                        icon: Icon(
+                          Icons.edit_outlined,
+                          color: context.colorScheme.primary,
+                          size: 20.sp,
+                        ),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        onPressed: isDeleting ? null : onEdit,
+                      ),
+                    ],
                     if (onDelete != null) ...[
                       SizedBox(width: 8.w),
                       if (isDeleting)
