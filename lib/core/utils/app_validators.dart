@@ -9,6 +9,14 @@ class AppValidators {
     return null;
   }
 
+  // TODO: Add Localization
+  static String? validateRequired<T>(T? value) {
+    if (value == null) {
+      return "This Field is Required";
+    }
+    return null;
+  }
+
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return LocaleKeys.validators_email_required.tr();
