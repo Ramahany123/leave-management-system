@@ -16,6 +16,11 @@ class UserRoles {
   static const managerRoles = ["Manager", "Dean", "President"];
   static const employeeRole = "Employee";
   static const adminRole = "HR_Admin";
+  static const List<String> allRoles = [
+    ...managerRoles,
+    employeeRole,
+    adminRole,
+  ];
 }
 
 //TODO: lozalize text
