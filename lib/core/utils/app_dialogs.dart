@@ -22,6 +22,8 @@ import 'package:leave_management_system/features/profile/ui/widgets/upload_signa
 import '../../features/admin_org_structure/data/models/all_colleges_model.dart';
 import '../../features/admin_org_structure/data/models/all_departements_model.dart';
 import '../../features/admin_org_structure/ui/widgets/college_details_bottom_sheet.dart';
+import '../../features/admin_user_management/data/models/admin_user_model.dart';
+import '../../features/admin_user_management/ui/widgets/admin_user_details_bottom_sheet.dart';
 import '../../features/profile/logic/cubit/upload_signature_cubit.dart';
 
 //TODO: use Future<void>
@@ -169,6 +171,18 @@ class AppDialogs {
         confirmText: confirmText,
         cancelText: cancelText,
       ),
+    );
+  }
+
+  static Future<void> showAdminUserDetailsSheet(
+    BuildContext context,
+    AdminUserModel user,
+  ) async {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => AdminUserDetailsBottomSheet(user: user),
     );
   }
 }
