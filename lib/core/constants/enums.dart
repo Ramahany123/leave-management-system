@@ -2,6 +2,24 @@ enum AuthStatus { activationRequired, authenticated, unauthenticated, initial }
 
 enum ViewMode { employee, manager }
 
+enum UserType {
+  academic("Academic"),
+  adminstritive("Administrative"),
+  service("Service");
+
+  final String rawValue;
+  const UserType(this.rawValue);
+
+  static UserType? fromRawValue(String rawValue) {
+    for (final value in UserType.values) {
+      if (value.rawValue == rawValue) {
+        return value;
+      }
+    }
+    return null;
+  }
+}
+
 enum ApprovalRole {
   headOfDepartment('Head_of_Department'),
   manager('Manager'),
