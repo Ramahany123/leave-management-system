@@ -2,6 +2,7 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:leave_management_system/core/utils/animated_snack_dialogue.dart';
 import 'package:leave_management_system/core/utils/app_dialogs.dart';
 import 'package:leave_management_system/core/widgets/custom_search_field.dart';
@@ -10,6 +11,8 @@ import 'package:leave_management_system/core/widgets/general_error_widget.dart';
 import 'package:leave_management_system/features/admin_user_management/logic/cubit/admin_users_cubit.dart';
 import 'package:leave_management_system/features/admin_user_management/ui/widgets/admin_user_card.dart';
 import 'package:leave_management_system/features/admin_user_management/ui/widgets/admin_users_shimmer.dart';
+
+import '../../../../core/routes/app_routes.dart';
 
 class AdminUserManagementScreen extends StatefulWidget {
   const AdminUserManagementScreen({super.key});
@@ -93,7 +96,6 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen> {
                         message: "No users match your search",
                       );
                     }
-                    //TODO: Test refresh
                     return RefreshIndicator(
                       onRefresh: userCubit.refreshUsers,
                       child: ListView.builder(
@@ -118,7 +120,23 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen> {
                               }
                             },
                             onTap: () {
-                              //TODO: implement when details bottom sheet is ready
+                              AppDialogs.showAdminUserDetailsSheet(
+                                context,
+                                user,
+                              );
+                            },
+                            onEdit: () async {
+                              final bool? isUpdated = await context.push<bool>(
+                                AppRoutes.adminUserManagementFormScreen,
+                                extra: user,
+                              );
+                              if (isUpdated == true && context.mounted) {
+                                showAnimatedSnakDialogue(
+                                  context,
+                                  message: "User Updated Successfully",
+                                );
+                                userCubit.refreshUsers();
+                              }
                             },
                           );
                         },
@@ -130,6 +148,22 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: "Add User",
+        onPressed: () async {
+          final bool? isCreated = await context.push<bool>(
+            AppRoutes.adminUserManagementFormScreen,
+          );
+          if (isCreated == true && context.mounted) {
+            showAnimatedSnakDialogue(
+              context,
+              message: "User Created Successfully",
+            );
+            userCubit.refreshUsers();
+          }
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
