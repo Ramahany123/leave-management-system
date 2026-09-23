@@ -97,7 +97,7 @@ class _AdminUserManagementFormState extends State<AdminUserManagementForm> {
     final now = DateTime.now();
     final picked = await DatePickerHelper.pickDate(
       context,
-      initialDate: _selectedDateOfBirth,
+      initialDate: _selectedDateOfBirth ?? DateTime(now.year - 18),
       firstDate: DateTime(now.year - 80),
       lastDate: DateTime(now.year - 18),
       helpText: "Select Date Of Birth",
