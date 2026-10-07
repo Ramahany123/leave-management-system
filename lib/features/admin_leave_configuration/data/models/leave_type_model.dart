@@ -1,17 +1,15 @@
 import 'required_document_model.dart';
 import 'work_flow_step_model.dart';
 
-class LeaveTypeResponse {
-  final String? status;
-  final List<LeaveType>? data;
+class LeaveTypeList {
+  final List<LeaveType> list;
 
-  LeaveTypeResponse({this.status, this.data});
+  LeaveTypeList({required this.list});
 
-  factory LeaveTypeResponse.fromJson(Map<String, dynamic> json) {
-    return LeaveTypeResponse(
-      status: json['status'] as String?,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((e) => LeaveType.fromJson(e as Map<String, dynamic>))
+  factory LeaveTypeList.fromJson(Map<String, dynamic> json) {
+    return LeaveTypeList(
+      list: (json['data'] as List<dynamic>)
+          .map((e) => LeaveType.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }
