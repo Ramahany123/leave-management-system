@@ -20,7 +20,7 @@ class LeaveType {
   final String typeName;
   final String? category;
   final String balanceType;
-  final num fixedBalance;
+  final num? fixedBalance;
   final bool isPaid;
   final bool deductFromBalance;
   final int? lifetimeLimit;
@@ -72,7 +72,7 @@ class LeaveType {
       typeName: json['type_name'] as String,
       category: json['category'] as String?,
       balanceType: json['balance_type'] as String,
-      fixedBalance: json['fixed_balance'] as num,
+      fixedBalance: json['fixed_balance'] as num?,
       isPaid: json['is_paid'] as bool,
       deductFromBalance: json['deduct_from_balance'] as bool,
       lifetimeLimit: json['lifetime_limit'] as int?,

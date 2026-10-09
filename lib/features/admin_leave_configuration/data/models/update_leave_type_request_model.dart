@@ -48,7 +48,7 @@ class UpdateLeaveTypeRequestModel {
     required String currentTypeName,
     required String? currentCategory,
     required String currentBalanceType,
-    required num currentFixedBalance,
+    required num? currentFixedBalance,
     required bool currentIsPaid,
     required bool currentDeductFromBalance,
     required int? currentLifetimeLimit,
