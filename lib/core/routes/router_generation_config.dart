@@ -3,6 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'package:leave_management_system/features/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/data/models/leave_type_model.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/leave_type_cubit.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/leave_type_form_cubit.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/ui/screens/leave_type_form_screen.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/ui/screens/leave_type_list_screen.dart';
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/departments_cubit.dart';
 import 'package:leave_management_system/features/admin_org_structure/ui/screens/admin_org_structure_screen.dart';
 import 'package:leave_management_system/features/admin_user_management/data/models/admin_user_model.dart';
@@ -328,6 +333,24 @@ class RouterGenerationConfig {
             BlocProvider(create: (context) => sl<DepartmentsCubit>()),
           ],
           child: AdminUserManagementForm(user: state.extra as AdminUserModel?),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.adminLeaveTypeListScreen,
+        name: AppRoutes.adminLeaveTypeListScreen,
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<LeaveTypeCubit>()..getLeaveTypes(),
+          child: LeaveTypeListScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.adminLeaveTypeFormScreen,
+        name: AppRoutes.adminLeaveTypeFormScreen,
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<LeaveTypeFormCubit>(),
+          child: LeaveTypeFormScreen(
+            leaveType: state.extra as LeaveType?,
+          ),
         ),
       ),
     ],
