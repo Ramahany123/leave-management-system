@@ -61,7 +61,7 @@ class CreateLeaveTypeRequestModel {
       'gender_policy': genderPolicy,
       'calculation_method': calculationMethod,
       'workflow': workflow.map((e) => e.toJson()).toList(),
-      'requiredDocuments': requiredDocuments.map((e) => e.toJson()).toList(),
+      'required_documents': requiredDocuments.map((e) => e.toJson()).toList(),
     };
   }
 }

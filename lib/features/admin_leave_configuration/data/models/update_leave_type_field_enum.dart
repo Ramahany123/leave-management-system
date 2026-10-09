@@ -15,7 +15,7 @@ enum UpdateLeaveTypeField {
   requiresDelegate('requires_delegate'),
   genderPolicy('gender_policy'),
   calculationMethod('calculation_method'),
-  requiredDocuments('requiredDocuments');
+  requiredDocuments('required_documents');
 
   final String apiKey;
 
