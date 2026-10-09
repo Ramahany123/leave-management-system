@@ -1,6 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:leave_management_system/core/networking/dio_factory.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/data/repo/leave_type_repo.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/data/web_services/leave_type_web_service.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/leave_type_cubit.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/leave_type_form_cubit.dart';
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/college_details_cubit.dart';
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/college_form_cubit.dart';
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/colleges_cubit.dart';
@@ -64,6 +68,7 @@ void setupServiceLocator() {
   setupManagerReportDependencies();
   setupAdminOrgDependencies();
   setupAdminUserManagementDependencies();
+  setupAdminLeaveConfigurationDependencies();
 }
 
 void setupAuthDependencies() {
@@ -157,4 +162,11 @@ void setupAdminUserManagementDependencies() {
   sl.registerLazySingleton(() => AdminUserRepo(userWebServices: sl()));
   sl.registerFactory(() => AdminUsersCubit(adminUserRepo: sl()));
   sl.registerFactory(() => AdminUserFormCubit(adminUserRepo: sl()));
+}
+
+void setupAdminLeaveConfigurationDependencies() {
+  sl.registerLazySingleton(() => LeaveTypeWebService(apiService: sl()));
+  sl.registerLazySingleton(() => LeaveTypeRepo(webService: sl()));
+  sl.registerFactory(() => LeaveTypeCubit(repo: sl()));
+  sl.registerFactory(() => LeaveTypeFormCubit(repo: sl()));
 }
