@@ -59,15 +59,7 @@ class AdminDashboardScreen extends StatelessWidget {
                 title: LocaleKeys.admin_dashboard_leave_config_title.tr(),
                 description: LocaleKeys.admin_dashboard_leave_config_desc.tr(),
                 icon: Icons.rule_folder_outlined,
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        LocaleKeys.admin_dashboard_upcoming_feature_notice.tr(),
-                      ),
-                    ),
-                  );
-                },
+                onTap: () => context.push(AppRoutes.adminLeaveTypeListScreen),
               ),
               SizedBox(height: 14.h),
               AdminModuleCard(
