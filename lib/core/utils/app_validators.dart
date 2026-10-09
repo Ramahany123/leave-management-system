@@ -47,4 +47,19 @@ class AppValidators {
     }
     return null;
   }
+
+  static String? validateRequiredInt(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return LocaleKeys.validators_field_required.tr();
+    }
+    if (int.tryParse(value.trim()) == null) return "Enter a whole number";
+    return null;
+  }
+
+  // TODO: Add Localization
+  static String? validateOptionalInt(String? value) {
+    if (value == null || value.trim().isEmpty) return null;
+    if (int.tryParse(value.trim()) == null) return "Enter a whole number";
+    return null;
+  }
 }
