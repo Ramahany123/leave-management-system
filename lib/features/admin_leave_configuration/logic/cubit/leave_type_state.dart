@@ -1,7 +1,5 @@
 part of 'leave_type_cubit.dart';
 
-enum InitialLoadingStatus { initial, loading, success, failure }
-
 @immutable
 final class LeaveTypeState {
   final List<LeaveType> leaveTypesList;
