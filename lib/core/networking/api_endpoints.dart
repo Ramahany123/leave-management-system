@@ -35,7 +35,7 @@ class ApiEndpoints {
 
   static const adminLeaveTypes = "admin/leave-types";
   static String adminLeaveType(int id) => "admin/leave-types/$id";
-  static const adminEligibilityRule = "admin/leave-eligibility";
-  static String deleteAdminEligibilityRule(int id) =>
+  static const adminEligibilityRules = "admin/leave-eligibility";
+  static String adminEligibilityRule(int id) =>
       "admin/leave-eligibility/$id";
 }
