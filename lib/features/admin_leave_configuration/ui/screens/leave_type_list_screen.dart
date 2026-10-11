@@ -9,6 +9,7 @@ import 'package:leave_management_system/core/widgets/custom_search_field.dart';
 import 'package:leave_management_system/core/widgets/empty_state_widget.dart';
 import 'package:leave_management_system/core/widgets/general_error_widget.dart';
 import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/leave_type_cubit.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/logic/initial_loading_status.dart';
 import 'package:leave_management_system/features/admin_leave_configuration/ui/widgets/leave_type_card.dart';
 import 'package:leave_management_system/features/admin_leave_configuration/ui/widgets/leave_type_shimmer.dart';
 
@@ -40,7 +41,16 @@ class _LeaveTypeListScreenState extends State<LeaveTypeListScreen> {
   Widget build(BuildContext context) {
     final leaveTypeCubit = context.read<LeaveTypeCubit>();
     return Scaffold(
-      appBar: AppBar(title: const Text("Leave Types")),
+      appBar: AppBar(
+        title: const Text("Leave Types"),
+        actions: [
+          IconButton(
+            tooltip: "Eligibility Rules",
+            onPressed: () => context.push(AppRoutes.adminEligibilityListScreen),
+            icon: const Icon(Icons.groups_outlined),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w),
