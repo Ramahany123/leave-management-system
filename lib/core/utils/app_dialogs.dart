@@ -9,6 +9,9 @@ import 'package:leave_management_system/features/admin_org_structure/logic/cubit
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/colleges_cubit.dart';
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/department_form_cubit.dart';
 import 'package:leave_management_system/features/admin_org_structure/ui/widgets/college_form_bottom_sheet.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/eligibility_cubit.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/leave_type_cubit.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/ui/widgets/create_eligibility_bottom_sheet.dart';
 import 'package:leave_management_system/features/admin_org_structure/ui/widgets/department_form_bottom_sheet.dart';
 import 'package:leave_management_system/features/manager_task_details/logic/cubit/task_approval_action_cubit.dart';
 import 'package:leave_management_system/features/manager_task_details/logic/cubit/task_details_cubit.dart';
@@ -119,6 +122,28 @@ class AppDialogs {
           BlocProvider.value(value: collegesCubit),
         ],
         child: DepartmentFormBottomSheet(department: department),
+      ),
+    );
+  }
+
+  static Future<bool?> showCreateEligibilitySheet(
+    BuildContext context, {
+    int? preselectedLeaveTypeId,
+  }) async {
+    final eligibilityCubit = context.read<EligibilityCubit>();
+    final leaveTypeCubit = context.read<LeaveTypeCubit>();
+    return await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: eligibilityCubit),
+          BlocProvider.value(value: leaveTypeCubit),
+        ],
+        child: CreateEligibilityBottomSheet(
+          preselectedLeaveTypeId: preselectedLeaveTypeId,
+        ),
       ),
     );
   }
