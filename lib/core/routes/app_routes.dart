@@ -41,6 +41,7 @@ class AppRoutes {
   static const adminUserManagementFormScreen = "/adminUserManagementFormScreen";
   static const adminLeaveTypeListScreen = "/adminLeaveTypeListScreen";
   static const adminLeaveTypeFormScreen = "/adminLeaveTypeFormScreen";
+  static const adminEligibilityListScreen = "/adminEligibilityListScreen";
 
   static const adminRoutes = [
     adminDashboardScreen,
@@ -50,5 +51,6 @@ class AppRoutes {
     adminUserManagementFormScreen,
     adminLeaveTypeListScreen,
     adminLeaveTypeFormScreen,
+    adminEligibilityListScreen,
   ];
 }
