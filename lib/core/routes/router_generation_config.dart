@@ -4,8 +4,10 @@ import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'package:leave_management_system/features/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
 import 'package:leave_management_system/features/admin_leave_configuration/data/models/leave_type_model.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/eligibility_cubit.dart';
 import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/leave_type_cubit.dart';
 import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/leave_type_form_cubit.dart';
+import 'package:leave_management_system/features/admin_leave_configuration/ui/screens/eligibility_list_screen.dart';
 import 'package:leave_management_system/features/admin_leave_configuration/ui/screens/leave_type_form_screen.dart';
 import 'package:leave_management_system/features/admin_leave_configuration/ui/screens/leave_type_list_screen.dart';
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/departments_cubit.dart';
@@ -351,6 +353,22 @@ class RouterGenerationConfig {
           child: LeaveTypeFormScreen(
             leaveType: state.extra as LeaveType?,
           ),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.adminEligibilityListScreen,
+        name: AppRoutes.adminEligibilityListScreen,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => sl<LeaveTypeCubit>()..getLeaveTypes(),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  sl<EligibilityCubit>()..getEligibilityRules(),
+            ),
+          ],
+          child: EligibilityListScreen(),
         ),
       ),
     ],
