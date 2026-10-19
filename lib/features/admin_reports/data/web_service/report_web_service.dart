@@ -2,35 +2,17 @@ import 'package:dio/dio.dart';
 import 'package:leave_management_system/core/networking/api_endpoints.dart';
 import 'package:leave_management_system/core/networking/api_service.dart';
 import 'package:leave_management_system/features/admin_reports/data/models/report_model.dart';
+import 'package:leave_management_system/features/admin_reports/data/models/report_query.dart';
 
 class ReportWebService {
   final ApiService _apiService;
 
   ReportWebService({required ApiService apiService}) : _apiService = apiService;
 
-  Future<ReportResponseModel> getReport({
-    String? status,
-    int? departmentId,
-    int? typeId,
-    int? userId,
-    String? startDate,
-    String? endDate,
-    int limit = 10,
-    int offset = 0,
-  }) async {
-    final Map<String, dynamic> queryParameters = {
-      'status': status,
-      'department_id': departmentId,
-      'type_id': typeId,
-      'user_id': userId,
-      'start_date': startDate,
-      'end_date': endDate,
-      'limit': limit,
-      'offset': offset,
-    }..removeWhere((_, value) => value == null);
+  Future<ReportResponseModel> getReport(ReportQuery query) async {
     final Response response = await _apiService.getRequest(
       apiEndpoint: ApiEndpoints.adminReports,
-      queryParameters: queryParameters,
+      queryParameters: query.toQueryParameters(),
     );
     return ReportResponseModel.fromJson(response.data);
   }
