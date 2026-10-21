@@ -12,7 +12,7 @@ class ReportQuery {
   final int limit;
   final int offset;
 
-  ReportQuery({
+  const ReportQuery({
     this.status,
     this.departmentId,
     this.typeId,
