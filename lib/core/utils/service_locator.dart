@@ -12,6 +12,10 @@ import 'package:leave_management_system/features/admin_org_structure/logic/cubit
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/college_form_cubit.dart';
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/colleges_cubit.dart';
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/departments_cubit.dart';
+import 'package:leave_management_system/features/admin_reports/data/repo/report_repo.dart';
+import 'package:leave_management_system/features/admin_reports/data/web_service/report_web_service.dart';
+import 'package:leave_management_system/features/admin_reports/logic/cubit/override_report_cubit.dart';
+import 'package:leave_management_system/features/admin_reports/logic/cubit/report_cubit.dart';
 import 'package:leave_management_system/features/admin_user_management/data/repo/admin_user_repo.dart';
 import 'package:leave_management_system/features/admin_user_management/data/web_services/admin_user_web_services.dart';
 import 'package:leave_management_system/features/admin_user_management/logic/cubit/admin_user_form_cubit.dart';
@@ -72,6 +76,7 @@ void setupServiceLocator() {
   setupAdminOrgDependencies();
   setupAdminUserManagementDependencies();
   setupAdminLeaveConfigurationDependencies();
+  setupAdminUserReportDependencies();
 }
 
 void setupAuthDependencies() {
@@ -175,4 +180,11 @@ void setupAdminLeaveConfigurationDependencies() {
   sl.registerLazySingleton(() => EligibilityWebService(apiService: sl()));
   sl.registerLazySingleton(() => EligibilityRepo(webService: sl()));
   sl.registerFactory(() => EligibilityCubit(repo: sl()));
+}
+
+void setupAdminUserReportDependencies() {
+  sl.registerLazySingleton(() => ReportWebService(apiService: sl()));
+  sl.registerLazySingleton(() => ReportRepo(webService: sl()));
+  sl.registerFactory(() => ReportCubit(repo: sl()));
+  sl.registerFactory(() => OverrideReportCubit(repo: sl()));
 }
