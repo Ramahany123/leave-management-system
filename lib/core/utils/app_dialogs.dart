@@ -13,6 +13,8 @@ import 'package:leave_management_system/features/admin_leave_configuration/logic
 import 'package:leave_management_system/features/admin_leave_configuration/logic/cubit/leave_type_cubit.dart';
 import 'package:leave_management_system/features/admin_leave_configuration/ui/widgets/create_eligibility_bottom_sheet.dart';
 import 'package:leave_management_system/features/admin_org_structure/ui/widgets/department_form_bottom_sheet.dart';
+import 'package:leave_management_system/features/admin_reports/logic/cubit/override_report_cubit.dart';
+import 'package:leave_management_system/features/admin_reports/ui/widgets/report_override_dialog.dart';
 import 'package:leave_management_system/features/manager_task_details/logic/cubit/task_approval_action_cubit.dart';
 import 'package:leave_management_system/features/manager_task_details/logic/cubit/task_details_cubit.dart';
 import 'package:leave_management_system/features/manager_task_details/ui/widgets/council_session_dialog.dart';
@@ -25,6 +27,7 @@ import 'package:leave_management_system/features/profile/ui/widgets/upload_signa
 import '../../features/admin_org_structure/data/models/all_colleges_model.dart';
 import '../../features/admin_org_structure/data/models/all_departements_model.dart';
 import '../../features/admin_org_structure/ui/widgets/college_details_bottom_sheet.dart';
+import '../../features/admin_reports/data/models/report_model.dart';
 import '../../features/admin_user_management/data/models/admin_user_model.dart';
 import '../../features/admin_user_management/ui/widgets/admin_user_details_bottom_sheet.dart';
 import '../../features/profile/logic/cubit/upload_signature_cubit.dart';
@@ -37,7 +40,10 @@ class AppDialogs {
   }) {
     showDialog(
       context: context,
-      builder: (context) => LogoutDialog(onConfirm: onConfirm),
+      builder: (context) => BlocProvider(
+        create: (context) => sl<OverrideReportCubit>(),
+        child: LogoutDialog(onConfirm: onConfirm),
+      ),
     );
   }
 
@@ -196,6 +202,16 @@ class AppDialogs {
         confirmText: confirmText,
         cancelText: cancelText,
       ),
+    );
+  }
+
+  static Future<bool?> showReportOverrideDialog(
+    BuildContext context, {
+    required ReportLeaveRequest leaveRequest,
+  }) {
+    return showDialog(
+      context: context,
+      builder: (_) => ReportOverrideDialog(leaveRequest: leaveRequest),
     );
   }
 
