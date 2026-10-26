@@ -68,8 +68,7 @@ class _ReportOverrideDialogState extends State<ReportOverrideDialog> {
               validator: AppValidators.validateField,
               hint: Text("Select Status"),
               initialValue: _status,
-              items: RequestStatues.statues
-                  .sublist(1)
+              items: RequestStatues.overrideStatuses
                   .map(
                     (status) => DropdownMenuItem<String>(
                       value: status,

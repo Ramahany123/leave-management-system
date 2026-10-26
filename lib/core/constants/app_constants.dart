@@ -38,4 +38,5 @@ class RequestStatues {
     rejected,
     cancelled,
   ];
+  static const List<String> overrideStatuses = [approved, rejected, cancelled];
 }
