@@ -25,7 +25,7 @@ class ReportLeaveRequest {
   final DateTime endDate;
   final int? duration;
   final String? reason;
-  final String? status;
+  final String status;
   final int userId;
   final int typeId;
   final bool preLeaveAcknowledgement;
@@ -61,7 +61,7 @@ class ReportLeaveRequest {
       endDate: DateTime.parse(json["end_date"] as String),
       duration: (json["duration"] as num?)?.toInt(),
       reason: json["reason"] as String?,
-      status: json["status"] as String?,
+      status: (json["status"] as String?) ?? "Pending",
       userId: json["user_id"] as int,
       typeId: json["type_id"] as int,
       preLeaveAcknowledgement: json["pre_leave_acknowledgement"] as bool,
