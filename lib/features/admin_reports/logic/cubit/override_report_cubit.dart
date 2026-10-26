@@ -17,8 +17,8 @@ class OverrideReportCubit extends Cubit<OverrideReportState> {
     required String status,
     required String comments,
   }) async {
-    emit(OverrideReportLoading());
     if (state is OverrideReportLoading) return;
+    emit(OverrideReportLoading());
     final result = await _repo.overrideStatus(
       id,
       status: status,
