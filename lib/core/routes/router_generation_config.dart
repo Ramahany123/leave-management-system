@@ -12,6 +12,9 @@ import 'package:leave_management_system/features/admin_leave_configuration/ui/sc
 import 'package:leave_management_system/features/admin_leave_configuration/ui/screens/leave_type_list_screen.dart';
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/departments_cubit.dart';
 import 'package:leave_management_system/features/admin_org_structure/ui/screens/admin_org_structure_screen.dart';
+import 'package:leave_management_system/features/admin_reports/data/models/report_query.dart';
+import 'package:leave_management_system/features/admin_reports/logic/cubit/report_cubit.dart';
+import 'package:leave_management_system/features/admin_reports/ui/screens/admin_report_screen.dart';
 import 'package:leave_management_system/features/admin_user_management/data/models/admin_user_model.dart';
 import 'package:leave_management_system/features/admin_user_management/logic/cubit/admin_user_form_cubit.dart';
 import 'package:leave_management_system/features/admin_user_management/logic/cubit/admin_users_cubit.dart';
@@ -350,9 +353,7 @@ class RouterGenerationConfig {
         name: AppRoutes.adminLeaveTypeFormScreen,
         builder: (context, state) => BlocProvider(
           create: (context) => sl<LeaveTypeFormCubit>(),
-          child: LeaveTypeFormScreen(
-            leaveType: state.extra as LeaveType?,
-          ),
+          child: LeaveTypeFormScreen(leaveType: state.extra as LeaveType?),
         ),
       ),
       GoRoute(
@@ -369,6 +370,14 @@ class RouterGenerationConfig {
             ),
           ],
           child: EligibilityListScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.adminReportsScreen,
+        name: AppRoutes.adminReportsScreen,
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<ReportCubit>()..applyQuery(ReportQuery()),
+          child: AdminReportScreen(),
         ),
       ),
     ],
