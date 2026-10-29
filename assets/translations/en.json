@@ -207,5 +207,12 @@
     "audit_ledger_title": "Global Requests & Audit",
     "audit_ledger_desc": "University-wide leave audit ledger and emergency status overrides",
     "upcoming_feature_notice": "This administrative module will be available in an upcoming milestone."
+  },
+  "admin_reports": {
+    "title": "Leave Reports",
+    "empty_title": "No leave requests yet",
+    "empty_message": "Leave requests submitted across the university will appear here.",
+    "deleted_leave_type": "Deleted leave type",
+    "no_department": "No department"
   }
 }

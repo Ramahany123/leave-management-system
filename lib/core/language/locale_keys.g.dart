@@ -196,5 +196,11 @@ abstract class  LocaleKeys {
   static const admin_dashboard_audit_ledger_desc = 'admin_dashboard.audit_ledger_desc';
   static const admin_dashboard_upcoming_feature_notice = 'admin_dashboard.upcoming_feature_notice';
   static const admin_dashboard = 'admin_dashboard';
+  static const admin_reports_title = 'admin_reports.title';
+  static const admin_reports_empty_title = 'admin_reports.empty_title';
+  static const admin_reports_empty_message = 'admin_reports.empty_message';
+  static const admin_reports_deleted_leave_type = 'admin_reports.deleted_leave_type';
+  static const admin_reports_no_department = 'admin_reports.no_department';
+  static const admin_reports = 'admin_reports';
 
 }
