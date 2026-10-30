@@ -66,15 +66,7 @@ class AdminDashboardScreen extends StatelessWidget {
                 title: LocaleKeys.admin_dashboard_audit_ledger_title.tr(),
                 description: LocaleKeys.admin_dashboard_audit_ledger_desc.tr(),
                 icon: Icons.assignment_outlined,
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        LocaleKeys.admin_dashboard_upcoming_feature_notice.tr(),
-                      ),
-                    ),
-                  );
-                },
+                onTap: () => context.push(AppRoutes.adminReportsScreen),
               ),
             ],
           ),
