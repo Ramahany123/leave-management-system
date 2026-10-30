@@ -375,8 +375,21 @@ class RouterGenerationConfig {
       GoRoute(
         path: AppRoutes.adminReportsScreen,
         name: AppRoutes.adminReportsScreen,
-        builder: (context, state) => BlocProvider(
-          create: (context) => sl<ReportCubit>()..applyQuery(ReportQuery()),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => sl<ReportCubit>()..applyQuery(ReportQuery()),
+            ),
+            //TODO: Temporary until i use stored value
+            BlocProvider(
+              lazy: false,
+              create: (context) => sl<DepartmentsCubit>()..getAllDepartments(),
+            ),
+            BlocProvider(
+              lazy: false,
+              create: (context) => sl<LeaveTypeCubit>()..getLeaveTypes(),
+            ),
+          ],
           child: AdminReportScreen(),
         ),
       ),
