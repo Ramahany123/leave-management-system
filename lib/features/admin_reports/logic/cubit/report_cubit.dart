@@ -16,6 +16,7 @@ class ReportCubit extends Cubit<ReportState> {
 
   ReportCubit({required ReportRepo repo}) : _repo = repo, super(ReportState());
 
+  ReportQuery get reportQuery => state.query;
   ReportQuery _queryAfterPage(
     ReportQuery requestQuery,
     ReportResponseModel response,
@@ -67,6 +68,11 @@ class ReportCubit extends Cubit<ReportState> {
         emit(state.copyWith(isInitialLoading: false, initialFailure: failure));
       },
     );
+  }
+
+  void changeStatusFilter(String? newStatus) {
+    if (newStatus == state.query.status) return;
+    applyQuery(state.query.copyWith(status: newStatus));
   }
 
   Future<void> refreshReports() async {
