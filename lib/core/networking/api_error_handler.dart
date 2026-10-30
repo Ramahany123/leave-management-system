@@ -32,9 +32,20 @@ class ApiErrorHandler {
     final int statusCode = response.statusCode ?? 0;
 
     final data = response.data;
-    final String apiMessage =
-        (data is Map ? data["data"]["message"] : null) as String? ??
-        "Server Error";
+    final String apiMessage = () {
+      if (data is Map) {
+        // 1. Check if "message" is directly at the root level
+        if (data["message"] is String) {
+          return data["message"] as String;
+        }
+        // 2. Check if it's nested inside data["data"]["message"]
+        final innerData = data["data"];
+        if (innerData is Map && innerData["message"] is String) {
+          return innerData["message"] as String;
+        }
+      }
+      return "Server Error";
+    }();
     return switch (statusCode) {
       401 => const UnauthenticatedFailure(),
       404 => NotFoundFailure(apiMessage),
