@@ -28,6 +28,8 @@ import '../../features/admin_org_structure/data/models/all_colleges_model.dart';
 import '../../features/admin_org_structure/data/models/all_departements_model.dart';
 import '../../features/admin_org_structure/ui/widgets/college_details_bottom_sheet.dart';
 import '../../features/admin_reports/data/models/report_model.dart';
+import '../../features/admin_reports/data/models/report_query.dart';
+import '../../features/admin_reports/ui/widgets/report_filter_bottom_sheet.dart';
 import '../../features/admin_user_management/data/models/admin_user_model.dart';
 import '../../features/admin_user_management/ui/widgets/admin_user_details_bottom_sheet.dart';
 import '../../features/profile/logic/cubit/upload_signature_cubit.dart';
@@ -211,7 +213,28 @@ class AppDialogs {
   }) {
     return showDialog(
       context: context,
-      builder: (_) => ReportOverrideDialog(leaveRequest: leaveRequest),
+      builder: (_) => BlocProvider(
+        create: (context) => sl<OverrideReportCubit>(),
+        child: ReportOverrideDialog(leaveRequest: leaveRequest),
+      ),
+    );
+  }
+
+  static Future<ReportQuery?> showReportFilterSheet(
+    BuildContext context, {
+    required ReportQuery initialQuery,
+    Map<int, String> departments = const {},
+    Map<int, String> leaveTypes = const {},
+  }) {
+    return showModalBottomSheet<ReportQuery>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => ReportFilterSheet(
+        initialQuery: initialQuery,
+        departments: departments,
+        leaveTypes: leaveTypes,
+      ),
     );
   }
 
