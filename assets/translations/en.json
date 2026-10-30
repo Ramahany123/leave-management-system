@@ -213,6 +213,21 @@
     "empty_title": "No leave requests yet",
     "empty_message": "Leave requests submitted across the university will appear here.",
     "deleted_leave_type": "Deleted leave type",
-    "no_department": "No department"
+    "no_department": "No department",
+    "all": "All",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "cancelled": "Cancelled",
+    "filters": "Filters",
+    "department": "Department",
+    "leave_type": "Leave Type",
+    "date_range": "Date Range",
+    "all_departments": "All departments",
+    "all_leave_types": "All leave types",
+    "any_date": "Any date",
+    "apply_filters": "Apply Filters",
+    "reset_filters": "Reset",
+    "no_reports_found": "No reports found for the selected filters"
   }
 }

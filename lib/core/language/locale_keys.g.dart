@@ -201,6 +201,21 @@ abstract class  LocaleKeys {
   static const admin_reports_empty_message = 'admin_reports.empty_message';
   static const admin_reports_deleted_leave_type = 'admin_reports.deleted_leave_type';
   static const admin_reports_no_department = 'admin_reports.no_department';
+  static const admin_reports_all = 'admin_reports.all';
+  static const admin_reports_pending = 'admin_reports.pending';
+  static const admin_reports_approved = 'admin_reports.approved';
+  static const admin_reports_rejected = 'admin_reports.rejected';
+  static const admin_reports_cancelled = 'admin_reports.cancelled';
+  static const admin_reports_filters = 'admin_reports.filters';
+  static const admin_reports_department = 'admin_reports.department';
+  static const admin_reports_leave_type = 'admin_reports.leave_type';
+  static const admin_reports_date_range = 'admin_reports.date_range';
+  static const admin_reports_all_departments = 'admin_reports.all_departments';
+  static const admin_reports_all_leave_types = 'admin_reports.all_leave_types';
+  static const admin_reports_any_date = 'admin_reports.any_date';
+  static const admin_reports_apply_filters = 'admin_reports.apply_filters';
+  static const admin_reports_reset_filters = 'admin_reports.reset_filters';
+  static const admin_reports_no_reports_found = 'admin_reports.no_reports_found';
   static const admin_reports = 'admin_reports';
 
 }

@@ -213,6 +213,21 @@
     "empty_title": "لا توجد طلبات إجازة بعد",
     "empty_message": "ستظهر هنا طلبات الإجازة المقدمة من جميع موظفي الجامعة.",
     "deleted_leave_type": "نوع إجازة محذوف",
-    "no_department": "بدون قسم"
+    "no_department": "بدون قسم",
+    "all": "الكل",
+    "pending": "المعلقة",
+    "approved": "المقبولة",
+    "rejected": "المرفوضة",
+    "cancelled": "الملغية",
+    "filters": "الفلاتر",
+    "department": "القسم",
+    "leave_type": "نوع الإجازة",
+    "date_range": "الفترة الزمنية",
+    "all_departments": "كل الأقسام",
+    "all_leave_types": "كل أنواع الإجازات",
+    "any_date": "أي تاريخ",
+    "apply_filters": "تطبيق الفلاتر",
+    "reset_filters": "إعادة تعيين",
+    "no_reports_found": "لا توجد تقارير تطابق الفلاتر المحددة"
   }
 }
