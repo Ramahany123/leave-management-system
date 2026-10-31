@@ -12,6 +12,7 @@ import 'package:leave_management_system/features/admin_leave_configuration/logic
 import 'package:leave_management_system/features/admin_org_structure/logic/cubit/departments_cubit.dart';
 import 'package:leave_management_system/features/admin_reports/logic/cubit/report_cubit.dart';
 
+import '../widgets/load_more_error_footer.dart';
 import '../widgets/report_filter_bar.dart';
 import '../widgets/report_list_shimmer.dart';
 import '../widgets/report_request_card.dart';
@@ -100,6 +101,7 @@ class AdminReportScreen extends StatelessWidget {
                     }
                   },
                   builder: (context, state) {
+                    final reportCubit = context.read<ReportCubit>();
                     if (state.isInitialLoading) {
                       return const ReportListShimmer();
                     }
@@ -108,8 +110,7 @@ class AdminReportScreen extends StatelessWidget {
                     if (failure != null) {
                       return GeneralErrorWidget(
                         message: failure.message,
-                        onRetry: () =>
-                            context.read<ReportCubit>().applyQuery(state.query),
+                        onRetry: () => reportCubit.applyQuery(state.query),
                       );
                     }
 
@@ -131,17 +132,45 @@ class AdminReportScreen extends StatelessWidget {
                     }
 
                     return RefreshIndicator(
-                      onRefresh: context.read<ReportCubit>().refreshReports,
-                      child: ListView.separated(
-                        padding: EdgeInsetsDirectional.only(
-                          top: 16.h,
-                          bottom: 24.h,
+                      onRefresh: reportCubit.refreshReports,
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (notification) {
+                          if (notification is ScrollEndNotification) {
+                            if (notification.metrics.extentAfter < 300) {
+                              reportCubit.loadMoreReports();
+                            }
+                          }
+                          return false;
+                        },
+                        child: ListView.separated(
+                          padding: EdgeInsetsDirectional.only(
+                            top: 16.h,
+                            bottom: 24.h,
+                          ),
+                          itemCount:
+                              state.requests.length +
+                              (state.isLoadingMore ||
+                                      state.loadMoreFailure != null
+                                  ? 1
+                                  : 0),
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 12.h),
+                          itemBuilder: (context, index) {
+                            if (index >= state.requests.length) {
+                              if (state.loadMoreFailure != null) {
+                                return LoadMoreErrorFooter(
+                                  onRetry: () => context
+                                      .read<ReportCubit>()
+                                      .loadMoreReports(),
+                                );
+                              }
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            return ReportRequestCard(
+                              request: state.requests[index],
+                            );
+                          },
                         ),
-                        itemCount: state.requests.length,
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: 12.h),
-                        itemBuilder: (context, index) =>
-                            ReportRequestCard(request: state.requests[index]),
                       ),
                     );
                   },
