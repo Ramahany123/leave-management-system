@@ -12,4 +12,9 @@ extension DateFormatter on DateTime {
   String get toApiDate {
     return DateFormat("yyyy-MM-dd").format(this);
   }
+
+  String toReadableDateRange(DateTime end) {
+    return '${DateFormat("MMM dd").format(this)} - '
+        '${DateFormat("MMM dd, yyyy").format(end)}';
+  }
 }

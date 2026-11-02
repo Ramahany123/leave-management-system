@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/theme/theme_context_extension.dart';
+import 'package:leave_management_system/core/utils/date_extension.dart';
 import 'package:leave_management_system/core/widgets/name_avatar.dart';
 import 'package:leave_management_system/core/widgets/status_badging.dart';
 import 'package:leave_management_system/features/admin_reports/data/models/report_model.dart';
@@ -21,9 +22,7 @@ class ReportRequestCard extends StatelessWidget {
     final departmentLabel =
         request.user.department?.name ??
         LocaleKeys.admin_reports_no_department.tr();
-    final dateRange =
-        '${DateFormat('MMM dd').format(request.startDate)} - '
-        '${DateFormat('MMM dd, yyyy').format(request.endDate)}';
+    final dateRange = request.startDate.toReadableDateRange(request.endDate);
 
     return Material(
       color: Colors.transparent,
