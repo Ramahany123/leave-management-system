@@ -9,6 +9,16 @@ class AppValidators {
     return null;
   }
 
+  static String? validateMinLength(String? value, int minLength) {
+    if (value == null || value.trim().isEmpty) {
+      return LocaleKeys.validators_field_required.tr();
+    }
+    if (value.trim().length < minLength) {
+      return LocaleKeys.validators_min_length.tr(args: ['$minLength']);
+    }
+    return null;
+  }
+
   // TODO: Add Localization
   static String? validateRequired<T>(T? value) {
     if (value == null) {
