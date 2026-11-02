@@ -75,6 +75,7 @@
     "invalid_email": "يرجى إدخال بريد إلكتروني صحيح",
     "password_required": "كلمة المرور مطلوبة",
     "password_min_length": "يجب ألا تقل كلمة المرور عن ٨ أحرف",
+    "min_length": "يجب ألا يقل النص عن {} أحرف",
     "confirm_password_required": "تأكيد كلمة المرور مطلوب",
     "passwords_do_not_match": "كلمتا المرور غير متطابقتين"
   },
@@ -228,6 +229,15 @@
     "any_date": "أي تاريخ",
     "apply_filters": "تطبيق الفلاتر",
     "reset_filters": "إعادة تعيين",
-    "no_reports_found": "لا توجد تقارير تطابق الفلاتر المحددة"
+    "no_reports_found": "لا توجد تقارير تطابق الفلاتر المحددة",
+    "override_status": "تجاوز الحالة",
+    "showing_count": "عرض {shown} من {total} طلبات",
+    "override_title": "تعديل حالة طلب الإجازة إدارياً",
+    "override_status_hint": "اختر الحالة الجديدة",
+    "override_comments_hint": "التبرير الإداري",
+    "override_warning": "سيؤدي هذا الإجراء إلى تعديل أرصدة الإجازات نهائياً، وإلغاء خطوات الاعتماد المعلقة، وإخطار الموظف.",
+    "override_confirm": "تعديل الحالة",
+    "override_success": "تم تعديل حالة الطلب بنجاح",
+    "load_more_failed": "فشل تحميل المزيد من الطلبات"
   }
 }

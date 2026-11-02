@@ -75,6 +75,7 @@
     "invalid_email": "Please enter a valid email address",
     "password_required": "Password is required",
     "password_min_length": "Password must be at least 8 characters",
+    "min_length": "Must be at least {} characters",
     "confirm_password_required": "Confirm password is required",
     "passwords_do_not_match": "Passwords do not match"
   },
@@ -228,6 +229,15 @@
     "any_date": "Any date",
     "apply_filters": "Apply Filters",
     "reset_filters": "Reset",
-    "no_reports_found": "No reports found for the selected filters"
+    "no_reports_found": "No reports found for the selected filters",
+    "override_status": "Override Status",
+    "showing_count": "Showing {shown} of {total} requests",
+    "override_title": "Override Leave Request Status",
+    "override_status_hint": "Select the new status",
+    "override_comments_hint": "Administrative justification",
+    "override_warning": "This action permanently adjusts leave balances, invalidates pending approval steps, and notifies the employee.",
+    "override_confirm": "Override",
+    "override_success": "Request status overridden successfully",
+    "load_more_failed": "Failed to load more requests"
   }
 }

@@ -73,6 +73,7 @@ abstract class  LocaleKeys {
   static const validators_invalid_email = 'validators.invalid_email';
   static const validators_password_required = 'validators.password_required';
   static const validators_password_min_length = 'validators.password_min_length';
+  static const validators_min_length = 'validators.min_length';
   static const validators_confirm_password_required = 'validators.confirm_password_required';
   static const validators_passwords_do_not_match = 'validators.passwords_do_not_match';
   static const validators = 'validators';
@@ -216,6 +217,15 @@ abstract class  LocaleKeys {
   static const admin_reports_apply_filters = 'admin_reports.apply_filters';
   static const admin_reports_reset_filters = 'admin_reports.reset_filters';
   static const admin_reports_no_reports_found = 'admin_reports.no_reports_found';
+  static const admin_reports_override_status = 'admin_reports.override_status';
+  static const admin_reports_showing_count = 'admin_reports.showing_count';
+  static const admin_reports_override_title = 'admin_reports.override_title';
+  static const admin_reports_override_status_hint = 'admin_reports.override_status_hint';
+  static const admin_reports_override_comments_hint = 'admin_reports.override_comments_hint';
+  static const admin_reports_override_warning = 'admin_reports.override_warning';
+  static const admin_reports_override_confirm = 'admin_reports.override_confirm';
+  static const admin_reports_override_success = 'admin_reports.override_success';
+  static const admin_reports_load_more_failed = 'admin_reports.load_more_failed';
   static const admin_reports = 'admin_reports';
 
 }
