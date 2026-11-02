@@ -23,6 +23,14 @@ class ReportQuery {
     this.offset = 0,
   });
 
+  bool get hasActiveFilters =>
+      departmentId != null ||
+      typeId != null ||
+      userId != null ||
+      startDate != null ||
+      endDate != null;
+  bool get hasAnyCriteria => status != null || hasActiveFilters;
+
   Map<String, dynamic> toQueryParameters() {
     final queryParams = <String, dynamic>{
       'status': status,

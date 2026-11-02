@@ -83,7 +83,13 @@ class ReportCubit extends Cubit<ReportState> {
     final requestQuery = state.query.copyWith(offset: 0);
     final requestGeneration = _requestGeneration;
 
-    emit(state.copyWith(isRefreshing: true, refreshFailure: null));
+    emit(
+      state.copyWith(
+        isRefreshing: true,
+        refreshFailure: null,
+        loadMoreFailure: null,
+      ),
+    );
 
     final result = await _fetchReports(
       requestQuery: requestQuery,

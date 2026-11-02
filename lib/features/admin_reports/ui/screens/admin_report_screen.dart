@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leave_management_system/core/language/locale_keys.g.dart';
+import 'package:leave_management_system/core/theme/theme_context_extension.dart';
 import 'package:leave_management_system/core/utils/animated_snack_dialogue.dart';
 import 'package:leave_management_system/core/utils/app_dialogs.dart';
 import 'package:leave_management_system/core/widgets/empty_state_widget.dart';
@@ -48,13 +49,8 @@ class AdminReportScreen extends StatelessWidget {
             children: [
               // 1. Filter bar — rebuilds ONLY when the query changes.
               BlocSelector<ReportCubit, ReportState, (String?, bool)>(
-                selector: (state) => (
-                  state.query.status,
-                  state.query.departmentId != null ||
-                      state.query.typeId != null ||
-                      state.query.startDate != null ||
-                      state.query.endDate != null,
-                ),
+                selector: (state) =>
+                    (state.query.status, state.query.hasActiveFilters),
                 builder: (context, filter) {
                   final reportCubit = context.read<ReportCubit>();
                   final (status, hasActiveFilters) = filter;
@@ -85,6 +81,32 @@ class AdminReportScreen extends StatelessWidget {
               ),
               SizedBox(height: 12.h),
 
+              // 1b. Ledger counter — rebuilds only when (shown, total) change.
+              BlocSelector<ReportCubit, ReportState, (int, int)>(
+                selector: (state) => (state.requests.length, state.total),
+                builder: (context, counts) {
+                  final (shown, total) = counts;
+                  if (total == 0) return const SizedBox.shrink();
+                  return Padding(
+                    padding: EdgeInsetsDirectional.only(bottom: 8.h),
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        LocaleKeys.admin_reports_showing_count.tr(
+                          namedArgs: {
+                            'shown': shown.toString(),
+                            'total': total.toString(),
+                          },
+                        ),
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: context.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+
               // 2. List area — must be Expanded inside a Column.
               Expanded(
                 child: BlocConsumer<ReportCubit, ReportState>(
@@ -102,76 +124,9 @@ class AdminReportScreen extends StatelessWidget {
                   },
                   builder: (context, state) {
                     final reportCubit = context.read<ReportCubit>();
-                    if (state.isInitialLoading) {
-                      return const ReportListShimmer();
-                    }
-
-                    final failure = state.initialFailure;
-                    if (failure != null) {
-                      return GeneralErrorWidget(
-                        message: failure.message,
-                        onRetry: () => reportCubit.applyQuery(state.query),
-                      );
-                    }
-
-                    if (state.requests.isEmpty) {
-                      final hasActiveFilters =
-                          state.query.status != null ||
-                          state.query.departmentId != null ||
-                          state.query.typeId != null ||
-                          state.query.startDate != null;
-                      return EmptyStateWidget(
-                        message: hasActiveFilters
-                            ? LocaleKeys.admin_reports_no_reports_found.tr()
-                            : LocaleKeys.admin_reports_empty_title.tr(),
-                        subtitle: hasActiveFilters
-                            ? null
-                            : LocaleKeys.admin_reports_empty_message.tr(),
-                        icon: Icons.assignment_outlined,
-                      );
-                    }
-
                     return RefreshIndicator(
                       onRefresh: reportCubit.refreshReports,
-                      child: NotificationListener<ScrollNotification>(
-                        onNotification: (notification) {
-                          if (notification is ScrollEndNotification) {
-                            if (notification.metrics.extentAfter < 300) {
-                              reportCubit.loadMoreReports();
-                            }
-                          }
-                          return false;
-                        },
-                        child: ListView.separated(
-                          padding: EdgeInsetsDirectional.only(
-                            top: 16.h,
-                            bottom: 24.h,
-                          ),
-                          itemCount:
-                              state.requests.length +
-                              (state.isLoadingMore ||
-                                      state.loadMoreFailure != null
-                                  ? 1
-                                  : 0),
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 12.h),
-                          itemBuilder: (context, index) {
-                            if (index >= state.requests.length) {
-                              if (state.loadMoreFailure != null) {
-                                return LoadMoreErrorFooter(
-                                  onRetry: () => context
-                                      .read<ReportCubit>()
-                                      .loadMoreReports(),
-                                );
-                              }
-                              return Center(child: CircularProgressIndicator());
-                            }
-                            return ReportRequestCard(
-                              request: state.requests[index],
-                            );
-                          },
-                        ),
-                      ),
+                      child: _buildListArea(context, state, reportCubit),
                     );
                   },
                 ),
@@ -179,6 +134,88 @@ class AdminReportScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildListArea(
+    BuildContext context,
+    ReportState state,
+    ReportCubit reportCubit,
+  ) {
+    if (state.isInitialLoading) {
+      return const ReportListShimmer();
+    }
+
+    final failure = state.initialFailure;
+    if (failure != null) {
+      return GeneralErrorWidget(
+        message: failure.message,
+        onRetry: () => reportCubit.applyQuery(state.query),
+      );
+    }
+
+    if (state.requests.isEmpty) {
+      final hasAnyCriteria = state.query.hasAnyCriteria;
+      return EmptyStateWidget(
+        message: hasAnyCriteria
+            ? LocaleKeys.admin_reports_no_reports_found.tr()
+            : LocaleKeys.admin_reports_empty_title.tr(),
+        subtitle: hasAnyCriteria
+            ? null
+            : LocaleKeys.admin_reports_empty_message.tr(),
+        icon: Icons.assignment_outlined,
+      );
+    }
+
+    return NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        if (notification is ScrollEndNotification &&
+            notification.metrics.extentAfter < 300) {
+          reportCubit.loadMoreReports();
+        }
+        return false;
+      },
+      child: ListView.separated(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: EdgeInsetsDirectional.only(top: 16.h, bottom: 24.h),
+        itemCount:
+            state.requests.length +
+            (state.isLoadingMore || state.loadMoreFailure != null ? 1 : 0),
+        separatorBuilder: (context, index) => SizedBox(height: 12.h),
+        itemBuilder: (context, index) {
+          if (index >= state.requests.length) {
+            if (state.loadMoreFailure != null) {
+              return LoadMoreErrorFooter(onRetry: reportCubit.loadMoreReports);
+            }
+            return const Center(child: CircularProgressIndicator());
+          }
+          return ReportRequestCard(
+            request: state.requests[index],
+            onTap: () async {
+              final request = state.requests[index];
+              final didOverride = await AppDialogs.showReportDetailsSheet(
+                context,
+                request: request,
+                onOverride: () async {
+                  if (!context.mounted) return false;
+                  return AppDialogs.showReportOverrideDialog(
+                    context,
+                    leaveRequest: request,
+                  );
+                },
+              );
+              if (didOverride == true && context.mounted) {
+                showAnimatedSnakDialogue(
+                  context,
+                  type: AnimatedSnackBarType.success,
+                  message: LocaleKeys.admin_reports_override_success.tr(),
+                );
+                await reportCubit.refreshReports();
+              }
+            },
+          );
+        },
       ),
     );
   }

@@ -46,8 +46,7 @@ class _ReportFilterSheetState extends State<ReportFilterSheet> {
         : null;
   }
 
-  /// DropdownButtonFormField asserts initialValue ∈ items — if the option
-  /// list doesn't contain the stored id, treat it as "no filter" instead.
+  /// Treats a stored id missing from the options as "no filter" (dropdown assert).
   int? _existingId(int? id, Map<int, String> options) =>
       id != null && options.containsKey(id) ? id : null;
 
