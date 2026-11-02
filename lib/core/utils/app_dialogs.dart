@@ -29,6 +29,7 @@ import '../../features/admin_org_structure/data/models/all_departements_model.da
 import '../../features/admin_org_structure/ui/widgets/college_details_bottom_sheet.dart';
 import '../../features/admin_reports/data/models/report_model.dart';
 import '../../features/admin_reports/data/models/report_query.dart';
+import '../../features/admin_reports/ui/widgets/report_details_bottom_sheet.dart';
 import '../../features/admin_reports/ui/widgets/report_filter_bottom_sheet.dart';
 import '../../features/admin_user_management/data/models/admin_user_model.dart';
 import '../../features/admin_user_management/ui/widgets/admin_user_details_bottom_sheet.dart';
@@ -213,6 +214,23 @@ class AppDialogs {
       builder: (_) => BlocProvider(
         create: (context) => sl<OverrideReportCubit>(),
         child: ReportOverrideDialog(leaveRequest: leaveRequest),
+      ),
+    );
+  }
+
+  /// Details-first flow: [onOverride] runs from the caller's context.
+  static Future<bool?> showReportDetailsSheet(
+    BuildContext context, {
+    required ReportLeaveRequest request,
+    required Future<bool?> Function() onOverride,
+  }) {
+    return showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => ReportDetailsBottomSheet(
+        request: request,
+        onOverride: onOverride,
       ),
     );
   }
