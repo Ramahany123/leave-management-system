@@ -81,7 +81,7 @@ class ReportLeaveRequest {
 class ReportUser {
   final int userId;
   final String name;
-  final String email;
+  final String? email;
   final ReportDepartment? department;
 
   ReportUser({
@@ -97,7 +97,7 @@ class ReportUser {
     return ReportUser(
       userId: json["user_id"] as int,
       name: json["name"] as String,
-      email: json["email"] as String,
+      email: json["email"] as String?,
       department: departmentJson == null
           ? null
           : ReportDepartment.fromJson(departmentJson),
