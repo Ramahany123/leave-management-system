@@ -42,10 +42,7 @@ class AppDialogs {
   }) {
     showDialog(
       context: context,
-      builder: (context) => BlocProvider(
-        create: (context) => sl<OverrideReportCubit>(),
-        child: LogoutDialog(onConfirm: onConfirm),
-      ),
+      builder: (context) => LogoutDialog(onConfirm: onConfirm),
     );
   }
 
