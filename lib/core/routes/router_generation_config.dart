@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:leave_management_system/core/constants/app_constants.dart';
+import 'package:leave_management_system/core/routes/route_guard.dart';
 import 'package:leave_management_system/core/utils/service_locator.dart';
 import 'package:leave_management_system/features/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
 import 'package:leave_management_system/features/admin_leave_configuration/data/models/leave_type_model.dart';
@@ -46,7 +46,6 @@ import '../../features/admin_org_structure/logic/cubit/colleges_cubit.dart';
 import '../../features/auth/data/repo/auth_repo.dart';
 import '../../features/manager_reports/logic/cubit/manager_report_cubit.dart';
 import '../../features/profile/logic/cubit/profile_cubit.dart';
-import '../constants/enums.dart';
 import 'app_routes.dart';
 import '../../features/auth/ui/screens/login_screen.dart';
 
@@ -55,72 +54,13 @@ class RouterGenerationConfig {
     initialLocation: AppRoutes.splashScreen,
     refreshListenable: sl<AuthRepo>(),
     redirect: (context, state) {
-      final AuthStatus authStatus = sl<AuthRepo>().currentAuthStatus;
-      final bool isLoggingIn = state.matchedLocation == AppRoutes.loginScreen;
-      final bool isSplash = state.matchedLocation == AppRoutes.splashScreen;
-      final bool isOnboarding =
-          state.matchedLocation == AppRoutes.onboardingScreen;
-      final bool isEmployeeRoute = AppRoutes.employeeRoutes.contains(
-        state.matchedLocation,
+      final authRepo = sl<AuthRepo>();
+      final AuthSnapshot authSnapshot = AuthSnapshot(
+        status: authRepo.currentAuthStatus,
+        role: authRepo.userRole,
+        viewMode: authRepo.currentViewMode,
       );
-      final bool isManagerRoute = AppRoutes.managerRoutes.contains(
-        state.matchedLocation,
-      );
-      final bool isAdminRoute = AppRoutes.adminRoutes.contains(
-        state.matchedLocation,
-      );
-      final String userRole = sl<AuthRepo>().userRole;
-
-      final ViewMode currentViewMode = sl<AuthRepo>().currentViewMode;
-
-      if (authStatus == AuthStatus.initial) {
-        return isSplash ? null : AppRoutes.splashScreen;
-      }
-
-      if (authStatus == AuthStatus.unauthenticated) {
-        return isLoggingIn ? null : AppRoutes.loginScreen;
-      }
-      if (authStatus == AuthStatus.activationRequired) {
-        return isOnboarding ? null : AppRoutes.onboardingScreen;
-      }
-      if (authStatus == AuthStatus.authenticated) {
-        if (isLoggingIn || isSplash || isOnboarding) {
-          if (userRole == UserRoles.employeeRole) {
-            return AppRoutes.employeeDashboardScreen;
-          } else if (userRole == UserRoles.adminRole) {
-            return AppRoutes.adminDashboardScreen;
-          } else if (UserRoles.managerRoles.contains(userRole)) {
-            return currentViewMode == ViewMode.manager
-                ? AppRoutes.managerDashboardScreen
-                : AppRoutes.employeeDashboardScreen;
-          }
-        }
-        // If in Manager mode but currently on an Employee route -> redirect to Manager Dashboard
-        if (currentViewMode == ViewMode.manager && isEmployeeRoute) {
-          return AppRoutes.managerDashboardScreen;
-        }
-
-        // If in Employee mode but currently on a Manager route -> redirect to Employee Dashboard
-        if (currentViewMode == ViewMode.employee && isManagerRoute) {
-          return AppRoutes.employeeDashboardScreen;
-        }
-
-        // To prevent access from employee to other roles
-        if (userRole == UserRoles.employeeRole &&
-            (isManagerRoute || isAdminRoute)) {
-          return AppRoutes.employeeDashboardScreen;
-        }
-        //to prevent access from manager to admin role
-        if (UserRoles.managerRoles.contains(userRole) && isAdminRoute) {
-          return AppRoutes.managerDashboardScreen;
-        }
-        //to prevent access from admin to manager or employee role
-        if (userRole == UserRoles.adminRole &&
-            (isManagerRoute || isEmployeeRoute)) {
-          return AppRoutes.adminDashboardScreen;
-        }
-      }
-      return null;
+      return redirectFor(authSnapshot, state.name ?? state.matchedLocation);
     },
     routes: [
       GoRoute(
