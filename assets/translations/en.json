@@ -239,5 +239,10 @@
     "override_confirm": "Override",
     "override_success": "Request status overridden successfully",
     "load_more_failed": "Failed to load more requests"
+  },
+  "no_access": {
+    "title": "Access Unavailable",
+    "message": "Your account role is not recognized by this application. Please contact the university IT support so the correct permissions can be assigned.",
+    "sign_out": "Sign Out"
   }
 }

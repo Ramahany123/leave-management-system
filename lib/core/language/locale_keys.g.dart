@@ -227,5 +227,9 @@ abstract class  LocaleKeys {
   static const admin_reports_override_success = 'admin_reports.override_success';
   static const admin_reports_load_more_failed = 'admin_reports.load_more_failed';
   static const admin_reports = 'admin_reports';
+  static const no_access_title = 'no_access.title';
+  static const no_access_message = 'no_access.message';
+  static const no_access_sign_out = 'no_access.sign_out';
+  static const no_access = 'no_access';
 
 }

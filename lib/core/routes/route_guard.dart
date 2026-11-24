@@ -3,11 +3,6 @@ import '../constants/enums.dart';
 import 'app_routes.dart';
 import 'route_access.dart';
 
-/// An immutable picture of the auth state, taken exactly once per redirect.
-///
-/// `core/` is not allowed to import `features/` (feature isolation), so this is
-/// a plain value object rather than a wrapper around `AuthRepo`. The router
-/// builds it from a single `sl<AuthRepo>()` read.
 class AuthSnapshot {
   const AuthSnapshot({
     required this.status,
@@ -22,9 +17,12 @@ class AuthSnapshot {
   bool get isAdmin => role == UserRoles.adminRole;
 
   bool get isManagerRole => UserRoles.managerRoles.contains(role);
+
+  bool get hasKnownRole => UserRoles.allRoles.contains(role);
 }
 
 String homeFor(AuthSnapshot auth) {
+  if (!auth.hasKnownRole) return AppRoutes.noAccessScreen;
   if (auth.isAdmin) return AppRoutes.adminDashboardScreen;
   if (auth.isManagerRole && auth.viewMode == ViewMode.manager) {
     return AppRoutes.managerDashboardScreen;
@@ -51,8 +49,6 @@ String? redirectFor(AuthSnapshot auth, String? routeName) {
       break;
   }
 
-  // ── Stage 2: RBAC over the descriptor table ───────────────────────────────
-  // Default-deny: a route nobody described is a route nobody may enter.
   if (tier == null) return homeFor(auth);
 
   return tier.allows(auth.role, auth.viewMode) ? null : homeFor(auth);

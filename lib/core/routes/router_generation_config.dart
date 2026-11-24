@@ -44,6 +44,7 @@ import 'package:leave_management_system/features/profile/ui/screens/update_conta
 import 'package:leave_management_system/features/splash/ui/screens/splash_screen.dart';
 import '../../features/admin_org_structure/logic/cubit/colleges_cubit.dart';
 import '../../features/auth/data/repo/auth_repo.dart';
+import '../../features/auth/ui/screens/no_access_screen.dart';
 import '../../features/manager_reports/logic/cubit/manager_report_cubit.dart';
 import '../../features/profile/logic/cubit/profile_cubit.dart';
 import 'app_routes.dart';
@@ -203,6 +204,12 @@ class RouterGenerationConfig {
         path: AppRoutes.splashScreen,
         name: AppRoutes.splashScreen,
         builder: (context, state) => SplashScreen(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.noAccessScreen,
+        name: AppRoutes.noAccessScreen,
+        builder: (context, state) => const NoAccessScreen(),
       ),
 
       GoRoute(

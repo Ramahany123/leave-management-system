@@ -40,6 +40,9 @@ class AppRoutes {
   static const changePasswordScreen = "/changePasswordScreen";
   static const updateContactScreen = "/updateContactScreen";
 
+  // Fallback for signed-in accounts whose role this build has no policy for
+  static const noAccessScreen = "/noAccessScreen";
+
   // ---------------------------------------------------------------------------
   static const List<AppRoute> routeTable = [
     AppRoute(splashScreen, RouteAccess.splash),
@@ -69,6 +72,8 @@ class AppRoutes {
 
     AppRoute(changePasswordScreen, RouteAccess.authenticated),
     AppRoute(updateContactScreen, RouteAccess.authenticated),
+
+    AppRoute(noAccessScreen, RouteAccess.authenticated),
   ];
 
   static final Map<String, RouteAccess> accessByName = {
