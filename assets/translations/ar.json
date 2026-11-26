@@ -147,9 +147,7 @@
     "work_mode": "وضع العمل",
     "switch_to_employee_view": "الانتقال إلى وضع الموظف",
     "switch_to_admin_view": "الانتقال إلى وضع الإدارة",
-    "switch_to_manager_view": "الانتقال إلى وضع المدير",
-    "employee_view_subtitle": "الوصول لطلبات ورصيد الإجازات الشخصية",
-    "manager_view_subtitle": "إدارة موافقات وتغطية القسم"
+    "switch_to_manager_view": "الانتقال إلى وضع المدير"
   },
   "change_password": {
     "title": "تغيير كلمة المرور",
@@ -240,6 +238,11 @@
     "override_confirm": "تعديل الحالة",
     "override_success": "تم تعديل حالة الطلب بنجاح",
     "load_more_failed": "فشل تحميل المزيد من الطلبات"
+  },
+  "not_found": {
+    "title": "الصفحة غير موجودة",
+    "message": "الصفحة التي تبحث عنها غير موجودة أو ربما تم نقلها.",
+    "back_home": "العودة إلى لوحة التحكم"
   },
   "no_access": {
     "title": "الوصول غير متاح",

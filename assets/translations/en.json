@@ -147,9 +147,7 @@
     "work_mode": "Work Mode",
     "switch_to_employee_view": "Switch to Employee View",
     "switch_to_admin_view": "Switch to Admin View",
-    "switch_to_manager_view": "Switch to Manager View",
-    "employee_view_subtitle": "Access your personal leave requests and balance",
-    "manager_view_subtitle": "Manage team approvals and department coverage"
+    "switch_to_manager_view": "Switch to Manager View"
   },
   "change_password": {
     "title": "Change Password",
@@ -240,6 +238,11 @@
     "override_confirm": "Override",
     "override_success": "Request status overridden successfully",
     "load_more_failed": "Failed to load more requests"
+  },
+  "not_found": {
+    "title": "Page Not Found",
+    "message": "The page you are looking for does not exist or may have been moved.",
+    "back_home": "Back to Dashboard"
   },
   "no_access": {
     "title": "Access Unavailable",

@@ -43,6 +43,9 @@ class AppRoutes {
   // Fallback for signed-in accounts whose role this build has no policy for
   static const noAccessScreen = "/noAccessScreen";
 
+  // Fallback for locations that matched no route pattern
+  static const notFoundScreen = "/notFoundScreen";
+
   // ---------------------------------------------------------------------------
   static const List<AppRoute> routeTable = [
     AppRoute(splashScreen, RouteAccess.splash),
@@ -74,6 +77,7 @@ class AppRoutes {
     AppRoute(updateContactScreen, RouteAccess.authenticated),
 
     AppRoute(noAccessScreen, RouteAccess.unknownRoleOnly),
+    AppRoute(notFoundScreen, RouteAccess.authenticated),
   ];
 
   static final Map<String, RouteAccess> accessByName = {

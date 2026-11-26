@@ -141,8 +141,6 @@ abstract class  LocaleKeys {
   static const profile_switch_to_employee_view = 'profile.switch_to_employee_view';
   static const profile_switch_to_admin_view = 'profile.switch_to_admin_view';
   static const profile_switch_to_manager_view = 'profile.switch_to_manager_view';
-  static const profile_employee_view_subtitle = 'profile.employee_view_subtitle';
-  static const profile_manager_view_subtitle = 'profile.manager_view_subtitle';
   static const profile = 'profile';
   static const change_password_title = 'change_password.title';
   static const change_password_current_password_label = 'change_password.current_password_label';
@@ -228,6 +226,10 @@ abstract class  LocaleKeys {
   static const admin_reports_override_success = 'admin_reports.override_success';
   static const admin_reports_load_more_failed = 'admin_reports.load_more_failed';
   static const admin_reports = 'admin_reports';
+  static const not_found_title = 'not_found.title';
+  static const not_found_message = 'not_found.message';
+  static const not_found_back_home = 'not_found.back_home';
+  static const not_found = 'not_found';
   static const no_access_title = 'no_access.title';
   static const no_access_message = 'no_access.message';
   static const no_access_sign_out = 'no_access.sign_out';

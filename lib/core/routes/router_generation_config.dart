@@ -45,6 +45,7 @@ import 'package:leave_management_system/features/splash/ui/screens/splash_screen
 import '../../features/admin_org_structure/logic/cubit/colleges_cubit.dart';
 import '../../features/auth/data/repo/auth_repo.dart';
 import '../../features/auth/ui/screens/no_access_screen.dart';
+import '../../features/auth/ui/screens/not_found_screen.dart';
 import '../../features/manager_reports/logic/cubit/manager_report_cubit.dart';
 import '../../features/profile/logic/cubit/profile_cubit.dart';
 import 'app_routes.dart';
@@ -55,13 +56,9 @@ class RouterGenerationConfig {
     initialLocation: AppRoutes.splashScreen,
     refreshListenable: sl<AuthRepo>(),
     redirect: (context, state) {
-      final authRepo = sl<AuthRepo>();
-      final AuthSnapshot authSnapshot = AuthSnapshot(
-        status: authRepo.currentAuthStatus,
-        role: authRepo.userRole,
-        area: authRepo.currentArea,
-      );
-      return redirectFor(authSnapshot, state.topRoute?.name);
+      // `state.name` is null in a top-level redirect (go_router documents it);
+      // the leaf route's name is only reachable through `topRoute`.
+      return redirectFor(_snapshot(), state.topRoute?.name);
     },
     routes: [
       GoRoute(
@@ -340,6 +337,25 @@ class RouterGenerationConfig {
           child: AdminReportScreen(),
         ),
       ),
+      // Catch-all: must stay last. Registering it means `findMatch` never
+      // fails, so unknown locations land here instead of the guard's
+      // `tier == null` branch, and `errorBuilder` only sees redirect errors.
+      GoRoute(
+        path: '/:unknownPath(.*)',
+        name: AppRoutes.notFoundScreen,
+        builder: (context, state) =>
+            NotFoundScreen(onGoHome: () => context.go(homeFor(_snapshot()))),
+      ),
     ],
   );
+
+  /// The policy inputs, built from the repository in one place.
+  static AuthSnapshot _snapshot() {
+    final authRepo = sl<AuthRepo>();
+    return AuthSnapshot(
+      status: authRepo.currentAuthStatus,
+      role: authRepo.userRole,
+      area: authRepo.currentArea,
+    );
+  }
 }
