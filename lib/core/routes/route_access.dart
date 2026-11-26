@@ -1,4 +1,3 @@
-import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/constants/enums.dart';
 
 enum RouteAccess {
@@ -12,7 +11,7 @@ enum RouteAccess {
 }
 
 extension RouteAccessPolicy on RouteAccess {
-  bool allows(String role, ViewMode viewMode) {
+  bool allows(AppArea appArea) {
     switch (this) {
       case RouteAccess.splash:
       case RouteAccess.guestOnly:
@@ -20,16 +19,13 @@ extension RouteAccessPolicy on RouteAccess {
         return false;
 
       case RouteAccess.authenticated:
-        return role.isNotEmpty;
+        return true;
       case RouteAccess.employeeArea:
-        return role == UserRoles.employeeRole ||
-            (UserRoles.managerRoles.contains(role) &&
-                viewMode == ViewMode.employee);
+        return appArea == AppArea.employee;
       case RouteAccess.managerArea:
-        return UserRoles.managerRoles.contains(role) &&
-            viewMode == ViewMode.manager;
+        return appArea == AppArea.manager;
       case RouteAccess.adminArea:
-        return role == UserRoles.adminRole;
+        return appArea == AppArea.admin;
     }
   }
 }

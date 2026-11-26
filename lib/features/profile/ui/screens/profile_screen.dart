@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:leave_management_system/core/constants/app_constants.dart';
 import 'package:leave_management_system/core/constants/enums.dart';
 import 'package:leave_management_system/core/language/locale_keys.g.dart';
 import 'package:leave_management_system/core/logic/cubit/theme_cubit.dart';
@@ -92,26 +91,30 @@ class ProfileScreen extends StatelessWidget {
                           listenable: sl<AuthRepo>(),
                           builder: (context, _) {
                             final authRepo = sl<AuthRepo>();
-                            if (!UserRoles.managerRoles.contains(
-                              authRepo.userRole,
-                            )) {
-                              return SizedBox.shrink();
+                            if (!authRepo.canSwitchArea) {
+                              return const SizedBox.shrink();
                             }
-                            final bool isManagerMode =
-                                authRepo.currentViewMode == ViewMode.manager;
+                            final AppArea target = authRepo.availableAreas
+                                .firstWhere(
+                                  (area) => area != authRepo.currentArea,
+                                );
+                            final String subtitle = switch (target) {
+                              AppArea.employee =>
+                                LocaleKeys.profile_switch_to_employee_view.tr(),
+                              AppArea.manager =>
+                                LocaleKeys.profile_switch_to_manager_view.tr(),
+                              AppArea.admin =>
+                                LocaleKeys.profile_switch_to_admin_view.tr(),
+                            };
                             return SettingsTile(
-                              title: LocaleKeys.profile_manager_mode.tr(),
-                              subTitle: isManagerMode
-                                  ? LocaleKeys.profile_switch_to_employee_view
-                                        .tr()
-                                  : LocaleKeys.profile_switch_to_manager_view
-                                        .tr(),
+                              title: LocaleKeys.profile_work_mode.tr(),
+                              subTitle: subtitle,
                               icon: Icons.swap_horiz_rounded,
                               trailing: Switch(
-                                value: isManagerMode,
-                                onChanged: (_) {
-                                  authRepo.toggleViewMode();
-                                },
+                                value:
+                                    authRepo.currentArea ==
+                                    authRepo.primaryArea,
+                                onChanged: (_) => authRepo.switchArea(target),
                               ),
                             );
                           },

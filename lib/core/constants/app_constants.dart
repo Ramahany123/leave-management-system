@@ -1,3 +1,5 @@
+import 'enums.dart';
+
 class AppImages {
   static const String universityLogo = "assets/images/Hurghada-University.png";
   static const String loadingLottie = "assets/lottie/loadingLottie.json";
@@ -21,6 +23,41 @@ class UserRoles {
     employeeRole,
     adminRole,
   ];
+}
+
+class PersonaAreas {
+  const PersonaAreas._();
+
+  //put primary area as index [0]
+  static const List<AppArea> _employeeOnly = <AppArea>[AppArea.employee];
+  static const List<AppArea> _managerAndEmployee = <AppArea>[
+    AppArea.manager,
+    AppArea.employee,
+  ];
+  static const List<AppArea> _adminAndEmployee = <AppArea>[
+    AppArea.admin,
+    AppArea.employee,
+  ];
+  static const List<AppArea> _none = <AppArea>[];
+
+  static List<AppArea> areasFor(String role) {
+    switch (role) {
+      case UserRoles.employeeRole:
+        return _employeeOnly;
+      case UserRoles.adminRole:
+        return _adminAndEmployee;
+      // Managers, Deansand Presidents share one policy; anything else has none.
+      default:
+        return UserRoles.managerRoles.contains(role)
+            ? _managerAndEmployee
+            : _none;
+    }
+  }
+
+  static AppArea? primaryAreaFor(String role) {
+    final List<AppArea> areas = areasFor(role);
+    return areas.isEmpty ? null : areas.first;
+  }
 }
 
 //TODO: lozalize text

@@ -144,8 +144,9 @@
     "enter_password_hint": "Enter your password",
     "save": "Save",
     "phone_updated_success": "Phone number changed successfully",
-    "manager_mode": "Manager Mode",
+    "work_mode": "Work Mode",
     "switch_to_employee_view": "Switch to Employee View",
+    "switch_to_admin_view": "Switch to Admin View",
     "switch_to_manager_view": "Switch to Manager View",
     "employee_view_subtitle": "Access your personal leave requests and balance",
     "manager_view_subtitle": "Manage team approvals and department coverage"

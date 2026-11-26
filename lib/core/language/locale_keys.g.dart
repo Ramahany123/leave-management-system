@@ -137,8 +137,9 @@ abstract class  LocaleKeys {
   static const profile_enter_password_hint = 'profile.enter_password_hint';
   static const profile_save = 'profile.save';
   static const profile_phone_updated_success = 'profile.phone_updated_success';
-  static const profile_manager_mode = 'profile.manager_mode';
+  static const profile_work_mode = 'profile.work_mode';
   static const profile_switch_to_employee_view = 'profile.switch_to_employee_view';
+  static const profile_switch_to_admin_view = 'profile.switch_to_admin_view';
   static const profile_switch_to_manager_view = 'profile.switch_to_manager_view';
   static const profile_employee_view_subtitle = 'profile.employee_view_subtitle';
   static const profile_manager_view_subtitle = 'profile.manager_view_subtitle';

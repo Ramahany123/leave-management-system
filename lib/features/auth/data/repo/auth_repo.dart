@@ -33,13 +33,18 @@ class AuthRepo extends ChangeNotifier {
   Failure? _initialAuthFailure;
   Failure? get initialAuthFailure => _initialAuthFailure;
 
-  ViewMode _currentViewMode = ViewMode.employee;
-  ViewMode get currentViewMode => _currentViewMode;
+  AppArea _currentArea = AppArea.employee;
+  AppArea get currentArea => _currentArea;
 
-  void toggleViewMode() {
-    _currentViewMode == ViewMode.manager
-        ? _currentViewMode = ViewMode.employee
-        : _currentViewMode = ViewMode.manager;
+  List<AppArea> get availableAreas => PersonaAreas.areasFor(_userRole);
+  bool get canSwitchArea => availableAreas.length > 1;
+
+  AppArea get primaryArea =>
+      PersonaAreas.primaryAreaFor(_userRole) ?? AppArea.employee;
+
+  void switchArea(AppArea area) {
+    if (!availableAreas.contains(area) || area == _currentArea) return;
+    _currentArea = area;
     notifyListeners();
   }
 
@@ -56,9 +61,7 @@ class AuthRepo extends ChangeNotifier {
 
     if (userRole != null) {
       _userRole = userRole;
-      _currentViewMode = UserRoles.managerRoles.contains(userRole)
-          ? ViewMode.manager
-          : ViewMode.employee;
+      _currentArea = primaryArea;
     }
     if (userName != null) {
       _userName = userName;
@@ -76,9 +79,7 @@ class AuthRepo extends ChangeNotifier {
               ? AuthStatus.authenticated
               : AuthStatus.activationRequired;
           _userRole = data.user.role;
-          _currentViewMode = UserRoles.managerRoles.contains(data.user.role)
-              ? ViewMode.manager
-              : ViewMode.employee;
+          _currentArea = primaryArea;
         case FailureResult<ProfileResponseModel>(:final failure):
           if (failure is UnauthenticatedFailure) {
             await logout();
@@ -117,9 +118,7 @@ class AuthRepo extends ChangeNotifier {
           _userName = response.user!.name;
         }
         _currentAuthStatus = response.status;
-        _currentViewMode = UserRoles.managerRoles.contains(_userRole)
-            ? ViewMode.manager
-            : ViewMode.employee;
+        _currentArea = primaryArea;
         notifyListeners();
       }
 
@@ -155,9 +154,7 @@ class AuthRepo extends ChangeNotifier {
       _currentAuthStatus = response.status;
       _userRole = response.user.role;
       _userName = response.user.name;
-      _currentViewMode = UserRoles.managerRoles.contains(_userRole)
-          ? ViewMode.manager
-          : ViewMode.employee;
+      _currentArea = primaryArea;
       notifyListeners();
       return SuccessResult(response);
     } catch (e) {
@@ -174,7 +171,7 @@ class AuthRepo extends ChangeNotifier {
     _currentAuthStatus = AuthStatus.unauthenticated;
     _userName = "";
     _userRole = UserRoles.employeeRole;
-    _currentViewMode = ViewMode.employee;
+    _currentArea = AppArea.employee;
 
     notifyListeners();
   }

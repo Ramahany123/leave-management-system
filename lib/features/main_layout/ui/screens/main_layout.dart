@@ -16,11 +16,11 @@ class MainLayout extends StatelessWidget {
     return ListenableBuilder(
       listenable: sl<AuthRepo>(),
       builder: (BuildContext context, _) {
-        final bool isManagerView =
-            sl<AuthRepo>().currentViewMode == ViewMode.manager;
+        final bool isManagerArea =
+            sl<AuthRepo>().currentArea == AppArea.manager;
         return Scaffold(
           body: navigationShell,
-          bottomNavigationBar: isManagerView
+          bottomNavigationBar: isManagerArea
               ? ManagerBottomNavigationBar(navigationShell: navigationShell)
               : EmployeeBottomNavigationBar(navigationShell: navigationShell),
         );

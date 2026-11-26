@@ -59,7 +59,7 @@ class RouterGenerationConfig {
       final AuthSnapshot authSnapshot = AuthSnapshot(
         status: authRepo.currentAuthStatus,
         role: authRepo.userRole,
-        viewMode: authRepo.currentViewMode,
+        area: authRepo.currentArea,
       );
       return redirectFor(authSnapshot, state.name ?? state.matchedLocation);
     },

@@ -4,30 +4,28 @@ import 'app_routes.dart';
 import 'route_access.dart';
 
 class AuthSnapshot {
-  const AuthSnapshot({
+  AuthSnapshot({
     required this.status,
     required this.role,
-    required this.viewMode,
-  });
+    required AppArea area,
+  }) : area = PersonaAreas.areasFor(role).contains(area)
+           ? area
+           : PersonaAreas.primaryAreaFor(role) ?? AppArea.employee;
 
   final AuthStatus status;
   final String role;
-  final ViewMode viewMode;
-
-  bool get isAdmin => role == UserRoles.adminRole;
-
-  bool get isManagerRole => UserRoles.managerRoles.contains(role);
+  final AppArea area;
 
   bool get hasKnownRole => UserRoles.allRoles.contains(role);
 }
 
 String homeFor(AuthSnapshot auth) {
   if (!auth.hasKnownRole) return AppRoutes.noAccessScreen;
-  if (auth.isAdmin) return AppRoutes.adminDashboardScreen;
-  if (auth.isManagerRole && auth.viewMode == ViewMode.manager) {
-    return AppRoutes.managerDashboardScreen;
-  }
-  return AppRoutes.employeeDashboardScreen;
+  return switch (auth.area) {
+    AppArea.employee => AppRoutes.employeeDashboardScreen,
+    AppArea.manager => AppRoutes.managerDashboardScreen,
+    AppArea.admin => AppRoutes.adminDashboardScreen,
+  };
 }
 
 /// The single routing decision of the app.
@@ -49,7 +47,12 @@ String? redirectFor(AuthSnapshot auth, String? routeName) {
       break;
   }
 
+  if (!auth.hasKnownRole) {
+    final String fallback = homeFor(auth);
+    return routeName == fallback ? null : fallback;
+  }
+
   if (tier == null) return homeFor(auth);
 
-  return tier.allows(auth.role, auth.viewMode) ? null : homeFor(auth);
+  return tier.allows(auth.area) ? null : homeFor(auth);
 }

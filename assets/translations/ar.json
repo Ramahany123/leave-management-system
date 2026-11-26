@@ -144,8 +144,9 @@
     "enter_password_hint": "أدخل كلمة المرور",
     "save": "حفظ",
     "phone_updated_success": "تم تغيير رقم الهاتف بنجاح",
-    "manager_mode": "وضع المدير",
+    "work_mode": "وضع العمل",
     "switch_to_employee_view": "الانتقال إلى وضع الموظف",
+    "switch_to_admin_view": "الانتقال إلى وضع الإدارة",
     "switch_to_manager_view": "الانتقال إلى وضع المدير",
     "employee_view_subtitle": "الوصول لطلبات ورصيد الإجازات الشخصية",
     "manager_view_subtitle": "إدارة موافقات وتغطية القسم"

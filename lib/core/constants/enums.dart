@@ -1,6 +1,6 @@
 enum AuthStatus { activationRequired, authenticated, unauthenticated, initial }
 
-enum ViewMode { employee, manager }
+enum AppArea { employee, manager, admin }
 
 enum UserType {
   academic("Academic"),
