@@ -28,10 +28,6 @@ String homeFor(AuthSnapshot auth) {
   };
 }
 
-/// The single routing decision of the app.
-///
-/// Returns `null` to allow the navigation (go_router's convention: `null`
-/// means "no redirect") or the location to redirect to.
 String? redirectFor(AuthSnapshot auth, String? routeName) {
   final RouteAccess? tier = AppRoutes.accessByName[routeName];
   switch (auth.status) {
@@ -48,8 +44,7 @@ String? redirectFor(AuthSnapshot auth, String? routeName) {
   }
 
   if (!auth.hasKnownRole) {
-    final String fallback = homeFor(auth);
-    return routeName == fallback ? null : fallback;
+    return tier == RouteAccess.unknownRoleOnly ? null : homeFor(auth);
   }
 
   if (tier == null) return homeFor(auth);

@@ -1,9 +1,9 @@
 import 'package:leave_management_system/core/routes/route_access.dart';
 
 class AppRoute {
-  final String path;
+  final String name;
   final RouteAccess access;
-  const AppRoute(this.path, this.access);
+  const AppRoute(this.name, this.access);
 }
 
 class AppRoutes {
@@ -73,10 +73,10 @@ class AppRoutes {
     AppRoute(changePasswordScreen, RouteAccess.authenticated),
     AppRoute(updateContactScreen, RouteAccess.authenticated),
 
-    AppRoute(noAccessScreen, RouteAccess.authenticated),
+    AppRoute(noAccessScreen, RouteAccess.unknownRoleOnly),
   ];
 
   static final Map<String, RouteAccess> accessByName = {
-    for (final route in routeTable) route.path: route.access,
+    for (final route in routeTable) route.name: route.access,
   };
 }

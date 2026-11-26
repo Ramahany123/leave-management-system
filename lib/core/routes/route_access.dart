@@ -5,6 +5,7 @@ enum RouteAccess {
   guestOnly,
   onboardingOnly,
   authenticated,
+  unknownRoleOnly,
   employeeArea,
   managerArea,
   adminArea,
@@ -20,6 +21,8 @@ extension RouteAccessPolicy on RouteAccess {
 
       case RouteAccess.authenticated:
         return true;
+      case RouteAccess.unknownRoleOnly:
+        return false;
       case RouteAccess.employeeArea:
         return appArea == AppArea.employee;
       case RouteAccess.managerArea:

@@ -61,7 +61,7 @@ class RouterGenerationConfig {
         role: authRepo.userRole,
         area: authRepo.currentArea,
       );
-      return redirectFor(authSnapshot, state.name ?? state.matchedLocation);
+      return redirectFor(authSnapshot, state.topRoute?.name);
     },
     routes: [
       GoRoute(
